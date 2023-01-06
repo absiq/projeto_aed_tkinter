@@ -28,6 +28,59 @@ def panel_admin():
 
     window_admin.place(x=0, y=0)
 
+def panel_edit_profile():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_edit_profile = PanedWindow(window, width=1080, height=720)
+    currentpanel = window_edit_profile
+
+    name, username, icon, bio = retrieve_current_user_data()
+
+    name_text = "Teu nome atual é: " + name
+    label_name = Label(window_edit_profile, text=name_text)
+    label_name.place(x=20, y=50)
+
+    username_text = "Teu username atual é: " + username
+    label_username = Label(window_edit_profile, text=username_text)
+    label_username.place(x=400, y=50)
+
+    bio_text = "Tua bio atual é: "
+    label_bio_text = Label(window_edit_profile, text=bio_text)
+    label_bio = Label(window_edit_profile, justify='center', wraplength=240, text=bio)
+    label_bio_text.place(x=20, y=220)
+    label_bio.place(x=20, y=240)
+
+    icon_text = "O teu icon atual é: "
+    label_icon_text = Label(window_edit_profile, text=icon_text)
+    label_icon_text.place(x=740, y=220)
+    ficheiro_img = os.path.join('imgs\\profile_pics', icon)
+    user_img = Canvas(window_edit_profile, width=100, height=100, bd=0)
+    user_img.place(x=740, y=240)
+    global img
+    img = PhotoImage(file = ficheiro_img)
+    user_img.create_image(50,50, anchor=CENTER, image = img)
+
+    label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:")
+    label_new_name.place(x=20, y=80)
+    new_name = name
+    entry_new_name = Entry(window_edit_profile, width=30, textvariable=new_name)
+    entry_new_name.place(x=20, y=100)
+
+    label_new_username = Label(window_edit_profile, text="Insira o teu novo username:")
+    label_new_username.place(x=400, y=80)
+    new_username = username
+    entry_new_username = Entry(window_edit_profile, width=30, textvariable=new_username)
+    entry_new_username.place(x=400, y=100)
+
+    label_new_bio = Label(window_edit_profile, text="Insira a tua nova bio:")
+    label_new_bio.place(x=20, y=290)
+    new_bio = bio
+    entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
+    entry_new_bio.place(x=20, y=310, width=300, height=100)
+
+    window_edit_profile.place(x=0, y=0)
+
 def panel_register():
     global currentpanel
     currentpanel.pack_forget()
@@ -139,7 +192,7 @@ def panel_account():
     label_username = Label(window_account, text=bio, justify='center', wraplength=240)
     label_username.place(x=100, y=160)
 
-    btn_edit_profile = Button(window_account, text="Editar perfil", width=20)
+    btn_edit_profile = Button(window_account, text="Editar perfil", width=20, command=panel_edit_profile)
     btn_edit_profile.place(x=800, y=40)
 
     btn_logout = Button(window_account, text="Fazer logout", width=20, command= lambda: logout_and_change_page(panel_homepage))

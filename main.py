@@ -35,7 +35,7 @@ def panel_edit_profile():
     window_edit_profile = PanedWindow(window, width=1080, height=720)
     currentpanel = window_edit_profile
 
-    name, username, icon, bio = retrieve_current_user_data()
+    name, username, icon, bio, user_id = retrieve_current_user_data()
 
     name_text = "Teu nome atual é: " + name
     label_name = Label(window_edit_profile, text=name_text)
@@ -75,9 +75,11 @@ def panel_edit_profile():
 
     label_new_bio = Label(window_edit_profile, text="Insira a tua nova bio:")
     label_new_bio.place(x=20, y=290)
-    new_bio = bio
     entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
     entry_new_bio.place(x=20, y=310, width=300, height=100)
+
+    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
+    btn_editar.place(x=540, y=700)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -172,7 +174,7 @@ def panel_account():
     window_account = PanedWindow(window, width=1080, height=720)
     currentpanel = window_account
 
-    name, username, icon, bio = retrieve_current_user_data()
+    name, username, icon, bio, user_id = retrieve_current_user_data()
 
     ficheiro_img = os.path.join('imgs\\profile_pics', icon)
 
@@ -243,7 +245,6 @@ btn_registrar.place(x=500, y=360)
 
 btn_login = Button(window_main, text="Login", command=panel_login)
 btn_login.place(x=500, y=400)
-
 
 currentpanel = window_main
 

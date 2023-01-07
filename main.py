@@ -224,15 +224,14 @@ def panel_admin():
     currentpanel = painel_adm
     painel_adm.configure(bg = "#d3d3d3")
     
+    # imagem
     userImg = PhotoImage(file= "./imgs/painel_adm/user.png")
     labelImg = Label(painel_adm, image=userImg, width=180, height=180, bd=0, bg="#d3d3d3")
     labelImg.place(x= 420, y=100)
 
-    admTxt = Label(painel_adm, text="Função: administrador", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-    admTxt.place(x=420, y=345)
 
     # botão voltar
-    btnVoltar = Button(painel_adm, text="Voltar", width=10)
+    btnVoltar = Button(painel_adm, text="Voltar", width=10, command=panel_account)
     btnVoltar.place(x=30, y=30)
 
     # botão add album
@@ -251,9 +250,25 @@ def panel_admin():
     btnApagarReviews = Button(painel_adm, text="Apague um review", width=25)
     btnApagarReviews.place(x=520, y=525)
 
-    # botão log out
+    # info user
+    name= retrieve_current_user_data()
+    username= retrieve_current_user_data()
+    icon = retrieve_current_user_data()
+
+    userInfoName = "Nome: " + str(name[0])
+    label_userInfoName = Label(painel_adm, text=userInfoName, bg = "#d3d3d3")
+    label_userInfoName.place (x=460, y=340)
+
+    userInfoUsername = "Username: " + str(username[1])
+    label_userInfoUsername = Label(painel_adm, text=userInfoUsername, bg = "#d3d3d3")
+    label_userInfoUsername.place (x=460, y=370)
+
+    admTxt = Label(painel_adm, text="Função: administrador", width=24, bd=0, bg="#d3d3d3", fg="black")
+    admTxt.place(x=440, y=400)
+
+    """# botão log out
     btnLogOut = Button(painel_adm, text="Log out", width=10)
-    btnLogOut.place(x=960, y=670)
+    btnLogOut.place(x=960, y=670)"""
 
     painel_adm.mainloop()
 

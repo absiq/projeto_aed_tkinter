@@ -291,12 +291,13 @@ def panel_admin():
     currentpanel = painel_adm
     painel_adm.configure(bg = "#d3d3d3")
     
-    admTxt = Label(painel_adm, text="Função: administrador", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-    admTxt.place(x=420, y=345)
-
+    # imagem e infos do user
     userImg = PhotoImage(file= "./imgs/painel_adm/user.png")
     labelImg = Label(painel_adm, image=userImg, width=180, height=180, bd=0, bg="#d3d3d3")
     labelImg.place(x= 420, y=100)
+
+    admTxt = Label(painel_adm, text="Função: administrador", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+    admTxt.place(x=420, y=345)
 
     # botão voltar
     btnVoltar = Button(painel_adm, text="Voltar", width=10, command=panel_account)

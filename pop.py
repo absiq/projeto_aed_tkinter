@@ -3,9 +3,23 @@ from tkinter import messagebox
 
 ficheiro= "pop.txt"
 
+def cria_id_album():
+    last_id = 0
+    count_id = 0
+    ficheiro = 'pop.txt'
+    f = open(ficheiro, 'r')
+    dados = f.readlines()
+    for i in dados:
+        line_split = i.split(';')
+        if int(line_split[0]) > last_id:
+            last_id = int(line_split[0])
+    count_id = last_id + 1
+    return count_id
+
 def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Descricao, Musicas):
     filePop=open(ficheiro, "a", encoding="utf-8")
-    linha = "img/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + "\n" 
+    album_id = cria_id_album()
+    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + "\n" 
     filePop.write(linha)
     filePop.close()
     
@@ -19,16 +33,20 @@ def album_contents():
     f.close()
     for linha in linhas:
         campos = linha.split(";")
+        campo = str(campos)
+        songs = campo.split(",")
+        print(songs)
         if campos[0] == "1":
+            print(campos[0])
             img = campos[1]
             album_name = campos[2]
             album_artist = campos[3]
             album_info = campos[4] + ", " + campos[5] + ", " + campos[6] + ", " + campos[7]
             album_score = campos[8]
             album_description = campos[9]
-            album_songs = campos[10]
-        return img, album_name, album_artist, album_info, album_score, album_description, album_songs
-
+            album_songs = songs[10:]
+            return img, album_name, album_artist, album_info, album_score, album_description, album_songs
+            
 def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))
 

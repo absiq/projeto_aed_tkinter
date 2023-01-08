@@ -26,7 +26,7 @@ def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Desc
 # colocar ID do álbum
 # músicas
 
-def album_contents():
+def album_contents(album_id):
 
     f = open(ficheiro, "r", encoding="utf-8")
     linhas = f.readlines()
@@ -36,8 +36,8 @@ def album_contents():
         # campo = str(campos)
         # songs = campo.split(",")
         # print(songs)
-        if campos[0] == "1":
-            print(campos[0])
+        if campos[0] == str(album_id):
+            print(album_id)
             img = campos[1]
             album_name = campos[2]
             album_artist = campos[3]

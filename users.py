@@ -159,3 +159,29 @@ def retrieve_current_user_data():
     icon = campos_split[5]
     bio = campos_split[6].replace('\n', '')
     return name, username, icon, bio
+
+def deletar_album(del_album, del_artista):
+    """
+    deleta album selecionado do ficheiro txt
+    """
+    album = del_album.get()
+    artista = del_artista.get()   
+    file = "pop.txt"
+    f = open(file, 'r')
+    lines = f.readlines()
+    f.close()
+    i = 0
+    for line in lines:
+        words = line.split(";")
+        nome_album = words[2]
+        nome_artista = words[3]
+        if nome_album == album:
+            if nome_artista == artista:
+                ficheiro = open(file, 'w')
+                for line in lines:
+                    if not line == lines[i]:
+                        ficheiro.write(line)
+        else: 
+            i += 1
+
+  

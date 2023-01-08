@@ -213,6 +213,36 @@ def panel_account():
     window_account.place(x=0, y=0)
 
 
+## - - - - - - - - - - CONTAINER DELETE ALBUM - - - - - - - - - - ##
+
+def panel_delete_album():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_delete_album = PanedWindow(window, width=1080, height=720)
+    panel_delete_album.place(x=0,y=0)
+    currentpanel = panel_delete_album
+    panel_delete_album.configure(bg = "#d3d3d3")
+
+    lblTitulo = Label(panel_delete_album, text = "Delete um álbum", fg = "black", bg = "#d3d3d3", font = "arial, 15", relief = "flat")
+    lblTitulo.place (x=60, y=25)
+
+    label_album = Label(panel_delete_album, text="Álbum que deseja apagar: ", bg = "#d3d3d3")
+    label_album.place(x=60, y=100)
+    del_album = Entry(panel_delete_album, width=30)
+    del_album.place(x=60, y=130)
+
+    label_artista = Label(panel_delete_album, text="Artista do álbum que deseja apagar: ", bg = "#d3d3d3")
+    label_artista.place(x=60, y=170)
+    del_artista = Entry(panel_delete_album, width=30)
+    del_artista.place(x=60, y=200)
+
+    btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
+    btn_delete.place(x=90, y=300)
+
+
+
+
 ## - - - - - - - - - - CONTAINER ADMIN PANEL - - - - - - - - - - ##
 
 def panel_admin():
@@ -239,7 +269,7 @@ def panel_admin():
     btnAddAlbum.place(x=300, y=480)
 
     # botão remover album
-    btnRemovAlbum = Button(painel_adm, text="Remova um álbum", width=25)
+    btnRemovAlbum = Button(painel_adm, text="Remova um álbum", width=25, command=panel_delete_album)
     btnRemovAlbum.place(x=520, y=480)
 
     # botão usuarios
@@ -265,10 +295,6 @@ def panel_admin():
 
     admTxt = Label(painel_adm, text="Função: administrador", width=24, bd=0, bg="#d3d3d3", fg="black")
     admTxt.place(x=440, y=400)
-
-    """# botão log out
-    btnLogOut = Button(painel_adm, text="Log out", width=10)
-    btnLogOut.place(x=960, y=670)"""
 
     painel_adm.mainloop()
 
@@ -300,6 +326,7 @@ def panel_search():
 
     txt = Label(panel_notific, text="Pesquise aqui", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
     txt.place(x=420, y=345)
+
 
 
 ## - - - - - - - - - - CONTAINER HOMEPAGE - - - - - - - - - - ##

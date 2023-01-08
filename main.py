@@ -26,7 +26,7 @@ def panel_edit_profile():
 
     window_edit_profile.configure(bg = "#d3d3d3")
 
-    name, username, icon, bio = retrieve_current_user_data()
+    name, username, icon, bio, user_id = retrieve_current_user_data()
 
     name_text = "Teu nome atual é: " + name
     label_name = Label(window_edit_profile, text=name_text, bg = "#d3d3d3")
@@ -66,9 +66,11 @@ def panel_edit_profile():
 
     label_new_bio = Label(window_edit_profile, text="Insira a tua nova bio:", bg = "#d3d3d3")
     label_new_bio.place(x=20, y=290)
-    new_bio = bio
     entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
     entry_new_bio.place(x=20, y=310, width=300, height=100)
+
+    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
+    btn_editar.place(x=540, y=700)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -178,7 +180,7 @@ def panel_account():
 
     window_account.configure(bg = "#d3d3d3")
 
-    name, username, icon, bio = retrieve_current_user_data()
+    name, username, icon, bio, user_id = retrieve_current_user_data()
 
     ficheiro_img = os.path.join('imgs\\profile_pics', icon)
 

@@ -10,7 +10,7 @@ def panel_album():
     window_album = PanedWindow(window, width=1080, height=720)
     currentpanel = window_album
 
-    img, album_name, album_artist, album_info, album_score, album_description, album_songs = album_contents()
+    img, album_name, album_artist, album_info, album_score, album_description = album_contents()
 
     global cover
     ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
@@ -38,9 +38,9 @@ def panel_album():
     Label_description = Label(window_album, text=description, fg="black", wraplength=450, justify="left")
     Label_description.place(x = 20, y = 270)
 
-    songs = album_songs
-    Label_songs = Label(window_album, text=songs, fg="black")
-    Label_songs.place(x=20,y=350)
+    # songs = album_songs
+    # Label_songs = Label(window_album, text=songs, fg="black")
+    # Label_songs.place(x=20,y=350)
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")

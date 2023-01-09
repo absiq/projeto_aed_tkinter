@@ -20,6 +20,18 @@ def generate_page_album(album_id):
     img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description)
 
+def login_or_account():
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\currentsession.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r')
+    campos = f.readlines()
+    print(campos)
+    if campos != []:
+        panel_account()
+    else:
+        panel_login()
+
 #### MISC FUNCTIONS
 
 def like():
@@ -280,7 +292,7 @@ def panel_delete_album():
 
     btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
     btn_voltar = Button(panel_delete_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=90, y=350)
+    btn_voltar.place(x=90, y=30)
     btn_delete.place(x=90, y=300)
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
@@ -638,7 +650,7 @@ def panel_homepage():
 
     #define icone de user no botao para ir p/ página do usuário
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=panel_login)
+    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -715,7 +727,7 @@ btnGuardarS.place (x = 1020 , y = 7)
 
 #define icone de user no botao para ir p/ página do usuário
 imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=panel_login)
+btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=login_or_account)
 btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações

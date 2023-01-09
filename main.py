@@ -156,8 +156,8 @@ def panel_register():
 
     btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: [submit_register(name_register.get(), email_register.get(), username_register.get(), password_register.get())])
     btn_submit_register.place(x=440, y=510)
-    btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
-    btn_voltar.place(x=440, y=575)
+    # btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
+    # btn_voltar.place(x=440, y=575)
 
 ## - - - - - - - - - - CONTAINER LOGIN - - - - - - - - - - ##
 

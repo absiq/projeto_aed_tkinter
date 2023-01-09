@@ -105,7 +105,7 @@ def panel_edit_profile():
     entry_new_bio.place(x=20, y=310, width=300, height=100)
 
     btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
-    btn_editar.place(x=540, y=700)
+    btn_editar.place(x=540, y=600)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -359,6 +359,10 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
+
+    btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
+    btnVoltar.place(x=30, y=500)
+
     window_album.place(x=0, y=0)
 
 ## - - - - - - - - - - CONTAINER ADD ALBUMS - - - - - - - - - - ##
@@ -549,6 +553,8 @@ def panel_admin():
     btnApagarReviews = Button(painel_adm, text="Apague um review", width=25)
     btnApagarReviews.place(x=520, y=525)
 
+    btnFiltrar = Button(painel_adm, text="Filtrar álbuns", width=25, command=panel_filtrar_albuns)
+    btnFiltrar.place(x=300, y=565)
     # info user
     name= retrieve_current_user_data()
     username= retrieve_current_user_data()

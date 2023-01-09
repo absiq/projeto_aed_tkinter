@@ -156,8 +156,8 @@ def panel_register():
 
     btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: [submit_register(name_register.get(), email_register.get(), username_register.get(), password_register.get())])
     btn_submit_register.place(x=440, y=510)
-    # btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
-    # btn_voltar.place(x=440, y=575)
+    btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
+    btn_voltar.place(x=440, y=575)
 
 ## - - - - - - - - - - CONTAINER LOGIN - - - - - - - - - - ##
 
@@ -244,8 +244,12 @@ def panel_account():
         btn_admin = Button(window_account, text="Painel do administrador", width=20, command=panel_admin)
         btn_admin.place(x=800, y=90)
         btn_logout.place(x=800, y=140)
+        btn_voltar = Button(window_account, text="Voltar", width=20, command=panel_homepage)
+        btn_voltar.place(x=800, y=190)
     else:
         btn_logout.place(x=800, y=90)
+        btn_voltar = Button(window_account, text="Voltar", width=20, command=panel_homepage)
+        btn_voltar.place(x=800, y=140)
 
     window_account.place(x=0, y=0)
 
@@ -275,6 +279,8 @@ def panel_delete_album():
     del_artista.place(x=60, y=200)
 
     btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
+    btn_voltar = Button(panel_delete_album, text="Voltar", width=20, command=panel_admin)
+    btn_voltar.place(x=90, y=350)
     btn_delete.place(x=90, y=300)
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
@@ -446,6 +452,9 @@ def panel_adicionar_albuns():
                 command= lambda: inserir_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
     btnInserir.place(x=400, y= 350)
 
+    btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)
+    btn_voltar.place(x=800, y=140)
+
     window_adicionar_album.place(x=0, y=0)
 
 ## - - - - - - - - - - CONTAINER FILTER ALBUMS - - - - - - - - - ##
@@ -513,6 +522,9 @@ def panel_filtrar_albuns():
     num_albuns = StringVar()
     txt_num_albuns = Entry(window_consultar_album, width=10, textvariable = num_albuns)
     txt_num_albuns.place(x=100, y=360)
+
+    btn_voltar = Button(window_consultar_album, text="Voltar", width=20, command=panel_admin)
+    btn_voltar.place(x=800, y=140)
 
     window_consultar_album.place(x=0,y=0)
 

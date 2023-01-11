@@ -438,39 +438,94 @@ imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
 btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#d3d3d3", command=panel_notific)
 btnGuardarN.place (x = 930 , y = 9)
 
-#define area de destaques
-frameDestaques = LabelFrame (home_page, text = "   Álbuns em destaque:   ", width= 800, height=450, bg="#d3d3d3", font="Arial, 10", fg= "black")
-frameDestaques.place (x=140, y=80)
+# mostra os generos musicias suportados pela app
+"""
+frameGeneros = LabelFrame (home_page, text = "   Géneros musicais:   ", width= 250, height=110, bg="#d3d3d3", font="Arial, 10", fg= "black")
+frameGeneros.place (x=110, y=80)
+"""
 
-#define os 3 albuns destacados cada um levando a pagina do album quando clicado
+btnPop = Button(home_page, text="POP", width=15, height=2, bg="black", fg="white")
+btnPop.place(x=70, y=90)
+
+btnHiphop = Button(home_page, text="HIP-HOP", width=15, height=2, bg="black", fg="white")
+btnHiphop.place(x=200, y=90)
+
+btnKpop = Button(home_page, text="K-POP", width=15, height=2, bg="black", fg="white")
+btnKpop.place(x=330, y=90)
+
+btnRock = Button(home_page, text="ROCK", width=15, height=2, bg="black", fg="white")
+btnRock.place(x=460, y=90)
+
+btnReb = Button(home_page, text="R&B", width=15, height=2, bg="black", fg="white")
+btnReb.place(x=590, y=90)
+
+btnCountry = Button(home_page, text="COUNTRY", width=15, height=2, bg="black", fg="white")
+btnCountry.place(x=720, y=90)
+
+btnOutros = Button(home_page, text="OUTROS", width=15, height=2, bg="black", fg="white")
+btnOutros.place(x=850, y=90)
+
+
+#define Álbuns mais ouvidos cada botao levando a pagina do album
+maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais ouvidos do momento", borderwidth=0, width= 1000, height=250, bg="#d3d3d3", font="Arial, 10", fg= "black", relief="flat")
+maisOuvidosTxt.place (x=70, y=177)
+
 imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
 btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#d3d3d3")
-btnGuardarA1.place (x = 160 , y = 135)
-tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles \n POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA1.place(x=150, y=300)
+btnGuardarA1.place (x = 70 , y = 212)
+tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+tituloA1.place(x=62, y=377)
 
 imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
 btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#d3d3d3")   
-btnGuardarA2.place (x = 360 , y = 135)
-tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller \n HIP-HOP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA2.place(x=350, y=300)
+btnGuardarA2.place (x = 250 , y = 212)
+tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+tituloA2.place(x=242, y=377)
 
 imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
 btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#d3d3d3")   #174px album +nome
-btnGuardarA3.place (x = 560 , y = 135)
-tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK \n K-POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA3.place(x=550, y=300)
+btnGuardarA3.place (x = 430 , y = 212)   #180px distancia de um album pra outro
+tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+tituloA3.place(x=422, y=377)
+
+imgAlbum4 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarA4 = Button (home_page, width = 150, height = 150, image = imgAlbum4, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarA4.place (x = 610 , y = 212)   #180px distancia de um album pra outro
+tituloA4 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+tituloA4.place(x=602, y=377)
+
+imgAlbum5 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarA5 = Button (home_page, width = 150, height = 150, image = imgAlbum5, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarA5.place (x = 790 , y = 212)   #180px distancia de um album pra outro
+tituloA5 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
+tituloA5.place(x=782, y=383)
 
 
-# mostra os generos musicias suportados pela app
-frameGeneros = LabelFrame (home_page, text = "   Géneros musicais:   ", width= 250, height=110, bg="#d3d3d3", font="Arial, 10", fg= "black")
-frameGeneros.place (x=140, y=470)
+#define Álbuns mais favoritados da app
+favoritosTxt = LabelFrame(home_page, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#d3d3d3", font="Arial, 10", fg= "black", relief="flat")
+favoritosTxt.place (x=70, y=463)
 
-generos = Label(home_page, text="POP \n HIP-HOP \n K-POP", bg="#d3d3d3", fg="black")
-generos.place (x=160, y=500)
+imgFav1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
+btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#d3d3d3")
+btnGuardarF1.place (x = 70 , y = 498)
 
-generos2 = Label(home_page, text="ROCK \n R&B \n COUNTRY", bg="#d3d3d3", fg="black")
-generos2.place (x=300, y=500)
+imgFav2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
+btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#d3d3d3")   
+btnGuardarF2.place (x = 250 , y = 498)
+
+
+imgFav3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarF3.place (x = 430 , y = 498)   
+
+imgFav4 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarF4.place (x = 610 , y = 498)  
+
+
+imgFav5 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarF5.place (x = 790 , y = 498)   
 
 
 currentpanel = home_page

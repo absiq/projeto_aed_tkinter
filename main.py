@@ -364,21 +364,20 @@ def panel_homepage():
     frameDestaques.place (x=140, y=80)
 
     #define os 3 albuns destacados cada um levando a pagina do album quando clicado
-                # !!!    falta colocar o comando pra ir pra pag de cada album    !!!
-    imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 200, width= 200)
-    btnGuardarA1 = Button (home_page, width = 200, height = 200, image = imgAlbum1, border=0, bg="#d3d3d3")
+    imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
+    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#d3d3d3")
     btnGuardarA1.place (x = 190 , y = 135)
     tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles \n POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
     tituloA1.place(x=210, y=345)
 
-    imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 200, width= 200)
-    btnGuardarA2 = Button (home_page, width = 200, height = 200, image = imgAlbum2, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
+    imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
+    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
     btnGuardarA2.place (x = 430 , y = 135)
     tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller \n HIP-HOP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
     tituloA2.place(x=450, y=345)
 
-    imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 200, width= 200)
-    btnGuardarA3 = Button (home_page, width = 200, height = 200, image = imgAlbum3, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
+    imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+    btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
     btnGuardarA3.place (x = 670 , y = 135)
     tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK \n K-POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
     tituloA3.place(x=690, y=345)
@@ -438,28 +437,27 @@ btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, bo
 btnGuardarN.place (x = 930 , y = 9)
 
 #define area de destaques
-frameDestaques = LabelFrame (home_page, text = "   Álbuns em destaque:   ", width= 800, height=350, bg="#d3d3d3", font="Arial, 10", fg= "black")
+frameDestaques = LabelFrame (home_page, text = "   Álbuns em destaque:   ", width= 800, height=450, bg="#d3d3d3", font="Arial, 10", fg= "black")
 frameDestaques.place (x=140, y=80)
 
 #define os 3 albuns destacados cada um levando a pagina do album quando clicado
-            # !!!    falta colocar o comando pra ir pra pag de cada album    !!!
-imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 200, width= 200)
-btnGuardarA1 = Button (home_page, width = 200, height = 200, image = imgAlbum1, border=0, bg="#d3d3d3")
-btnGuardarA1.place (x = 190 , y = 135)
+imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
+btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#d3d3d3")
+btnGuardarA1.place (x = 160 , y = 135)
 tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles \n POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA1.place(x=210, y=345)
+tituloA1.place(x=150, y=300)
 
-imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 200, width= 200)
-btnGuardarA2 = Button (home_page, width = 200, height = 200, image = imgAlbum2, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
-btnGuardarA2.place (x = 430 , y = 135)
+imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
+btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#d3d3d3")   
+btnGuardarA2.place (x = 360 , y = 135)
 tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller \n HIP-HOP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA2.place(x=450, y=345)
+tituloA2.place(x=350, y=300)
 
-imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 200, width= 200)
-btnGuardarA3 = Button (home_page, width = 200, height = 200, image = imgAlbum3, border=0, bg="#d3d3d3")   #30px de distancia entre cada album
-btnGuardarA3.place (x = 670 , y = 135)
+imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
+btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#d3d3d3")   #174px album +nome
+btnGuardarA3.place (x = 560 , y = 135)
 tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK \n K-POP", width=24, height=3, bd=0, bg="#d3d3d3", fg="black")
-tituloA3.place(x=690, y=345)
+tituloA3.place(x=550, y=300)
 
 
 # mostra os generos musicias suportados pela app

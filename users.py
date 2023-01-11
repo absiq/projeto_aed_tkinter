@@ -115,8 +115,6 @@ def verify_login(ficheiro, username, password):
     for i in dados:
         line_split = i.split(',')
         if username == line_split[3]: # verificação de username
-            print(password)
-            print(line_split[4])
             password = password.replace('\n', '')
             if password == line_split[4]: # verificação de senha
                 atualiza_sessao(i)
@@ -154,11 +152,12 @@ def retrieve_current_user_data():
     f = open(ficheiro, 'r')
     campos = f.readline()
     campos_split = campos.split(',')
+    user_id = campos_split[0]
     name = campos_split[1]
     username = campos_split[3]
     icon = campos_split[5]
     bio = campos_split[6].replace('\n', '')
-    return name, username, icon, bio
+    return name, username, icon, bio, user_id
 
 def deletar_album(del_album, del_artista):
     """
@@ -184,4 +183,41 @@ def deletar_album(del_album, del_artista):
         else: 
             i += 1
 
-  
+def edit_user_data(new_name, new_username, new_bio):
+    '''
+    edita os dados do usuário logado
+    '''
+    name, username, icon, bio, user_id = retrieve_current_user_data()
+    print(user_id)
+    ficheiro = '.\\databases\\users.csv'
+    f = open(ficheiro, 'r')
+    dados = f.readlines()
+    i = 0
+    print('inicio do for')
+    for line in dados:
+        line_split = line.split(',')
+        line_id = line_split[0]
+        past_name = line_split[1]
+        past_email = line_split[2]
+        past_username = line_split[3]
+        past_password = line_split[4]
+        past_icon = line_split[5]
+        past_bio = line_split[6].replace('\n', '')
+        new_data = [line_id, past_name, past_email, past_username, past_password, past_icon, past_bio]
+        if line_id == user_id:
+            print(line_id)
+            if new_name != '':
+                new_data[1] = new_name
+            if new_username != '':
+                new_data[3] = new_username
+            if new_bio != '':
+                print(new_bio)
+                new_data[6] = new_bio
+            list_to_string = ','.join(map(str, new_data))
+            line = list_to_string + '\n'
+            dados[i] = line
+            # atualizando o arquivo com os novos dados      
+            arquivo = open(ficheiro, 'w')
+            arquivo.writelines(dados)
+        else:
+            i += 1

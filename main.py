@@ -62,6 +62,30 @@ def five_stars():
     stars_btn4['file'] = "imgs\star-icon-full.png"
     stars_btn5['file'] = "imgs\star-icon-full.png"
 
+## - - - - - - - - - - PANEL NOTIFICATIONS - - - - - - - - - - ##
+
+panelNot = False
+
+def close_notifications(panel):
+    global panelNot
+    panelNot = False
+    panel.place_forget()
+
+def panel_notifications(event):
+    global panelNot
+    global currentpanel
+    print(panelNot)
+    if not panelNot:
+        notifications = PanedWindow(window, width=300, height=200)
+        notifications.place(x=730, y=60)
+        currentpanel = notifications
+        panelNot = True
+        label_notifications = Label(notifications, text="Ainda não há notificações")
+        label_notifications.place(x=80, y=40)
+
+        btnLeave = Button(notifications, text="FECHAR", width=10, command = lambda: close_notifications(notifications))
+        btnLeave.place(x=120, y=170)
+
 ## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
 
 def panel_edit_profile():
@@ -577,8 +601,17 @@ def panel_admin():
     btnApagarReviews = Button(painel_adm, text="Apague um review", width=25)
     btnApagarReviews.place(x=520, y=525)
 
+    # botão filtrar álbuns
     btnFiltrar = Button(painel_adm, text="Filtrar álbuns", width=25, command=panel_filtrar_albuns)
     btnFiltrar.place(x=300, y=565)
+
+    # botão gerenciar categorias
+    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25)
+    btnGerenciarCategorias.place(x=520, y=565)
+
+    # botão gerenciar notificações
+    btnNotificações = Button(painel_adm, text="Gerenciar notificações", width=25)
+    btnNotificações.place(x=300, y=605)
     # info user
     name= retrieve_current_user_data()
     username= retrieve_current_user_data()
@@ -655,8 +688,10 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#d3d3d3", command=panel_notific)
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#d3d3d3")
     btnGuardarN.place (x = 930 , y = 9)
+
+    btnGuardarN.bind('<Enter>', panel_notifications)
 
     #define area de destaques
     frameDestaques = LabelFrame (home_page, text = "   Álbuns em destaque:   ", width= 800, height=350, bg="#d3d3d3", font="Arial, 10", fg= "black")
@@ -732,8 +767,10 @@ btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#d3d3d3", command=panel_notific)
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#d3d3d3")
 btnGuardarN.place (x = 930 , y = 9)
+
+btnGuardarN.bind('<Motion>', panel_notifications)
 
 #define area de destaques
 frameDestaques = LabelFrame (home_page, text = "   Álbuns em destaque:   ", width= 800, height=350, bg="#d3d3d3", font="Arial, 10", fg= "black")
@@ -769,7 +806,7 @@ generos.place (x=160, y=500)
 
 generos2 = Label(home_page, text="ROCK \n R&B \n COUNTRY", bg="#d3d3d3", fg="black")
 generos2.place (x=300, y=500)
-
+global currentpanel
 currentpanel = home_page
 
 window.mainloop()

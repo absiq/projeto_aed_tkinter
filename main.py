@@ -21,6 +21,13 @@ def generate_page_album(album_id):
     img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description)
 
+def check_login():
+    user_existence = retrieve_current_user_data()
+    if user_existence == []:
+        panel_login()
+    else:
+        panel_account()
+
 #### MISC FUNCTIONS
 
 def like():
@@ -651,7 +658,7 @@ def panel_homepage():
 
     #define icone de user no botao para ir p/ página do usuário
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=check_login)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações

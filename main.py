@@ -21,12 +21,17 @@ def generate_page_album(album_id):
     img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description)
 
-def check_login():
-    user_existence = retrieve_current_user_data()
-    if user_existence == []:
-        panel_login()
-    else:
+def login_or_account():
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\currentsession.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r')
+    campos = f.readlines()
+    print(campos)
+    if campos != []:
         panel_account()
+    else:
+        panel_login()
 
 #### MISC FUNCTIONS
 
@@ -57,6 +62,30 @@ def five_stars():
     stars_btn3['file'] = "imgs\star-icon-full.png"
     stars_btn4['file'] = "imgs\star-icon-full.png"
     stars_btn5['file'] = "imgs\star-icon-full.png"
+
+## - - - - - - - - - - PANEL NOTIFICATIONS - - - - - - - - - - ##
+
+panelNot = False
+
+def close_notifications(panel):
+    global panelNot
+    panelNot = False
+    panel.place_forget()
+
+def panel_notifications(event):
+    global panelNot
+    global currentpanel
+    print(panelNot)
+    if not panelNot:
+        notifications = PanedWindow(window, width=300, height=200)
+        notifications.place(x=730, y=60)
+        currentpanel = notifications
+        panelNot = True
+        label_notifications = Label(notifications, text="Ainda não há notificações")
+        label_notifications.place(x=80, y=40)
+
+        btnLeave = Button(notifications, text="FECHAR", width=10, command = lambda: close_notifications(notifications))
+        btnLeave.place(x=120, y=170)
 
 ## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
 
@@ -288,7 +317,7 @@ def panel_delete_album():
 
     btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
     btn_voltar = Button(panel_delete_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=90, y=350)
+    btn_voltar.place(x=90, y=30)
     btn_delete.place(x=90, y=300)
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
@@ -573,8 +602,17 @@ def panel_admin():
     btnApagarReviews = Button(painel_adm, text="Apague um review", width=25)
     btnApagarReviews.place(x=520, y=525)
 
+    # botão filtrar álbuns
     btnFiltrar = Button(painel_adm, text="Filtrar álbuns", width=25, command=panel_filtrar_albuns)
     btnFiltrar.place(x=300, y=565)
+
+    # botão gerenciar categorias
+    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25)
+    btnGerenciarCategorias.place(x=520, y=565)
+
+    # botão gerenciar notificações
+    btnNotificações = Button(painel_adm, text="Gerenciar notificações", width=25)
+    btnNotificações.place(x=300, y=605)
     # info user
     name= retrieve_current_user_data()
     username= retrieve_current_user_data()
@@ -658,7 +696,7 @@ def panel_homepage():
 
     #define icone de user no botao para ir p/ página do usuário
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=check_login)
+    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -794,6 +832,7 @@ btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
 btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
 btnGuardarN.place (x = 930 , y = 9)
 

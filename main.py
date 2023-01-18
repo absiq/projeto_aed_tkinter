@@ -3,6 +3,7 @@ from tkinter import ttk
 import os
 from users import *
 from pop import *
+from notifications import *
 
 ## GUI implementation
 
@@ -634,16 +635,19 @@ def panel_admin():
 
 ## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
 
+panelNot = False
+
 def panel_notific():
     global currentpanel
-    currentpanel.pack_forget()
+    global panelNot
 
-    panel_notific = PanedWindow(window, width=1080, height=720)
-    currentpanel = panel_notific
-    panel_notific.configure(bg="#121212")
+    if not panelNot:
+        panel_notific = PanedWindow(window, width=1080, height=720)
+        currentpanel = panel_notific
+        panel_notific.configure(bg = "#d3d3d3")
 
-    txt = Label(panel_notific, text="Isto é uma notificacao", width=24, height=3, bd=0, bg="#121212", fg="white")
-    txt.place(x=420, y=345) 
+        txt = Label(panel_notific, text="Ainda não há notificações")
+        txt.place(x=420, y=345) 
 
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 

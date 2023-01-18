@@ -91,7 +91,7 @@ def submit_register(nome, email, username, password):
         count_id = cria_id_user()
         default_bio = 'Adicione um texto na tua bio ao editar o perfil'
         default_profile_pic = 'avatarnone.png'
-        register = str(count_id) + ',' + line + ',' + default_profile_pic + default_bio + '\n'
+        register = str(count_id) + ',' + line + ',' + default_profile_pic + ',' + default_bio + '\n'
         f.write(register)
         print('Dado inserido com sucesso')
 

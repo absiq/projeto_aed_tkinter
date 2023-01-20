@@ -201,7 +201,17 @@ def panel_login():
 
     btn_voltar = Button(window_login, text="Voltar", width=34, command=panel_homepage)
     btn_voltar.place(x=440, y=500)
-
+    
+    global imgBolinhas1
+    imgBolinhas1 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg1 = Label(window_login, image=imgBolinhas1, width=300, height=600, bg="#121212")
+    labelImg1.place(x=6, y=50)
+    
+    global imgBolinhas2
+    imgBolinhas2 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg2 = Label(window_login, image=imgBolinhas2, width=300, height=600, bg="#121212")
+    labelImg2.place(x=770, y=50)
+    
     window_login.place(x=0, y=0)
 
 ## - - - - - - - - - - CONTAINER ACCOUNT - - - - - - - - - - ##
@@ -239,6 +249,11 @@ def panel_account():
     btn_edit_profile.place(x=800, y=40)
 
     btn_logout = Button(window_account, text="Fazer logout", width=20, command= lambda: logout_and_change_page(panel_homepage))
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_account, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
 
     if username == 'admin':
         btn_admin = Button(window_account, text="Painel do administrador", width=20, command=panel_admin)
@@ -589,7 +604,7 @@ def panel_admin():
 
 ## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
 
-def panel_notific():
+def panel_notifications():
     global currentpanel
     currentpanel.pack_forget()
 
@@ -611,7 +626,7 @@ def panel_search():
     panel_search.configure(bg="#121212")
 
 
-    txt = Label(panel_notific, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
+    txt = Label(panel_notifications, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
     txt.place(x=420, y=345)
 
 
@@ -652,8 +667,10 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
     btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
 
     # mostra os generos musicias suportados pela app
     """
@@ -783,8 +800,9 @@ btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
 btnGuardarN.place (x = 930 , y = 9)
+btnGuardarN.bind('<Enter>', panel_notifications)
 
 # mostra os generos musicias suportados pela app
 """

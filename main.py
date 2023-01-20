@@ -789,6 +789,21 @@ def panel_admin():
 
     painel_adm.mainloop()
 
+
+
+## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
+
+def panel_notifications():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_notific = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_notific
+    panel_notific.configure(bg="#121212")
+
+    txt = Label(panel_notific, text="Isto é uma notificacao", width=24, height=3, bd=0, bg="#121212", fg="white")
+    txt.place(x=420, y=345) 
+
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 
 def panel_search():
@@ -841,9 +856,10 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
     btnGuardarN.place (x = 930 , y = 9)
     btnGuardarN.bind('<Enter>', panel_notifications)
+
 
     # mostra os generos musicias suportados pela app
     """
@@ -973,8 +989,7 @@ btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
 btnGuardarN.place (x = 930 , y = 9)
 btnGuardarN.bind('<Enter>', panel_notifications)
 

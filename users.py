@@ -178,7 +178,7 @@ def deletar_album(del_album, del_artista):
     """
     album = del_album.get()
     artista = del_artista.get()   
-    file = "albums.txt"
+    file = "pop.txt"
     f = open(file, 'r')
     lines = f.readlines()
     f.close()

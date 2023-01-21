@@ -10,7 +10,7 @@ def panel_genre(genre):
 
     generoAPesquisar = genre
     
-    f = open("pop.txt", "r", encoding="utf-8")
+    f = open("albums.txt", "r", encoding="utf-8")
     arquivo = f.readlines()
     f.close()
     for linha in arquivo:

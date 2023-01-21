@@ -16,9 +16,9 @@ def data_exists_in_utilizadores(ficheiro, linha):
     f = open(ficheiro, 'r')
     dados = f.readlines()
     f.close()
-    linha_split = linha.split(',')
+    linha_split = linha.split(';')
     for i in dados:
-        i_split = i.split(',')
+        i_split = i.split(';')
         if linha_split[1] == i_split[1]: # verificação de email
             print('verificação de email não passou')
             return True
@@ -62,7 +62,7 @@ def cria_id_user():
     f = open(ficheiro, 'r')
     dados = f.readlines()
     for i in dados:
-        line_split = i.split(',')
+        line_split = i.split(';')
         if int(line_split[0]) > last_id:
             last_id = int(line_split[0])
     count_id = last_id + 1
@@ -91,7 +91,7 @@ def submit_register(nome, email, username, password):
         count_id = cria_id_user()
         default_bio = 'Adicione um texto na tua bio ao editar o perfil'
         default_profile_pic = 'avatarnone.png'
-        register = str(count_id) + ',' + line + ',' + default_profile_pic + ',' + default_bio + '\n'
+        register = str(count_id) + ';' + line + ';' + default_profile_pic + ';' + default_bio + '\n'
         f.write(register)
         print('Dado inserido com sucesso')
 
@@ -113,7 +113,7 @@ def verify_login(ficheiro, username, password):
     f = open(ficheiro, 'r')
     dados = f.readlines()
     for i in dados:
-        line_split = i.split(',')
+        line_split = i.split(';')
         if username == line_split[3]: # verificação de username
             password = password.replace('\n', '')
             if password == line_split[4]: # verificação de senha
@@ -151,13 +151,26 @@ def retrieve_current_user_data():
     verify_files(pasta, ficheiro)
     f = open(ficheiro, 'r')
     campos = f.readline()
-    campos_split = campos.split(',')
+    campos_split = campos.split(';')
     user_id = campos_split[0]
     name = campos_split[1]
     username = campos_split[3]
     icon = campos_split[5]
     bio = campos_split[6].replace('\n', '')
     return name, username, icon, bio, user_id
+
+def retrieve_current_user_id():
+    '''
+    busca apenas o id do usuário logado
+    '''
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\currentsession.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r')
+    campos = f.readline()
+    campos_split = campos.split(';')
+    user_id = campos_split[0]
+    return user_id
 
 def deletar_album(del_album, del_artista):
     """
@@ -195,7 +208,7 @@ def edit_user_data(new_name, new_username, new_bio):
     i = 0
     print('inicio do for')
     for line in dados:
-        line_split = line.split(',')
+        line_split = line.split(';')
         line_id = line_split[0]
         past_name = line_split[1]
         past_email = line_split[2]
@@ -214,6 +227,7 @@ def edit_user_data(new_name, new_username, new_bio):
                 print(new_bio)
                 new_data[6] = new_bio
             list_to_string = ','.join(map(str, new_data))
+            list_to_string = list_to_string.replace(',', ';')
             line = list_to_string + '\n'
             dados[i] = line
             # atualizando o arquivo com os novos dados      

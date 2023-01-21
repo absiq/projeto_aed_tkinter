@@ -1,13 +1,13 @@
 from tkinter import *
 from tkinter import messagebox
 
-ficheiro= "albums.txt"
-musicas = "musicas.txt"
+ficheiro= "databases/albums.txt"
+musicas = "databases/musicas.txt"
 
 def cria_id_album():
     last_id = 0
     count_id = 0
-    ficheiro = 'albums.txt'
+    ficheiro = 'databases/albums.txt'
     f = open(ficheiro, 'r')
     dados = f.readlines()
     for i in dados:
@@ -43,7 +43,7 @@ def album_contents(album_id):
             
             return img, album_name, album_artist, album_info, album_score, album_description
 
-ficheiroFav= "favoritos.txt"
+ficheiroFav= "databases/favoritos.txt"
 
 def likeList():
     favoritos = open(ficheiroFav, "a", encoding="utf-8")
@@ -51,7 +51,7 @@ def likeList():
     favoritos.write(infoAlb)
     favoritos.close()
 
-ficheiroReviews = "reviews.txt"
+ficheiroReviews = "databases/reviews.txt"
 
 def reviewsList(numberStars):
     reviews = open(ficheiroReviews, "a", encoding="utf-8")

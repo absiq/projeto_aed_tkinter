@@ -77,7 +77,7 @@ def submit_register(nome, email, username, password):
     pasta = '.\\databases'
     ficheiro = '.\\databases\\users.csv'
     verify_files(pasta, ficheiro)
-    line = '{0},{1},{2},{3}' .format(nome, email, username, password)
+    line = '{0};{1};{2};{3}' .format(nome, email, username, password)
     if data_exists_in_utilizadores(ficheiro, line) == True:
         print('Os dados já existem no banco de dados')
     elif valida_campo_sem_virgula(nome, email, username, password) == False:
@@ -206,7 +206,6 @@ def edit_user_data(new_name, new_username, new_bio):
     f = open(ficheiro, 'r')
     dados = f.readlines()
     i = 0
-    print('inicio do for')
     for line in dados:
         line_split = line.split(';')
         line_id = line_split[0]
@@ -235,3 +234,18 @@ def edit_user_data(new_name, new_username, new_bio):
             arquivo.writelines(dados)
         else:
             i += 1
+
+def get_user_id(username):
+    '''
+    retorna o id do usuário baseado no username
+    '''
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\users.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r')
+    campos = f.readlines()
+    for line in campos:
+        data = line.split(';')
+        if data[3] == username:
+            user_id = data[0]
+            return user_id

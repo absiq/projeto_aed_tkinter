@@ -94,14 +94,22 @@ def panel_notifications(event):
         new_y = 5
         description_list = []
         for i in notifications_data:
-            campos = i.split(';')
-            title = ' ' + campos[0].replace("'", '') + ' '
-            description = campos[1].replace("'", '')
-            description_list.insert(notification_counter, description)
-            frameNotification = LabelFrame(notifications, width=280, height=100, text=title)
-            frameNotification.place(x=const_x, y=new_y)
-            new_y += 110
-            notification_counter += 1
+            if i == '\n':
+                notification_counter += 0
+            else:
+                campos = i.split(';')
+                title = ' ' + campos[0].replace("'", '') + ' '
+                description = campos[1].replace("'", '')
+                print(title)
+                print(description)
+                if title == " 0 ":
+                    notification_counter = notification_counter
+                else:
+                    description_list.insert(notification_counter, description)
+                    frameNotification = LabelFrame(notifications, width=280, height=100, text=title)
+                    frameNotification.place(x=const_x, y=new_y)
+                    new_y += 110
+                    notification_counter += 1
 
         if notification_counter == 1:
             description_0 = Label(notifications, text=description_list[0])
@@ -127,7 +135,7 @@ def panel_notifications(event):
             description_2.place(x=8, y=245)
             description_3 = Label(notifications, text=description_list[3])
             description_3.place(x=8, y=355)
-        elif notification_counter == 0:
+        elif notification_counter <= 0:
             label_notifications = Label(notifications, text="Ainda não há notificações")
             label_notifications.place(x=80, y=40)
 
@@ -137,6 +145,10 @@ def panel_notifications(event):
 
 
 ## - - - - - - - - - - CONTAINER GERIR NOTIFICAÇÕES - - - - - - - - - - ##
+
+def find_user_and_insert_notification(username, title, text):
+    user_id = get_user_id(username)
+    create_notification(user_id, title, text)
 
 def panel_gerir_notificacoes():
     global currentpanel
@@ -156,19 +168,26 @@ def panel_gerir_notificacoes():
     entryUsername = Entry(window_manage_notifs, width=25, textvariable=username)
     entryUsername.place(x=400, y=90) 
 
+    label_title = Label(window_manage_notifs, text="Insira o título da notificação:", bg="#121212", fg="white")
+    label_title.place(x=400, y=140)
+
     label_text = Label(window_manage_notifs, text="Insira o texto da notificação:", bg="#121212", fg="white")
-    label_text.place(x=400, y=140)
+    label_text.place(x=400, y=240)
+
+    notifTitle = StringVar()
+    entryTitle = Entry(window_manage_notifs, width=20, textvariable=notifTitle)
+    entryTitle.place(x=400, y=190)
 
     notifText = StringVar()
     entryText = Entry(window_manage_notifs, width=50, textvariable=notifText)
-    entryText.place(x=400, y=190)
+    entryText.place(x=400, y=290)
 
-    btn_send = Button(window_manage_notifs, text="Enviar", width=34)
-    btn_send.place(x=440, y=250)
+    btn_send = Button(window_manage_notifs, text="Enviar", width=34, command=lambda:find_user_and_insert_notification(username.get(), notifTitle.get(), notifText.get()))
+    btn_send.place(x=440, y=350)
 
     window_manage_notifs.place(x=0, y=0)
 
-## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
+## - - - - - - - - - - CONTAINER EDIT - - - - - - - - - - ##
 
 def panel_edit_profile():
     global currentpanel
@@ -227,6 +246,14 @@ def panel_edit_profile():
 
     window_edit_profile.place(x=0, y=0)
 
+
+# - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - #
+
+def create_register(nome, email, username, password):
+    submit_register(nome, email, username, password)
+    user_id = get_user_id(username)
+    insert_new_user_into_notification_database(int(user_id))
+
 def panel_register():
     global currentpanel
     currentpanel.pack_forget()
@@ -272,7 +299,7 @@ def panel_register():
     label_password.place(x=440, y=430)
     entry_password.place(x=440, y=455)
 
-    btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: [submit_register(name_register.get(), email_register.get(), username_register.get(), password_register.get())])
+    btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: create_register(name_register.get(), email_register.get(), username_register.get(), password_register.get()))
     btn_submit_register.place(x=440, y=510)
     btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
     btn_voltar.place(x=440, y=575)

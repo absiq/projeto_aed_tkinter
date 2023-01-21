@@ -1,13 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
 
-ficheiro= "albums.txt"
-musicas = "musicas.txt"
+ficheiro= "pop.txt"
 
 def cria_id_album():
     last_id = 0
     count_id = 0
-    ficheiro = 'albums.txt'
+    ficheiro = 'pop.txt'
     f = open(ficheiro, 'r')
     dados = f.readlines()
     for i in dados:
@@ -23,6 +22,9 @@ def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Desc
     linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + "\n" 
     filePop.write(linha)
     filePop.close()
+    
+# colocar ID do álbum
+# músicas
 
 def album_contents(album_id):
 
@@ -30,8 +32,10 @@ def album_contents(album_id):
     linhas = f.readlines()
     f.close()
     for linha in linhas:
-        global campos
         campos = linha.split(";")
+        # campo = str(campos)
+        # songs = campo.split(",")
+        # print(songs)
         if campos[0] == str(album_id):
             print(album_id)
             img = campos[1]
@@ -40,39 +44,10 @@ def album_contents(album_id):
             album_info = campos[4] + ", " + campos[5] + ", " + campos[6] + ", " + campos[7]
             album_score = campos[8]
             album_description = campos[9]
-            
+            # for songs in linha:
+              #  album_songs = songs[0:]
             return img, album_name, album_artist, album_info, album_score, album_description
-
-ficheiroFav= "favoritos.txt"
-
-def likeList():
-    favoritos = open(ficheiroFav, "a", encoding="utf-8")
-    infoAlb = campos[0] + ";" + campos[1] + ";" + campos[2] + ";" + campos[3] + ";" + campos[4] + ";" + campos[5] + ";" + campos[6] + ";" + campos[7] + ";" + campos[8] + ";" + campos[9] 
-    favoritos.write(infoAlb)
-    favoritos.close()
-
-ficheiroReviews = "reviews.txt"
-
-def reviewsList(numberStars):
-    reviews = open(ficheiroReviews, "a", encoding="utf-8")
-    if numberStars == 1:
-        writeFile = campos[0] + ";" + "one star" + "\n"
-        reviews.write(writeFile)
-    elif numberStars == 2:
-        writeFile = campos[0] + ";" + "two stars" + "\n"
-        reviews.write(writeFile)
-    elif numberStars == 3:
-        writeFile = campos[0] + ";" + "three stars" + "\n"
-        reviews.write(writeFile)
-    elif numberStars == 4:
-        writeFile = campos[0] + ";" + "four stars" + "\n"
-        reviews.write(writeFile)
-    elif numberStars == 5:
-        writeFile = campos[0] + ";" + "five stars" + "\n"
-        reviews.write(writeFile)
-    reviews.close()
             
-
 def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))
 

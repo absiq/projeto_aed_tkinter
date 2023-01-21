@@ -453,7 +453,7 @@ def panel_adicionar_albuns():
     lblNome = Label(window_adicionar_album, text = "Nome", bg="#121212", fg = "white")
     lblNome.place(x=70, y=70)
     nome = StringVar()
-    entryNome = Entry(window, width=25, textvariable=nome, bg="#121212", fg = "white")
+    entryNome = Entry(window_adicionar_album, width=25, textvariable=nome, bg="#121212", fg = "white")
     entryNome.place(x=120, y= 70) 
 
     lblArtista = Label(window_adicionar_album, text = "Artista", bg="#121212", fg = "white")

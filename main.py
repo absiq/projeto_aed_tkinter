@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import os
 from users import *
-from infoalbums import *
+from pop import *
 from notifications import *
 from favoritos import *
 
@@ -456,16 +456,16 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     window_album.configure(bg = "#121212")
     currentpanel = window_album
     
-    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
+    # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
 
     name = album_name
-    Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 70))
+    Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 80))
     Label_name.place(x=242,y=60)
 
     artist = album_artist
@@ -481,7 +481,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_score.place(x=170, y=220)
 
     description = album_description
-    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=750, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=450, justify="left")
     Label_description.place(x = 20, y = 270)
 
     global lboxMusicas
@@ -525,7 +525,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     like_label= Label(image=like_btn)
     button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
     button_like.place(x = 80, y = 220)
-    button_like.configure(bg="#121212")
+    button_like.configure(bg="#121212", fg="#121212")
 
 
     global stars_btn
@@ -533,7 +533,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label= Label(image=stars_btn)
     button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = one_star)
     button_stars.place(x = 250, y = 220)
-    button_stars.configure(bg="#121212")
+    button_stars.configure(bg="#121212", fg="#121212")
 
     global stars_btn2
     stars_btn2= PhotoImage(file="imgs\star-icon.png")
@@ -554,14 +554,12 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
-    button_stars4.configure(bg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
-    button_stars5.configure(bg="#121212")
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)

@@ -135,6 +135,39 @@ def panel_notifications(event):
         btnLeave = Button(notifications, text="FECHAR", width=10, command = lambda: close_notifications(notifications))
         btnLeave.place(x=120, y=450)
 
+
+## - - - - - - - - - - CONTAINER GERIR NOTIFICAÇÕES - - - - - - - - - - ##
+
+def panel_gerir_notificacoes():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_manage_notifs = PanedWindow(window, width=1080, height=720)
+    currentpanel = window_manage_notifs
+    window_manage_notifs.configure(bg="#121212")
+
+    btn_voltar = Button(window_manage_notifs, text="Voltar", width=20, command=panel_admin)
+    btn_voltar.place(x=30, y=40)
+
+    label_username = Label(window_manage_notifs, text="Escreva o username do usuário que deseja enviar uma notificação:", bg="#121212", fg="white")
+    label_username.place(x=400, y=40)
+
+    username = StringVar()
+    entryUsername = Entry(window_manage_notifs, width=25, textvariable=username)
+    entryUsername.place(x=400, y=90) 
+
+    label_text = Label(window_manage_notifs, text="Insira o texto da notificação:", bg="#121212", fg="white")
+    label_text.place(x=400, y=140)
+
+    notifText = StringVar()
+    entryText = Entry(window_manage_notifs, width=50, textvariable=notifText)
+    entryText.place(x=400, y=190)
+
+    btn_send = Button(window_manage_notifs, text="Enviar", width=34)
+    btn_send.place(x=440, y=250)
+
+    window_manage_notifs.place(x=0, y=0)
+
 ## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
 
 def panel_edit_profile():
@@ -659,7 +692,7 @@ def panel_admin():
     btnGerenciarCategorias.place(x=520, y=565)
 
     # botão gerenciar notificações
-    btnNotificações = Button(painel_adm, text="Gerenciar notificações", width=25)
+    btnNotificações = Button(painel_adm, text="Gerir notificações", width=25, command=panel_gerir_notificacoes)
     btnNotificações.place(x=300, y=605)
     # info user
     name= retrieve_current_user_data()

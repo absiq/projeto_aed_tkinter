@@ -69,6 +69,7 @@ panelNot = False
 
 def close_notifications(panel):
     global panelNot
+    clear_notifications()
     panelNot = False
     panel.place_forget()
 
@@ -77,15 +78,62 @@ def panel_notifications(event):
     global currentpanel
     print(panelNot)
     if not panelNot:
-        notifications = PanedWindow(window, width=300, height=200)
+        notifications = PanedWindow(window, width=300, height=500)
         notifications.place(x=730, y=60)
         currentpanel = notifications
         panelNot = True
-        label_notifications = Label(notifications, text="Ainda não há notificações")
-        label_notifications.place(x=80, y=40)
 
+        user_id = retrieve_current_user_id()
+        read_notifications(user_id)
+
+        filenotifications = '.\\databases\\currentnotifications.csv'
+        f = open(filenotifications, 'r')
+        notifications_data = f.readlines()
+        notification_counter = 0
+        const_x = 5
+        new_y = 5
+        description_list = []
+        for i in notifications_data:
+            campos = i.split(';')
+            title = ' ' + campos[0].replace("'", '') + ' '
+            description = campos[1].replace("'", '')
+            description_list.insert(notification_counter, description)
+            frameNotification = LabelFrame(notifications, width=280, height=100, text=title)
+            frameNotification.place(x=const_x, y=new_y)
+            new_y += 110
+            notification_counter += 1
+
+        if notification_counter == 1:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+        elif notification_counter == 2:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+        elif notification_counter == 3:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+            description_2 = Label(notifications, text=description_list[2])
+            description_2.place(x=8, y=245)
+        elif notification_counter == 4:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+            description_2 = Label(notifications, text=description_list[2])
+            description_2.place(x=8, y=245)
+            description_3 = Label(notifications, text=description_list[3])
+            description_3.place(x=8, y=355)
+        elif notification_counter == 0:
+            label_notifications = Label(notifications, text="Ainda não há notificações")
+            label_notifications.place(x=80, y=40)
+
+        clear_notifications()
         btnLeave = Button(notifications, text="FECHAR", width=10, command = lambda: close_notifications(notifications))
-        btnLeave.place(x=120, y=170)
+        btnLeave.place(x=120, y=450)
 
 ## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
 
@@ -631,24 +679,6 @@ def panel_admin():
 
     painel_adm.mainloop()
 
-
-
-## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
-
-panelNot = False
-
-def panel_notific():
-    global currentpanel
-    global panelNot
-
-    if not panelNot:
-        panel_notific = PanedWindow(window, width=1080, height=720)
-        currentpanel = panel_notific
-        panel_notific.configure(bg = "#d3d3d3")
-
-        txt = Label(panel_notific, text="Ainda não há notificações")
-        txt.place(x=420, y=345) 
-
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 
 def panel_search():
@@ -660,7 +690,7 @@ def panel_search():
     panel_search.configure(bg="#121212")
 
 
-    txt = Label(panel_notific, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
+    txt = Label(panel_search, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
     txt.place(x=420, y=345)
 
 
@@ -701,8 +731,9 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
     btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
 
     # mostra os generos musicias suportados pela app
     """
@@ -833,8 +864,9 @@ btnGuardarU.place (x = 975 , y = 9)
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
 
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
 btnGuardarN.place (x = 930 , y = 9)
+btnGuardarN.bind('<Enter>', panel_notifications)
 
 # mostra os generos musicias suportados pela app
 """

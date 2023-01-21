@@ -21,5 +21,19 @@ def read_notifications(user_id):
     for line in campos:
         line_split = line.split(';')
         if line_split[0] == str(user_id):
-            list_notifications = line_split[1]
-    print(list_notifications)
+            notifications = line_split[1]
+            list_notifications = notifications.split(',')
+            for line in list_notifications:
+                list_notif = line.split('-')
+                title = list_notif[0]
+                description = list_notif[1]
+                pasta = '.\\databases'
+                new_ficheiro = '.\\databases\\currentnotifications.csv'
+                verify_files(pasta, ficheiro)
+                file_notif = open(new_ficheiro, 'a')
+                file_notif.write(title + ';' + description + '\n')
+
+def clear_notifications():
+    ficheiro = '.\\databases\\currentnotifications.csv'
+    f = open(ficheiro, 'w')
+    f.close()

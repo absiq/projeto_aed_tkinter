@@ -333,21 +333,21 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
-    ctn_cover = Canvas(window, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
 
     name = album_name
-    Label_name = Label(window, text=name, fg="white", bg="#121212", font=('Arial', 70))
+    Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 70))
     Label_name.place(x=242,y=60)
 
     artist = album_artist
-    Label_artist = Label(window, text=artist, fg="white", bg="#121212")
+    Label_artist = Label(window_album, text=artist, fg="white", bg="#121212")
     Label_artist.place(x=250,y=170)
     
     info = album_info
-    Label_info = Label(window, text=info, fg="white", bg="#121212")
+    Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
     def changebg(score):
@@ -361,15 +361,15 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
             Label_score.config(bg="green")
 
     score = album_score
-    Label_score = Label(window, text=score, fg="white", bg="#121212", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="white", bg="#121212", font=('Arial', 20))
     Label_score.place(x=170, y=220)
     changebg(score)
 
     description = album_description
-    Label_description = Label(window, text=description, fg="white", bg="#121212", wraplength=750, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=750, justify="left")
     Label_description.place(x = 20, y = 270)
 
-    lboxMusicas=Listbox(window, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
+    lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
     lboxMusicas.place(x=20, y= 320)
     lboxMusicas.configure(foreground="white")
     musicas = "musicas.txt"
@@ -387,28 +387,28 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
     share_label= Label(image=share_btn)
-    button_share= Button(window, relief = "raised", image=share_btn, borderwidth=0)
+    button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
     button_share.configure(bg="#121212", fg="#121212")
 
     global like_btn
     like_btn= PhotoImage(file="imgs\icons\heart-icon.png")
     like_label= Label(image=like_btn)
-    button_like= Button(window, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList()))
+    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList()))
     button_like.place(x = 80, y = 220)
     button_like.configure(bg="#121212")
 
     global stars_btn
     stars_btn= PhotoImage(file="imgs\icons\star-icon.png")
     stars_label= Label(image=stars_btn)
-    button_stars= Button(window, image=stars_btn, borderwidth=0, command = lambda:(one_star(), reviewsList(1)))
+    button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = lambda:(one_star(), reviewsList(1)))
     button_stars.place(x = 250, y = 220)
     button_stars.configure(bg="#121212")
 
     global stars_btn2
     stars_btn2= PhotoImage(file="imgs\icons\star-icon.png")
     stars_label2= Label(image=stars_btn2)
-    button_stars2= Button(window, image=stars_btn2, borderwidth=0, command = lambda:(two_stars(), reviewsList(2)))
+    button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = lambda:(two_stars(), reviewsList(2)))
     button_stars2.place(x = 285, y = 220)
     button_stars2.configure(bg="#121212", fg="white")
 
@@ -416,7 +416,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global button_stars3
     stars_btn3= PhotoImage(file="imgs\icons\star-icon.png")
     stars_label3= Label(image=stars_btn3)
-    button_stars3= Button(window, image=stars_btn3, borderwidth=0, command = lambda:(three_stars(), reviewsList(3)))
+    button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = lambda:(three_stars(), reviewsList(3)))
     button_stars3.place(x = 320, y = 220)
     button_stars3.configure(bg="#121212")
 
@@ -424,14 +424,14 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\icons\star-icon.png")
     stars_label4= Label(image=stars_btn4)
-    button_stars4= Button(window, image=stars_btn4, borderwidth=0, command = lambda:(four_stars(), reviewsList(4)))
+    button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = lambda:(four_stars(), reviewsList(4)))
     button_stars4.place(x = 355, y = 220)
     button_stars4.configure(bg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\icons\star-icon.png")
     stars_label5= Label(image=stars_btn5)
-    button_stars5= Button(window, image=stars_btn5, borderwidth=0, command = lambda:(five_stars(), reviewsList(5)))
+    button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = lambda:(five_stars(), reviewsList(5)))
     button_stars5.place(x = 390, y = 220)
     button_stars5.configure(bg="#121212")
 
@@ -450,35 +450,35 @@ def panel_adicionar_albuns():
     currentpanel = window_adicionar_album
     window_adicionar_album.configure(bg = "#121212")
 
-    lblNome = Label(window, text = "Nome", bg="#121212", fg = "white")
+    lblNome = Label(window_adicionar_album, text = "Nome", bg="#121212", fg = "white")
     lblNome.place(x=70, y=70)
     nome = StringVar()
     entryNome = Entry(window, width=25, textvariable=nome, bg="#121212", fg = "white")
     entryNome.place(x=120, y= 70) 
 
-    lblArtista = Label(window, text = "Artista", bg="#121212", fg = "white")
+    lblArtista = Label(window_adicionar_album, text = "Artista", bg="#121212", fg = "white")
     lblArtista.place(x=70, y=120)
     artista = StringVar()
-    entryArtista = Entry(window, width=25, bg="#121212", fg = "white", textvariable=artista)
+    entryArtista = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=artista)
     entryArtista.place(x=120, y= 120) 
 
-    lblAno = Label(window, text = "Ano", bg="#121212", fg = "white")
+    lblAno = Label(window_adicionar_album, text = "Ano", bg="#121212", fg = "white")
     lblAno.place(x=70, y=170)
     ano = IntVar()
-    entryAno = Entry(window, width=25, bg="#121212", fg = "white", textvariable=ano)
+    entryAno = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=ano)
     entryAno.place(x=120, y= 170) 
 
 
-    lblGenero = Label(window, text = "Género", bg="#121212", fg = "white")
+    lblGenero = Label(window_adicionar_album, text = "Género", bg="#121212", fg = "white")
     lblGenero.place(x=70, y=220)
     generoalbum = StringVar()
     generoalbum.set(0)
-    rd1 = Radiobutton(window, text = "POP", value = "POP", bg="#121212", variable= generoalbum)
-    rd2 = Radiobutton(window, text = "HIP-HOP", value = "HIP-HOP", bg="#121212", variable= generoalbum)
-    rd3 = Radiobutton(window, text = "K-POP", value = "K-POP", bg="#121212", variable= generoalbum)
-    rd4 = Radiobutton(window, text = "ROCK", value = "ROCK", bg="#121212", variable= generoalbum)
-    rd5 = Radiobutton(window, text = "R&B", value = "R&B", bg="#121212", variable= generoalbum)
-    rd6 = Radiobutton(window, text = "COUNTRY", value = "COUNTRY", bg="#121212", variable= generoalbum)
+    rd1 = Radiobutton(window_adicionar_album, text = "POP", value = "POP", bg="#121212", variable= generoalbum)
+    rd2 = Radiobutton(window_adicionar_album, text = "HIP-HOP", value = "HIP-HOP", bg="#121212", variable= generoalbum)
+    rd3 = Radiobutton(window_adicionar_album, text = "K-POP", value = "K-POP", bg="#121212", variable= generoalbum)
+    rd4 = Radiobutton(window_adicionar_album, text = "ROCK", value = "ROCK", bg="#121212", variable= generoalbum)
+    rd5 = Radiobutton(window_adicionar_album, text = "R&B", value = "R&B", bg="#121212", variable= generoalbum)
+    rd6 = Radiobutton(window_adicionar_album, text = "COUNTRY", value = "COUNTRY", bg="#121212", variable= generoalbum)
     rd1.place(x= 120, y= 220)
     rd2.place(x= 120, y= 250)
     rd3.place(x= 120, y= 280)
@@ -486,39 +486,39 @@ def panel_adicionar_albuns():
     rd5.place(x=120, y=340)
     rd6.place(x=120, y=370)
 
-    lblQt = Label(window, text = "Qt músicas", bg="#121212", fg = "white")
+    lblQt = Label(window_adicionar_album, text = "Qt músicas", bg="#121212", fg = "white")
     lblQt.place(x=370, y=70)
     qt = IntVar()
-    entryQt = Entry(window, width=25, bg="#121212", fg = "white", textvariable=qt)
+    entryQt = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=qt)
     entryQt.place(x=450, y= 70) 
 
-    lblDuracao = Label(window, text = "Duração", bg="#121212", fg = "white")
+    lblDuracao = Label(window_adicionar_album, text = "Duração", bg="#121212", fg = "white")
     lblDuracao.place(x=370, y=120)
     duracao = StringVar()
-    entryDuracao = Entry(window, width=25, bg="#121212", fg = "white", textvariable=duracao)
+    entryDuracao = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=duracao)
     entryDuracao.place(x=450, y= 120) 
 
-    lblMetacritic = Label(window, text = "Metacritic", bg="#121212", fg = "white")
+    lblMetacritic = Label(window_adicionar_album, text = "Metacritic", bg="#121212", fg = "white")
     lblMetacritic.place(x=370, y=170)
     metacritic = IntVar()
-    entryMetacritic = Entry(window, width=25, bg="#121212", fg = "white", textvariable=metacritic)
+    entryMetacritic = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=metacritic)
     entryMetacritic.place(x=450, y= 170) 
 
-    lblDescricao = Label(window, text = "Descrição", bg="#121212", fg = "white")
+    lblDescricao = Label(window_adicionar_album, text = "Descrição", bg="#121212", fg = "white")
     lblDescricao.place(x=370, y=220)
     descricao = StringVar()
-    entryDescricao = Entry(window, width=25, bg="#121212", fg = "white", textvariable=descricao)
+    entryDescricao = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=descricao)
     entryDescricao.place(x=450, y= 220) 
 
-    lblMusicas = Label(window, text = "Músicas", bg="#121212", fg = "white")
+    lblMusicas = Label(window_adicionar_album, text = "Músicas", bg="#121212", fg = "white")
     lblMusicas.place(x=370, y=270)
     musicas=StringVar()
-    entryMusicas = Entry(window, width=25, bg="#121212", fg = "white", textvariable=musicas)
+    entryMusicas = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=musicas)
     entryMusicas.place(x=450, y= 270) 
 
     global image1
     image1 = PhotoImage(file = "imgs\icons\\add.png" )
-    btnInserir = Button(window, image = image1, width=48, height=48, 
+    btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
                 command= lambda: inserir_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
     btnInserir.place(x=400, y= 350)
 

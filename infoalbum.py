@@ -154,3 +154,72 @@ def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, n
         if album.split(";")[4] == "COUNTRY" and choice6.get():
             tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
     contar_albuns(tree, num_albuns)
+
+    """
+    seleciona os 5 albuns mais vistos da aplicacao
+    """
+    file = open("pop.txt", 'r', encoding="utf-8")
+    lines = file.readlines()
+    file.close()
+    viewsList = []
+    for line in lines:
+        split = line.split(";")
+        views = split[-2]
+        viewsList.append((views, line))
+
+    top_5_views = sorted(viewsList, key=lambda x: x[0], reverse=True)[:5]
+
+    for view in top_5_views:
+        split = view[1].split(";")
+        id_album = split[0]
+        img_album = split[1]
+        nome_album = split[2]
+        nome_artista = split[3]
+        return(id_album + ";" + img_album  + ";" + nome_album +";" + nome_artista)
+
+    with open("top_5_views.txt", "w", encoding="utf-8") as file:
+        for view in top_5_views:
+            split = view[1].split(";")
+            id_album = split[0]
+            img_album = split[1]
+            nome_album = split[2]
+            nome_artista = split[3]
+            file.write(id_album + ";" + img_album  + ";" + nome_album +";" + nome_artista + '\n')
+        
+def maioresScores():
+    """
+    seleciona os 5 albuns com o maior Score do metacritic
+    """
+    file = open("pop.txt", 'r', encoding="utf-8")
+    lines = file.readlines()
+    file.close()
+    scoresList = []
+    for line in lines:
+        split = line.split(";")
+        score = int(split[8])
+        scoresList.append((score, line))
+
+    top_5_scores = sorted(scoresList, key=lambda x: x[0], reverse=True)[:5]
+
+    for score in top_5_scores:
+        split = score[1].split(";")
+        id_album = split[0]
+        nome_album = split[2]
+        nome_artista = split[3]
+        return(id_album + ";" + nome_album + ";" + nome_artista)
+
+def idsMaisVistos():
+    file = open("top_5_views.txt", "r", encoding="utf-8")
+    lista = file.readlines()
+    ids = []
+    for linha in lista:
+        split = linha.split(";")
+        id_album = split[0]
+        ids.append(id_album)
+    primeiro = ids[0]
+    segundo = ids[1]
+    terceiro = ids[2]
+    quarto = ids[3]
+    quinto = ids[4]
+    print(quinto)
+    return ids

@@ -245,7 +245,7 @@ def selecionaFile():
 
     filename = filedialog.askopenfilename(title="Select Image", initialdir="./images", filetypes=(("png files", "*.png"), ("gif files", "*.gif"), ("all files", "*.*")))
     image1 = PhotoImage(file=filename)
-    user_img.itemconfig(image_id, image= image1)
+    
 
 
 

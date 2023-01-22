@@ -2,10 +2,10 @@ from tkinter import *
 from tkinter import ttk
 import os
 from users import *
-from pop import *
 from notifications import *
 from favoritos import *
 from categorias import *
+from infoalbum import *
 
 ## GUI implementation
 
@@ -454,6 +454,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     currentpanel.pack_forget()
 
     window_album = PanedWindow(window, width=1080, height=720)
+    window_album.configure(bg = "#121212")
     currentpanel = window_album
     
     # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
@@ -465,7 +466,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     ctn_cover.create_image(100, 100, image = cover) 
 
     name = album_name
-    Label_name = Label(window_album, text=name, fg="black", font=('Arial', 80))
+    Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 80))
     Label_name.place(x=242,y=60)
 
     artist = album_artist
@@ -481,12 +482,34 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_score.place(x=170, y=220)
 
     description = album_description
-    Label_description = Label(window_album, text=description, fg="black", wraplength=450, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=450, justify="left")
     Label_description.place(x = 20, y = 270)
 
-    # songs = album_songs
-    # Label_songs = Label(window_album, text=songs, fg="black")
-    # Label_songs.place(x=20,y=350)
+    global lboxMusicas
+    lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
+    lboxMusicas.place(x=20, y= 320)
+    lboxMusicas.configure(foreground="white")
+    musicas = "databases\musicas.txt"
+
+    file = open(musicas, "r", encoding="utf-8")
+    music = file.readlines()
+    file.close()
+
+    for musica in music:
+        campos = musica.split(";")
+        if campos[0] == str(alb_id):
+            for songs in campos[1:]:
+                lboxMusicas.insert("end", songs)
+
+    global playBtn
+    playBtn = PhotoImage(file="imgs\icons\play_icon.png")
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
+    play_button.place(x=80, y= 590)
+
+    global pauseBtn
+    pauseBtn = PhotoImage(file="imgs\icons\pause_icon.png")
+    play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
+    play_button.place(x=120, y= 590)
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
@@ -496,29 +519,37 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     user_id = retrieve_current_user_id()
 
+
+    user_id = retrieve_current_user_id()
+
     global like_btn
     like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)
     button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
     button_like.place(x = 80, y = 220)
+    button_like.configure(bg="#121212", fg="#121212")
+
 
     global stars_btn
     stars_btn= PhotoImage(file="imgs\star-icon.png")
     stars_label= Label(image=stars_btn)
     button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = one_star)
     button_stars.place(x = 250, y = 220)
+    button_stars.configure(bg="#121212", fg="#121212")
 
     global stars_btn2
     stars_btn2= PhotoImage(file="imgs\star-icon.png")
     stars_label2= Label(image=stars_btn2)
     button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = two_stars)
     button_stars2.place(x = 285, y = 220)
+    button_stars2.configure(bg="#121212")
 
     global stars_btn3
     stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
     button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = three_stars)
     button_stars3.place(x = 320, y = 220)
+    button_stars3.configure(bg="#121212")
 
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\star-icon.png")
@@ -536,6 +567,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     btnVoltar.place(x=30, y=500)
 
     window_album.place(x=0, y=0)
+
 
 ## - - - - - - - - - - CONTAINER ADD ALBUMS - - - - - - - - - - ##
 

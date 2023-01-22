@@ -93,4 +93,15 @@ def create_notification(user_id, title, text):
             j.writelines(campos)
         else:
             i += 1 
-        
+
+
+def send_notification(users, album_title, album_artist):
+    '''
+    recebe uma lista de ID de usuários e envia notificação a cada um
+    '''
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\notifications.csv'
+    title = 'Novo album: {0}' .format(album_title)
+    text = 'Acaba de ser adicionado o album {0} de {1}! Aproveite!' .format(album_title, album_artist)
+    for user_id in users:
+        create_notification(user_id, title, text)

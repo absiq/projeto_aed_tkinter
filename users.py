@@ -91,7 +91,8 @@ def submit_register(nome, email, username, password):
         count_id = cria_id_user()
         default_bio = 'Adicione um texto na tua bio ao editar o perfil'
         default_profile_pic = 'avatarnone.png'
-        register = str(count_id) + ';' + line + ';' + default_profile_pic + ';' + default_bio + '\n'
+        default_fav_gender = 'POP'
+        register = str(count_id) + ';' + line + ';' + default_profile_pic + ';' + default_bio + ';' + default_fav_gender + '\n'
         f.write(register)
         print('Dado inserido com sucesso')
 
@@ -196,7 +197,7 @@ def deletar_album(del_album, del_artista):
         else: 
             i += 1
 
-def edit_user_data(new_name, new_username, new_bio):
+def edit_user_data(new_name, new_username, new_bio, new_gender):
     '''
     edita os dados do usuário logado
     '''
@@ -214,20 +215,21 @@ def edit_user_data(new_name, new_username, new_bio):
         past_username = line_split[3]
         past_password = line_split[4]
         past_icon = line_split[5]
-        past_bio = line_split[6].replace('\n', '')
-        new_data = [line_id, past_name, past_email, past_username, past_password, past_icon, past_bio]
+        past_bio = line_split[6]
+        past_gender = line_split[7].replace('\n', '')
+        new_data = [line_id, past_name, past_email, past_username, past_password, past_icon, past_bio, past_gender]
         if line_id == user_id:
-            print(line_id)
             if new_name != '':
                 new_data[1] = new_name
             if new_username != '':
                 new_data[3] = new_username
             if new_bio != '':
-                print(new_bio)
                 new_data[6] = new_bio
+            if new_gender != '':
+                new_data[7] = new_gender
             list_to_string = ','.join(map(str, new_data))
             list_to_string = list_to_string.replace(',', ';')
-            line = list_to_string + '\n'
+            line = list_to_string
             dados[i] = line
             # atualizando o arquivo com os novos dados      
             arquivo = open(ficheiro, 'w')
@@ -249,3 +251,25 @@ def get_user_id(username):
         if data[3] == username:
             user_id = data[0]
             return user_id
+
+def get_users_by_gender(gender):
+    '''
+    retorna uma lista de IDs de usuários com o gênero favorito dado como parâmetro
+    '''
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\users.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r')
+    campos = f.readlines()
+    users = []
+    for line in campos:
+        data = line.split(';')
+        if '\n' in gender:
+            gender = gender.replace('\n', '')
+        if '\n' in data[7]:
+            data[7] = data[7].replace('\n', '')
+        if data[7] == gender:
+            user_id = data[0]
+            users.append(user_id)
+
+    return users

@@ -10,7 +10,7 @@ def cria_id_album():
     last_id = 0
     count_id = 0
     ficheiro = 'databases/albums.txt'
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding="utf=8")
     dados = f.readlines()
     for i in dados:
         line_split = i.split(';')

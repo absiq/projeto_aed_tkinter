@@ -122,11 +122,9 @@ def panel_edit_profile():
     user_img.place(x=400, y=240)
     global img
     img = PhotoImage(file = ficheiro_img)
-    user_img.create_image(50,50, anchor=CENTER, image = img)
-    image_id = user_img.create_image(50, 0, anchor="nw", image=img)
+    image_id = user_img.create_image(50,50, anchor=CENTER, image = img)
     btnAltIcon = Button(window, width=15, text="Altere o teu icon", relief="flat", command=selecionaFile)
     btnAltIcon.place(x=400, y=370)
-    
    
 
     label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")

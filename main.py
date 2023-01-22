@@ -4,6 +4,7 @@ import os
 from users import *
 from infoalbums import *
 from notifications import *
+from favoritos import *
 
 ## GUI implementation
 
@@ -18,8 +19,9 @@ def login_and_change_page(username, password, page):
         page()
 
 def generate_page_album(album_id):
-    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
-    panel_album(img, album_name, album_artist, album_info, album_score, album_description)
+    print('entered function')
+    img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
+    panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id)
 
 def login_or_account():
     pasta = '.\\databases'
@@ -69,6 +71,7 @@ panelNot = False
 
 def close_notifications(panel):
     global panelNot
+    clear_notifications()
     panelNot = False
     panel.place_forget()
 
@@ -77,17 +80,116 @@ def panel_notifications(event):
     global currentpanel
     print(panelNot)
     if not panelNot:
-        notifications = PanedWindow(window, width=300, height=200)
+        notifications = PanedWindow(window, width=300, height=500)
         notifications.place(x=730, y=60)
         currentpanel = notifications
         panelNot = True
-        label_notifications = Label(notifications, text="Ainda não há notificações")
-        label_notifications.place(x=80, y=40)
 
+        user_id = retrieve_current_user_id()
+        read_notifications(user_id)
+
+        filenotifications = '.\\databases\\currentnotifications.csv'
+        f = open(filenotifications, 'r')
+        notifications_data = f.readlines()
+        notification_counter = 0
+        const_x = 5
+        new_y = 5
+        description_list = []
+        for i in notifications_data:
+            if i == '\n':
+                notification_counter += 0
+            else:
+                campos = i.split(';')
+                title = ' ' + campos[0].replace("'", '') + ' '
+                description = campos[1].replace("'", '')
+                print(title)
+                print(description)
+                if title == " 0 ":
+                    notification_counter = notification_counter
+                else:
+                    description_list.insert(notification_counter, description)
+                    frameNotification = LabelFrame(notifications, width=280, height=100, text=title)
+                    frameNotification.place(x=const_x, y=new_y)
+                    new_y += 110
+                    notification_counter += 1
+
+        if notification_counter == 1:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+        elif notification_counter == 2:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+        elif notification_counter == 3:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+            description_2 = Label(notifications, text=description_list[2])
+            description_2.place(x=8, y=245)
+        elif notification_counter == 4:
+            description_0 = Label(notifications, text=description_list[0])
+            description_0.place(x=8, y=25)
+            description_1 = Label(notifications, text=description_list[1])
+            description_1.place(x=8, y=135)
+            description_2 = Label(notifications, text=description_list[2])
+            description_2.place(x=8, y=245)
+            description_3 = Label(notifications, text=description_list[3])
+            description_3.place(x=8, y=355)
+        elif notification_counter <= 0:
+            label_notifications = Label(notifications, text="Ainda não há notificações")
+            label_notifications.place(x=80, y=40)
+
+        clear_notifications()
         btnLeave = Button(notifications, text="FECHAR", width=10, command = lambda: close_notifications(notifications))
-        btnLeave.place(x=120, y=170)
+        btnLeave.place(x=120, y=450)
 
-## - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - ##
+
+## - - - - - - - - - - CONTAINER GERIR NOTIFICAÇÕES - - - - - - - - - - ##
+
+def find_user_and_insert_notification(username, title, text):
+    user_id = get_user_id(username)
+    create_notification(user_id, title, text)
+
+def panel_gerir_notificacoes():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_manage_notifs = PanedWindow(window, width=1080, height=720)
+    currentpanel = window_manage_notifs
+    window_manage_notifs.configure(bg="#121212")
+
+    btn_voltar = Button(window_manage_notifs, text="Voltar", width=20, command=panel_admin)
+    btn_voltar.place(x=30, y=40)
+
+    label_username = Label(window_manage_notifs, text="Escreva o username do usuário que deseja enviar uma notificação:", bg="#121212", fg="white")
+    label_username.place(x=400, y=40)
+
+    username = StringVar()
+    entryUsername = Entry(window_manage_notifs, width=25, textvariable=username)
+    entryUsername.place(x=400, y=90) 
+
+    label_title = Label(window_manage_notifs, text="Insira o título da notificação:", bg="#121212", fg="white")
+    label_title.place(x=400, y=140)
+
+    label_text = Label(window_manage_notifs, text="Insira o texto da notificação:", bg="#121212", fg="white")
+    label_text.place(x=400, y=240)
+
+    notifTitle = StringVar()
+    entryTitle = Entry(window_manage_notifs, width=20, textvariable=notifTitle)
+    entryTitle.place(x=400, y=190)
+
+    notifText = StringVar()
+    entryText = Entry(window_manage_notifs, width=50, textvariable=notifText)
+    entryText.place(x=400, y=290)
+
+    btn_send = Button(window_manage_notifs, text="Enviar", width=34, command=lambda:find_user_and_insert_notification(username.get(), notifTitle.get(), notifText.get()))
+    btn_send.place(x=440, y=350)
+
+    window_manage_notifs.place(x=0, y=0)
+
+## - - - - - - - - - - CONTAINER EDIT - - - - - - - - - - ##
 
 def panel_edit_profile():
     global currentpanel
@@ -146,6 +248,15 @@ def panel_edit_profile():
 
     window_edit_profile.place(x=0, y=0)
 
+
+# - - - - - - - - - - CONTAINER REGISTER - - - - - - - - - - #
+
+def create_register(nome, email, username, password):
+    submit_register(nome, email, username, password)
+    user_id = get_user_id(username)
+    insert_new_user_into_notification_database(int(user_id))
+    insert_new_user_into_favs_database(int(user_id))
+
 def panel_register():
     global currentpanel
     currentpanel.pack_forget()
@@ -191,7 +302,7 @@ def panel_register():
     label_password.place(x=440, y=430)
     entry_password.place(x=440, y=455)
 
-    btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: [submit_register(name_register.get(), email_register.get(), username_register.get(), password_register.get())])
+    btn_submit_register = Button(window_register, text="Registar", width=34, command= lambda: create_register(name_register.get(), email_register.get(), username_register.get(), password_register.get()))
     btn_submit_register.place(x=440, y=510)
     btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
     btn_voltar.place(x=440, y=575)
@@ -238,7 +349,17 @@ def panel_login():
 
     btn_voltar = Button(window_login, text="Voltar", width=34, command=panel_homepage)
     btn_voltar.place(x=440, y=500)
-
+    
+    global imgBolinhas1
+    imgBolinhas1 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg1 = Label(window_login, image=imgBolinhas1, width=300, height=600, bg="#121212")
+    labelImg1.place(x=6, y=50)
+    
+    global imgBolinhas2
+    imgBolinhas2 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg2 = Label(window_login, image=imgBolinhas2, width=300, height=600, bg="#121212")
+    labelImg2.place(x=770, y=50)
+    
     window_login.place(x=0, y=0)
 
 ## - - - - - - - - - - CONTAINER ACCOUNT - - - - - - - - - - ##
@@ -276,6 +397,11 @@ def panel_account():
     btn_edit_profile.place(x=800, y=40)
 
     btn_logout = Button(window_account, text="Fazer logout", width=20, command= lambda: logout_and_change_page(panel_homepage))
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_account, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
 
     if username == 'admin':
         btn_admin = Button(window_account, text="Painel do administrador", width=20, command=panel_admin)
@@ -322,14 +448,14 @@ def panel_delete_album():
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
-def panel_album(img, album_name, album_artist, album_info, album_score, album_description):
+def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
 
     window_album = PanedWindow(window, width=1080, height=720)
-    currentpanel = window_album
     window_album.configure(bg = "#121212")
-
+    currentpanel = window_album
+    
     img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
@@ -350,39 +476,39 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
-    def changebg(score):
-        scoreBom = 70
-        scoreMau = 40
-        if score <= scoreMau:
-            Label_score.config(bg="red")
-        elif score > scoreMau and score < scoreBom:
-            Label_score.config(bg="yellow")
-        elif score >= scoreBom:
-            Label_score.config(bg="green")
-
     score = album_score
     Label_score = Label(window_album, text=score, fg="white", bg="#121212", font=('Arial', 20))
     Label_score.place(x=170, y=220)
-    changebg(score)
 
     description = album_description
     Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=750, justify="left")
     Label_description.place(x = 20, y = 270)
 
+    global lboxMusicas
     lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
     lboxMusicas.place(x=20, y= 320)
     lboxMusicas.configure(foreground="white")
-    musicas = "musicas.txt"
+    musicas = "databases\musicas.txt"
 
     file = open(musicas, "r", encoding="utf-8")
     music = file.readlines()
     file.close()
 
     for musica in music:
-        campos = musica.split(",")
+        campos = musica.split(";")
         if campos[0] == "2":
             for songs in campos[1:]:
                 lboxMusicas.insert("end", songs)
+
+    global playBtn
+    playBtn = PhotoImage(file="imgs\icons\play_icon.png")
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas)))
+    play_button.place(x=80, y= 590)
+
+    global pauseBtn
+    pauseBtn = PhotoImage(file="imgs\icons\pause_icon.png")
+    play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
+    play_button.place(x=120, y= 590)
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
@@ -391,47 +517,49 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     button_share.place(x = 20, y = 220)
     button_share.configure(bg="#121212", fg="#121212")
 
+
+    user_id = retrieve_current_user_id()
+
     global like_btn
-    like_btn= PhotoImage(file="imgs\icons\heart-icon.png")
+    like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)
-    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList()))
+    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
     button_like.place(x = 80, y = 220)
     button_like.configure(bg="#121212")
 
+
     global stars_btn
-    stars_btn= PhotoImage(file="imgs\icons\star-icon.png")
+    stars_btn= PhotoImage(file="imgs\star-icon.png")
     stars_label= Label(image=stars_btn)
-    button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = lambda:(one_star(), reviewsList(1)))
+    button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = one_star)
     button_stars.place(x = 250, y = 220)
     button_stars.configure(bg="#121212")
 
     global stars_btn2
-    stars_btn2= PhotoImage(file="imgs\icons\star-icon.png")
+    stars_btn2= PhotoImage(file="imgs\star-icon.png")
     stars_label2= Label(image=stars_btn2)
-    button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = lambda:(two_stars(), reviewsList(2)))
+    button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = two_stars)
     button_stars2.place(x = 285, y = 220)
-    button_stars2.configure(bg="#121212", fg="white")
+    button_stars2.configure(bg="#121212")
 
     global stars_btn3
-    global button_stars3
-    stars_btn3= PhotoImage(file="imgs\icons\star-icon.png")
+    stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
-    button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = lambda:(three_stars(), reviewsList(3)))
+    button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = three_stars)
     button_stars3.place(x = 320, y = 220)
     button_stars3.configure(bg="#121212")
 
-
     global stars_btn4
-    stars_btn4= PhotoImage(file="imgs\icons\star-icon.png")
+    stars_btn4= PhotoImage(file="imgs\star-icon.png")
     stars_label4= Label(image=stars_btn4)
-    button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = lambda:(four_stars(), reviewsList(4)))
+    button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
     button_stars4.configure(bg="#121212")
 
     global stars_btn5
-    stars_btn5= PhotoImage(file="imgs\icons\star-icon.png")
+    stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
-    button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = lambda:(five_stars(), reviewsList(5)))
+    button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
     button_stars5.configure(bg="#121212")
 
@@ -448,37 +576,36 @@ def panel_adicionar_albuns():
 
     window_adicionar_album = PanedWindow(window, width=1080, height=720)
     currentpanel = window_adicionar_album
-    window_adicionar_album.configure(bg = "#121212")
 
-    lblNome = Label(window_adicionar_album, text = "Nome", bg="#121212", fg = "white")
+    lblNome = Label(window_adicionar_album, text = "Nome")
     lblNome.place(x=70, y=70)
     nome = StringVar()
-    entryNome = Entry(window_adicionar_album, width=25, textvariable=nome, bg="#121212", fg = "white")
+    entryNome = Entry(window_adicionar_album, width=25, textvariable=nome)
     entryNome.place(x=120, y= 70) 
 
-    lblArtista = Label(window_adicionar_album, text = "Artista", bg="#121212", fg = "white")
+    lblArtista = Label(window_adicionar_album, text = "Artista")
     lblArtista.place(x=70, y=120)
     artista = StringVar()
-    entryArtista = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=artista)
+    entryArtista = Entry(window_adicionar_album, width=25, textvariable=artista)
     entryArtista.place(x=120, y= 120) 
 
-    lblAno = Label(window_adicionar_album, text = "Ano", bg="#121212", fg = "white")
+    lblAno = Label(window_adicionar_album, text = "Ano")
     lblAno.place(x=70, y=170)
     ano = IntVar()
-    entryAno = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=ano)
+    entryAno = Entry(window_adicionar_album, width=25, textvariable=ano)
     entryAno.place(x=120, y= 170) 
 
 
-    lblGenero = Label(window_adicionar_album, text = "Género", bg="#121212", fg = "white")
+    lblGenero = Label(window_adicionar_album, text = "Género")
     lblGenero.place(x=70, y=220)
     generoalbum = StringVar()
     generoalbum.set(0)
-    rd1 = Radiobutton(window_adicionar_album, text = "POP", value = "POP", bg="#121212", variable= generoalbum)
-    rd2 = Radiobutton(window_adicionar_album, text = "HIP-HOP", value = "HIP-HOP", bg="#121212", variable= generoalbum)
-    rd3 = Radiobutton(window_adicionar_album, text = "K-POP", value = "K-POP", bg="#121212", variable= generoalbum)
-    rd4 = Radiobutton(window_adicionar_album, text = "ROCK", value = "ROCK", bg="#121212", variable= generoalbum)
-    rd5 = Radiobutton(window_adicionar_album, text = "R&B", value = "R&B", bg="#121212", variable= generoalbum)
-    rd6 = Radiobutton(window_adicionar_album, text = "COUNTRY", value = "COUNTRY", bg="#121212", variable= generoalbum)
+    rd1 = Radiobutton(window_adicionar_album, text = "POP", value = "POP", variable= generoalbum)
+    rd2 = Radiobutton(window_adicionar_album, text = "HIP-HOP", value = "HIP-HOP", variable= generoalbum)
+    rd3 = Radiobutton(window_adicionar_album, text = "K-POP", value = "K-POP", variable= generoalbum)
+    rd4 = Radiobutton(window_adicionar_album, text = "ROCK", value = "ROCK", variable= generoalbum)
+    rd5 = Radiobutton(window_adicionar_album, text = "R&B", value = "R&B", variable= generoalbum)
+    rd6 = Radiobutton(window_adicionar_album, text = "COUNTRY", value = "COUNTRY", variable= generoalbum)
     rd1.place(x= 120, y= 220)
     rd2.place(x= 120, y= 250)
     rd3.place(x= 120, y= 280)
@@ -486,38 +613,38 @@ def panel_adicionar_albuns():
     rd5.place(x=120, y=340)
     rd6.place(x=120, y=370)
 
-    lblQt = Label(window_adicionar_album, text = "Qt músicas", bg="#121212", fg = "white")
+    lblQt = Label(window_adicionar_album, text = "Qt músicas")
     lblQt.place(x=370, y=70)
     qt = IntVar()
-    entryQt = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=qt)
+    entryQt = Entry(window_adicionar_album, width=25, textvariable=qt)
     entryQt.place(x=450, y= 70) 
 
-    lblDuracao = Label(window_adicionar_album, text = "Duração", bg="#121212", fg = "white")
+    lblDuracao = Label(window_adicionar_album, text = "Duração")
     lblDuracao.place(x=370, y=120)
     duracao = StringVar()
-    entryDuracao = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=duracao)
+    entryDuracao = Entry(window_adicionar_album, width=25, textvariable=duracao)
     entryDuracao.place(x=450, y= 120) 
 
-    lblMetacritic = Label(window_adicionar_album, text = "Metacritic", bg="#121212", fg = "white")
+    lblMetacritic = Label(window_adicionar_album, text = "Metacritic")
     lblMetacritic.place(x=370, y=170)
     metacritic = IntVar()
-    entryMetacritic = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=metacritic)
+    entryMetacritic = Entry(window_adicionar_album, width=25, textvariable=metacritic)
     entryMetacritic.place(x=450, y= 170) 
 
-    lblDescricao = Label(window_adicionar_album, text = "Descrição", bg="#121212", fg = "white")
+    lblDescricao = Label(window_adicionar_album, text = "Descrição")
     lblDescricao.place(x=370, y=220)
     descricao = StringVar()
-    entryDescricao = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=descricao)
+    entryDescricao = Entry(window_adicionar_album, width=25, textvariable=descricao)
     entryDescricao.place(x=450, y= 220) 
 
-    lblMusicas = Label(window_adicionar_album, text = "Músicas", bg="#121212", fg = "white")
+    lblMusicas = Label(window_adicionar_album, text = "Músicas")
     lblMusicas.place(x=370, y=270)
     musicas=StringVar()
-    entryMusicas = Entry(window_adicionar_album, width=25, bg="#121212", fg = "white", textvariable=musicas)
+    entryMusicas = Entry(window_adicionar_album, width=25, textvariable=musicas)
     entryMusicas.place(x=450, y= 270) 
 
     global image1
-    image1 = PhotoImage(file = "imgs\icons\\add.png" )
+    image1 = PhotoImage(file = "imgs\\add.png" )
     btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
                 command= lambda: inserir_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
     btnInserir.place(x=400, y= 350)
@@ -644,7 +771,7 @@ def panel_admin():
     btnGerenciarCategorias.place(x=520, y=565)
 
     # botão gerenciar notificações
-    btnNotificações = Button(painel_adm, text="Gerenciar notificações", width=25)
+    btnNotificações = Button(painel_adm, text="Gerir notificações", width=25, command=panel_gerir_notificacoes)
     btnNotificações.place(x=300, y=605)
     # info user
     name= retrieve_current_user_data()
@@ -664,24 +791,6 @@ def panel_admin():
 
     painel_adm.mainloop()
 
-
-
-## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
-
-panelNot = False
-
-def panel_notific():
-    global currentpanel
-    global panelNot
-
-    if not panelNot:
-        panel_notific = PanedWindow(window, width=1080, height=720)
-        currentpanel = panel_notific
-        panel_notific.configure(bg = "#d3d3d3")
-
-        txt = Label(panel_notific, text="Ainda não há notificações")
-        txt.place(x=420, y=345) 
-
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 
 def panel_search():
@@ -693,7 +802,7 @@ def panel_search():
     panel_search.configure(bg="#121212")
 
 
-    txt = Label(panel_notific, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
+    txt = Label(panel_search, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
     txt.place(x=420, y=345)
 
 
@@ -734,8 +843,9 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
     btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
 
     # mostra os generos musicias suportados pela app
     """
@@ -770,7 +880,7 @@ def panel_homepage():
     maisOuvidosTxt.place (x=70, y=177)
 
     imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white")
+    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
     btnGuardarA1.place (x = 70 , y = 212)
     tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=62, y=377)
@@ -866,8 +976,9 @@ btnGuardarU.place (x = 975 , y = 9)
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
 
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notific)
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
 btnGuardarN.place (x = 930 , y = 9)
+btnGuardarN.bind('<Enter>', panel_notifications)
 
 # mostra os generos musicias suportados pela app
 """
@@ -902,7 +1013,7 @@ maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais ouvidos do momento",
 maisOuvidosTxt.place (x=70, y=177)
 
 imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white")
+btnGuardarA1 = Button(home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
 btnGuardarA1.place (x = 70 , y = 212)
 tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA1.place(x=62, y=377)

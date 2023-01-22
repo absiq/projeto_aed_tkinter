@@ -146,7 +146,7 @@ def panel_edit_profile():
 
     btn_editar = Button(window_edit_profile, text='Editar dados', width=20, command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
     btn_editar.place(x=800, y=140)
-    btn_voltar = Button(window_edit_profile, text='Voltar', width=20, command=panel_admin)
+    btn_voltar = Button(window_edit_profile, text='Voltar', width=20, command=panel_account)
     btn_voltar.place(x=800, y=190)
 
     window_edit_profile.place(x=0, y=0)

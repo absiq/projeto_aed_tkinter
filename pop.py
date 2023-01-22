@@ -19,7 +19,7 @@ def cria_id_album():
 def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Descricao, Musicas):
     filePop=open(ficheiro, "a", encoding="utf-8")
     album_id = cria_id_album()
-    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + "\n" 
+    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0" "\n" 
     filePop.write(linha)
     filePop.close()
     
@@ -73,3 +73,28 @@ def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, n
         if album.split(";")[4] == "COUNTRY" and choice6.get():
             tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
     contar_albuns(tree, num_albuns)
+
+
+def maisVistos():
+    """
+    seleciona os 5 albuns mais vistos da aplicacao
+    """
+    file = open("pop.txt", 'r', encoding="utf-8")
+    lines = file.readlines()
+    file.close()
+    viewsList = []
+    for line in lines:
+        split = line.split(";")
+        id_album = split[0]
+        img_album = split[1]
+        views = int(split[10])
+        viewsList.append((views, line))
+
+    top_5_views = sorted(viewsList, key=lambda x: x[0], reverse=True)[:5]
+
+    for view in top_5_views:
+        split = view[1].split(";")
+        id_album_v = split[0]
+        img_album_v = split[1]
+        return(id_album_v + ";" + img_album_v)
+

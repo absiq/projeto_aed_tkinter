@@ -121,3 +121,4 @@ def maioresScores():
         nome_artista = split[3]
         return(id_album + ";" + nome_album + ";" + nome_artista)
 
+

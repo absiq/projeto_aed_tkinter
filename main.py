@@ -496,13 +496,13 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     for musica in music:
         campos = musica.split(";")
-        if campos[0] == "2":
+        if campos[0] == str(album_id):
             for songs in campos[1:]:
                 lboxMusicas.insert("end", songs)
 
     global playBtn
     playBtn = PhotoImage(file="imgs\icons\play_icon.png")
-    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas)))
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, album_id)))
     play_button.place(x=80, y= 590)
 
     global pauseBtn

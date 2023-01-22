@@ -26,8 +26,7 @@ def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Desc
     filePop.write(linha)
     filePop.close()
 
-#def album_contents(album_id):
-def album_contents():
+def album_contents(album_id):
 
     f = open(ficheiro, "r", encoding="utf-8")
     linhas = f.readlines()
@@ -35,9 +34,8 @@ def album_contents():
     for linha in linhas:
         global campos
         campos = linha.split(";")
-        #if campos[0] == str(album_id):
-        if campos[0] == "2":
-            #print(album_id)
+        if campos[0] == str(album_id):
+            print(album_id)
             img = campos[1]
             album_name = campos[2]
             album_artist = campos[3]
@@ -112,11 +110,11 @@ fileMP3 = open(ficheirosMp3, "r", encoding="utf-8")
 mp3 = fileMP3.readlines()
 fileMP3.close()
 
-def play_song(lboxMusicas):
+def play_song(lboxMusicas,album_id):
     index = lboxMusicas.curselection()[0]
     for songs in mp3:
         songs = songs.split(";")
-        if songs[0] == "2":
+        if songs[0] == str(album_id):
             song = songs[1:][index]
             mixer.music.load(song)
             mixer.music.play()

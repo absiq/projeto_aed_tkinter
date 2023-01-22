@@ -26,8 +26,6 @@ def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Desc
     filePop.write(linha)
     filePop.close()
     
-# colocar ID do álbum
-# músicas
 
 def album_contents(album_id):
 
@@ -37,9 +35,6 @@ def album_contents(album_id):
     for linha in linhas:
         global campos
         campos = linha.split(";")
-        # campo = str(campos)
-        # songs = campo.split(",")
-        # print(songs)
         if campos[0] == str(album_id):
             print(album_id)
             alb_id = campos[0]
@@ -49,8 +44,6 @@ def album_contents(album_id):
             album_info = campos[4] + ", " + campos[5] + ", " + campos[6] + ", " + campos[7]
             album_score = campos[8]
             album_description = campos[9]
-            # for songs in linha:
-              #  album_songs = songs[0:]
             return img, album_name, album_artist, album_info, album_score, album_description, alb_id
 
 ficheiroFav= "databases/favoritos.txt"
@@ -128,3 +121,37 @@ def play_song(lboxMusicas,album_id):
 
 def pause_song():
     mixer.music.stop()
+
+ficheiroCategorias = "categorias.txt"
+ficheiroMusicas = "databases\\albums.txt"
+
+def ListBoxCategorias(lbCategorias):
+    f = open(ficheiroCategorias, "r", encoding="utf-8")
+    categorias = f.readlines()
+    f.close()
+    for categoria in categorias:
+        lbCategorias.insert(END, categoria)
+
+def contarAlbum(treeCategorias, numAlbumCat):
+    numAlbumCat.set(len(treeCategorias.get_children()))
+
+
+def filtrarAlbums(treeCategorias, numAlbumCat):
+    treeCategorias.delete(*treeCategorias.get_children())
+
+    fileAlbum = open(ficheiroMusicas, "r", encoding="utf-8")
+    lista = fileAlbum.readlines()
+    fileAlbum.close()
+    for musica in lista:
+        musica = musica.split(";")
+        categoria = musica[4] + "\n"
+        if categoria == texto:
+            treeCategorias.insert("", "end", values = (musica[0], musica[2], musica[3], musica[5]))
+            
+    contarAlbum(treeCategorias, numAlbumCat)
+
+def selecaoItem(lbCategorias):
+    id = lbCategorias.curselection()
+    global texto
+    texto = lbCategorias.get(id)
+    return texto

@@ -477,8 +477,10 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
+    
+
     score = album_score
-    Label_score = Label(window_album, text=score, fg="white", bg="#121212", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="white", font=('Arial', 20))
     Label_score.place(x=170, y=220)
 
     description = album_description
@@ -497,17 +499,17 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     for musica in music:
         campos = musica.split(";")
-        if campos[0] == str(album_id):
+        if campos[0] == str(alb_id):
             for songs in campos[1:]:
                 lboxMusicas.insert("end", songs)
 
     global playBtn
-    playBtn = PhotoImage(file="imgs\icons\play_icon.png")
-    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, album_id)))
+    playBtn = PhotoImage(file="imgs\play_icon.png")
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
     play_button.place(x=80, y= 590)
 
     global pauseBtn
-    pauseBtn = PhotoImage(file="imgs\icons\pause_icon.png")
+    pauseBtn = PhotoImage(file="imgs\pause_icon.png")
     play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
     play_button.place(x=120, y= 590)
 
@@ -810,18 +812,84 @@ def panel_notifications():
 
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 
+
 def panel_search():
     global currentpanel
     currentpanel.pack_forget()
 
     panel_search = PanedWindow(window, width=1080, height=720)
+    panel_search.place(x=0,y=0)
     currentpanel = panel_search
     panel_search.configure(bg="#121212")
 
+    global lbCategorias
+    lblCategorias = Label(panel_search, text = "Filtro por Categorias", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 10)
+    lbCategorias = Listbox(panel_search, width=20, height=8)
+    ListBoxCategorias(lbCategorias)
+    lbCategorias.place(x = 20, y = 40)
 
-    txt = Label(panel_search, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
-    txt.place(x=420, y=345)
+    BtnNext = Button(panel_search, text = ">", command= lambda: [selecaoItem(lbCategorias), filtrarAlbums(treeCategorias, numAlbumCat)])
+    BtnNext.place(x = 160, y = 100)
 
+    def on_select(event):
+        selected_item = treeCategorias.selection()[0]
+        global select
+        select = treeCategorias.item(selected_item)["values"][0]
+        print(select)
+        return select
+
+    treeCategorias = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Ano"), show = "headings")
+
+    treeCategorias.column("ID", width=14, anchor="w")
+    treeCategorias.column("Álbum", width=200, anchor="w")
+    treeCategorias.column("Artista", width=150, anchor="w")
+    treeCategorias.column("Ano", width=100, anchor="c")
+    treeCategorias.heading("ID", text = "ID")
+    treeCategorias.heading("Álbum", text = "Álbum")
+    treeCategorias.heading("Artista", text = "Artista")
+    treeCategorias.heading("Ano", text = "Ano")
+    treeCategorias.place(x = 200, y = 40)
+    treeCategorias.bind("<<TreeviewSelect>>", on_select)
+
+    lbNumAlbumCat = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbumCat.place(x=220, y=180)
+    global numAlbumCat
+    numAlbumCat = StringVar()
+    txtNumAlbumCat = Entry(panel_search, width=10, textvariable = numAlbumCat, state="disable")
+    txtNumAlbumCat.place(x=320, y=180)
+
+    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeCategorias.yview)
+    verscrlbar.place(x = 670+2, y=40+2, height=112+10)
+    treeCategorias.configure(yscrollcommand=verscrlbar.set)
+
+    btnPag = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select))
+    btnPag.place(x = 450, y = 180)
+
+    lblCategorias = Label(panel_search, text = "Filtro por Visualizações", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 220)
+
+    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("Álbum", "Artista", "Visualizações"), show = "headings")
+
+    treeVisualicacao.column("Álbum", width=200, anchor="w")
+    treeVisualicacao.column("Artista", width=150, anchor="w")
+    treeVisualicacao.column("Visualizações", width=100, anchor="c")
+    treeVisualicacao.heading("Álbum", text = "Álbum")
+    treeVisualicacao.heading("Artista", text = "Artista")
+    treeVisualicacao.heading("Visualizações", text = "Visualizações")
+    treeVisualicacao.place(x = 20, y = 260)
+
+    lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbum.place(x=20, y=400)
+    numAlbumVisu = StringVar()
+    txtNumAlbumVisu = Entry(panel_search, width=10, textvariable = numAlbumVisu, state="disable")
+    txtNumAlbumVisu.place(x = 120, y=400)
+
+    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeVisualicacao.yview)
+    verscrlbar.place(x = 470+2, y=260+2, height=112+10)
+    treeVisualicacao.configure(yscrollcommand=verscrlbar.set)
+
+    panel_search.mainloop()
 
 
 ## - - - - - - - - - - CONTAINER HOMEPAGE - - - - - - - - - - ##
@@ -904,13 +972,13 @@ def panel_homepage():
     tituloA1.place(x=62, y=377)
 
     imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(4))   
     btnGuardarA2.place (x = 250 , y = 212)
     tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=242, y=377)
 
     imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-    btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white")   #174px album +nome
+    btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(5))   #174px album +nome
     btnGuardarA3.place (x = 430 , y = 212)   #180px distancia de um album pra outro
     tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA3.place(x=422, y=377)
@@ -1036,13 +1104,13 @@ tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, h
 tituloA1.place(x=62, y=377)
 
 imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(4))   
 btnGuardarA2.place (x = 250 , y = 212)
 tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA2.place(x=242, y=377)
 
 imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white")   #174px album +nome
+btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(5))   #174px album +nome
 btnGuardarA3.place (x = 430 , y = 212)   #180px distancia de um album pra outro
 tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA3.place(x=422, y=377)

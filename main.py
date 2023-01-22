@@ -2,9 +2,10 @@ from tkinter import *
 from tkinter import ttk
 import os
 from users import *
-from infoalbum import *
 from notifications import *
 from favoritos import *
+from categorias import *
+from infoalbum import *
 
 ## GUI implementation
 
@@ -448,7 +449,6 @@ def panel_delete_album():
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
-
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
@@ -460,7 +460,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
@@ -470,15 +470,15 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_name.place(x=242,y=60)
 
     artist = album_artist
-    Label_artist = Label(window_album, text=artist, fg="white", bg="#121212")
+    Label_artist = Label(window_album, text=artist, fg="black")
     Label_artist.place(x=250,y=170)
     
     info = album_info
-    Label_info = Label(window_album, text=info, fg="white", bg="#121212")
+    Label_info = Label(window_album, text=info, fg="black")
     Label_info.place(x=250,y=199)
 
     score = album_score
-    Label_score = Label(window_album, text=score, fg="white", bg="#121212", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="black", font=('Arial', 20))
     Label_score.place(x=170, y=220)
 
     description = album_description
@@ -497,13 +497,13 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     for musica in music:
         campos = musica.split(";")
-        if campos[0] == str(album_id):
+        if campos[0] == str(alb_id):
             for songs in campos[1:]:
                 lboxMusicas.insert("end", songs)
 
     global playBtn
     playBtn = PhotoImage(file="imgs\icons\play_icon.png")
-    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, album_id)))
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
     play_button.place(x=80, y= 590)
 
     global pauseBtn
@@ -516,7 +516,8 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
-    button_share.configure(bg="#121212", fg="#121212")
+
+    user_id = retrieve_current_user_id()
 
 
     user_id = retrieve_current_user_id()
@@ -555,14 +556,12 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
-    button_stars4.configure(bg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
-    button_stars5.configure(bg="#121212")
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)
@@ -655,6 +654,66 @@ def panel_adicionar_albuns():
     btn_voltar.place(x=800, y=140)
 
     window_adicionar_album.place(x=0, y=0)
+
+## - - - - - - - - - - CONTAINER GERENCIAR CATEGORIAS - - - - - - - - - ##
+
+def preencheCombobox():
+    """
+    função que irá preencher a combobox com as categorias
+    """
+    ficheiroCategorias = 'databases/categorias.txt'
+    f = open(ficheiroCategorias, "r", encoding="utf-8")
+    categorias = f.readlines()
+    f.close()
+    return categorias
+
+def panel_categorias():
+    """
+    Painel de gerenciamento de categorias
+    """
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_consultar_categorias = PanedWindow(window, width=1080, height=720)
+    currentpanel = window_consultar_categorias
+
+    btn_voltar = Button(window_consultar_categorias, text="Voltar", command=panel_admin)
+    btn_voltar.place(x=100, y=30)
+
+    label_remover = Label(window_consultar_categorias, text="Remover uma categoria:")
+    label_remover.place(x=100, y=90)
+
+    current_var = StringVar()
+    combobox = ttk.Combobox(window_consultar_categorias, textvariable=current_var)
+    categorias = preencheCombobox()
+    combobox['values'] = categorias
+    combobox['state'] = 'readonly'
+    combobox.place(x=100, y=150)
+
+    btn_remover = Button(window_consultar_categorias, text="Remover", command=lambda:remover_categoria(current_var.get()))
+    btn_remover.place(x=100, y=210)
+
+    label_adicionar = Label(window_consultar_categorias, text="Adicionar uma categoria:")
+    label_adicionar.place(x=500, y=90)
+
+    current_input = StringVar()
+    entry_categoria = Entry(window_consultar_categorias, textvariable=current_input)
+    entry_categoria.place(x=500, y=150)
+
+    btn_add = Button(window_consultar_categorias, text="Adicionar", command=lambda:inserir_categoria(current_input.get()))
+    btn_add.place(x=500, y=210)
+
+    columns = ('categorias')
+    treeview = ttk.Treeview(window_consultar_categorias, selectmode="browse", columns=columns, show='headings')
+    treeview.heading('categorias', text='Categorias')
+    for categoria in categorias:
+        treeview.insert('', END, values=categoria)
+    treeview.place(x=400, y=400)
+    window_consultar_categorias.place(x=0, y=0)
+    btn_refresh = Button(window_consultar_categorias, text="Refresh", command=panel_categorias)
+    btn_refresh.place(x=600, y=410)
+
+
 
 ## - - - - - - - - - - CONTAINER FILTER ALBUMS - - - - - - - - - ##
 
@@ -769,7 +828,7 @@ def panel_admin():
     btnFiltrar.place(x=300, y=565)
 
     # botão gerenciar categorias
-    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25)
+    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25, command=panel_categorias)
     btnGerenciarCategorias.place(x=520, y=565)
 
     # botão gerenciar notificações
@@ -792,21 +851,6 @@ def panel_admin():
     admTxt.place(x=440, y=400)
 
     painel_adm.mainloop()
-
-
-
-## - - - - - - - - - - CONTAINER NOTIFICACOES - - - - - - - - - - ##
-
-def panel_notifications():
-    global currentpanel
-    currentpanel.pack_forget()
-
-    panel_notific = PanedWindow(window, width=1080, height=720)
-    currentpanel = panel_notific
-    panel_notific.configure(bg="#121212")
-
-    txt = Label(panel_notific, text="Isto é uma notificacao", width=24, height=3, bd=0, bg="#121212", fg="white")
-    txt.place(x=420, y=345) 
 
 ## - - - - - - - - - - CONTAINER SEARCH - - - - - - - - - - ##
 
@@ -860,10 +904,9 @@ def panel_homepage():
 
     #define icone de sino para ir pra página de notificações
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
+    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
     btnGuardarN.place (x = 930 , y = 9)
     btnGuardarN.bind('<Enter>', panel_notifications)
-
 
     # mostra os generos musicias suportados pela app
     """
@@ -904,7 +947,7 @@ def panel_homepage():
     tituloA1.place(x=62, y=377)
 
     imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
     btnGuardarA2.place (x = 250 , y = 212)
     tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=242, y=377)
@@ -993,7 +1036,8 @@ btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white")
+
+btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
 btnGuardarN.place (x = 930 , y = 9)
 btnGuardarN.bind('<Enter>', panel_notifications)
 
@@ -1036,7 +1080,7 @@ tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, h
 tituloA1.place(x=62, y=377)
 
 imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
 btnGuardarA2.place (x = 250 , y = 212)
 tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA2.place(x=242, y=377)

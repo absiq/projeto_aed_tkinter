@@ -128,3 +128,29 @@ def play_song(lboxMusicas,album_id):
 
 def pause_song():
     mixer.music.stop()
+
+def contar_albuns(tree, num_albuns):
+    num_albuns.set(len(tree.get_children()))
+
+def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, num_albuns):
+    tree.delete(*tree.get_children())
+
+    file=open(ficheiro, "r", encoding="utf-8")
+    lista = file.readlines()
+    file.close()
+    cont=0
+    for album in lista:
+        if album == "": continue
+        if album.split(";")[4] == "POP" and choice1.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] == "K-POP" and choice2.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] == "HIP-HOP" and choice3.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] == "ROCK" and choice4.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] == "R&B" and choice5.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] == "COUNTRY" and choice6.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+    contar_albuns(tree, num_albuns)

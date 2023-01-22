@@ -261,10 +261,18 @@ def panel_edit_profile():
     entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
     entry_new_bio.place(x=20, y=310, width=300, height=100)
 
-    btn_editar = Button(window_edit_profile, text='Editar dados', width=20, command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
-    btn_editar.place(x=800, y=140)
-    btn_voltar = Button(window_edit_profile, text='Voltar', width=20, command=panel_account)
-    btn_voltar.place(x=800, y=190)
+    label_new_fav = Label(window_edit_profile, text="Insira o teu novo gênero favorito:", bg="#121212", fg="white")
+    label_new_fav.place(x=400, y=290)
+
+    current_var = StringVar()
+    combobox = ttk.Combobox(window_edit_profile, textvariable=current_var)
+    categorias = preencheCombobox()
+    combobox['values'] = categorias
+    combobox['state'] = 'readonly'
+    combobox.place(x=400, y=340)
+
+    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get()))
+    btn_editar.place(x=540, y=430)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -537,12 +545,12 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
                 lboxMusicas.insert("end", songs)
 
     global playBtn
-    playBtn = PhotoImage(file="imgs\icons\play_icon.png")
+    playBtn = PhotoImage(file="imgs\play_icon.png")
     play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
     play_button.place(x=80, y= 590)
 
     global pauseBtn
-    pauseBtn = PhotoImage(file="imgs\icons\pause_icon.png")
+    pauseBtn = PhotoImage(file="imgs\pause_icon.png")
     play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
     play_button.place(x=120, y= 590)
 
@@ -605,6 +613,13 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
 
 ## - - - - - - - - - - CONTAINER ADD ALBUMS - - - - - - - - - - ##
+
+def add_album(nome, artista, genero, ano, qt, duracao, metacritic, descricao, musicas):
+    # função que envia notificação
+    users = get_users_by_gender(genero)
+    print(users)
+    send_notification(users, nome, artista)
+    inserir_album(nome, artista, genero, ano, qt, duracao, metacritic, descricao, musicas)
 
 def panel_adicionar_albuns():
     global currentpanel
@@ -683,7 +698,7 @@ def panel_adicionar_albuns():
     global image1
     image1 = PhotoImage(file = "imgs\\add.png" )
     btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
-                command= lambda: inserir_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
+                command= lambda: add_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
     btnInserir.place(x=400, y= 350)
 
     btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)

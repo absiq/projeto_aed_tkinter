@@ -19,7 +19,7 @@ def cria_id_album():
 def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Descricao, Musicas):
     filePop=open(ficheiro, "a", encoding="utf-8")
     album_id = cria_id_album()
-    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0" "\n" 
+    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0;" "\n" 
     filePop.write(linha)
     filePop.close()
     

@@ -938,7 +938,7 @@ def panel_homepage():
 
     #define icone de user no botao para ir p/ página do usuário
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#d3d3d3", command=login_or_account)
+    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações

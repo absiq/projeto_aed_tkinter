@@ -219,13 +219,16 @@ def panel_edit_profile():
 
     icon_text = "O teu icon atual é: "
     label_icon_text = Label(window_edit_profile, text=icon_text, bg="#121212", fg="white")
-    label_icon_text.place(x=740, y=220)
+    label_icon_text.place(x=400, y=220)
     ficheiro_img = os.path.join('imgs\\profile_pics', icon)
     user_img = Canvas(window_edit_profile, width=100, height=100, bd=0)
-    user_img.place(x=740, y=240)
+    user_img.place(x=400, y=240)
     global img
     img = PhotoImage(file = ficheiro_img)
-    user_img.create_image(50,50, anchor=CENTER, image = img)
+    image_id = user_img.create_image(50,50, anchor=CENTER, image = img)
+    btnAltIcon = Button(window, width=15, text="Altere o teu icon", relief="flat", command=selecionaFile)
+    btnAltIcon.place(x=400, y=370)
+   
 
     label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")
     label_new_name.place(x=20, y=80)
@@ -244,8 +247,10 @@ def panel_edit_profile():
     entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
     entry_new_bio.place(x=20, y=310, width=300, height=100)
 
-    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
-    btn_editar.place(x=540, y=430)
+    btn_editar = Button(window_edit_profile, text='Editar dados', width=20, command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c')))
+    btn_editar.place(x=800, y=140)
+    btn_voltar = Button(window_edit_profile, text='Voltar', width=20, command=panel_account)
+    btn_voltar.place(x=800, y=190)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -307,6 +312,16 @@ def panel_register():
     btn_submit_register.place(x=440, y=510)
     btn_voltar = Button(window_register, text="Voltar", width=34, command=panel_homepage)
     btn_voltar.place(x=440, y=575)
+
+    global imgBolinhas1
+    imgBolinhas1 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg1 = Label(window_register, image=imgBolinhas1, width=300, height=600, bg="#121212")
+    labelImg1.place(x=6, y=50)
+    
+    global imgBolinhas2
+    imgBolinhas2 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg2 = Label(window_register, image=imgBolinhas2, width=300, height=600, bg="#121212")
+    labelImg2.place(x=770, y=50)
 
 ## - - - - - - - - - - CONTAINER LOGIN - - - - - - - - - - ##
 
@@ -444,8 +459,14 @@ def panel_delete_album():
 
     btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
     btn_voltar = Button(panel_delete_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=90, y=30)
-    btn_delete.place(x=90, y=300)
+    btn_voltar.place(x=800, y=190)
+    btn_delete.place(x=800, y=140)
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(panel_delete_album, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
+
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
@@ -577,27 +598,28 @@ def panel_adicionar_albuns():
 
     window_adicionar_album = PanedWindow(window, width=1080, height=720)
     currentpanel = window_adicionar_album
+    window_adicionar_album.configure(bg="#121212")
 
-    lblNome = Label(window_adicionar_album, text = "Nome")
+    lblNome = Label(window_adicionar_album, text = "Nome", bg="#121212", fg="white")
     lblNome.place(x=70, y=70)
     nome = StringVar()
     entryNome = Entry(window_adicionar_album, width=25, textvariable=nome)
     entryNome.place(x=120, y= 70) 
 
-    lblArtista = Label(window_adicionar_album, text = "Artista")
+    lblArtista = Label(window_adicionar_album, text = "Artista",bg="#121212", fg="white")
     lblArtista.place(x=70, y=120)
     artista = StringVar()
     entryArtista = Entry(window_adicionar_album, width=25, textvariable=artista)
     entryArtista.place(x=120, y= 120) 
 
-    lblAno = Label(window_adicionar_album, text = "Ano")
+    lblAno = Label(window_adicionar_album, text = "Ano",bg="#121212", fg="white")
     lblAno.place(x=70, y=170)
     ano = IntVar()
     entryAno = Entry(window_adicionar_album, width=25, textvariable=ano)
     entryAno.place(x=120, y= 170) 
 
 
-    lblGenero = Label(window_adicionar_album, text = "Género")
+    lblGenero = Label(window_adicionar_album, text = "Género",bg="#121212", fg="white")
     lblGenero.place(x=70, y=220)
     generoalbum = StringVar()
     generoalbum.set(0)
@@ -614,31 +636,31 @@ def panel_adicionar_albuns():
     rd5.place(x=120, y=340)
     rd6.place(x=120, y=370)
 
-    lblQt = Label(window_adicionar_album, text = "Qt músicas")
+    lblQt = Label(window_adicionar_album, text = "Qt músicas",bg="#121212", fg="white")
     lblQt.place(x=370, y=70)
     qt = IntVar()
     entryQt = Entry(window_adicionar_album, width=25, textvariable=qt)
     entryQt.place(x=450, y= 70) 
 
-    lblDuracao = Label(window_adicionar_album, text = "Duração")
+    lblDuracao = Label(window_adicionar_album, text = "Duração",bg="#121212", fg="white")
     lblDuracao.place(x=370, y=120)
     duracao = StringVar()
     entryDuracao = Entry(window_adicionar_album, width=25, textvariable=duracao)
     entryDuracao.place(x=450, y= 120) 
 
-    lblMetacritic = Label(window_adicionar_album, text = "Metacritic")
+    lblMetacritic = Label(window_adicionar_album, text = "Metacritic", bg="#121212", fg="white")
     lblMetacritic.place(x=370, y=170)
     metacritic = IntVar()
     entryMetacritic = Entry(window_adicionar_album, width=25, textvariable=metacritic)
     entryMetacritic.place(x=450, y= 170) 
 
-    lblDescricao = Label(window_adicionar_album, text = "Descrição")
+    lblDescricao = Label(window_adicionar_album, text = "Descrição", bg="#121212", fg="white")
     lblDescricao.place(x=370, y=220)
     descricao = StringVar()
     entryDescricao = Entry(window_adicionar_album, width=25, textvariable=descricao)
     entryDescricao.place(x=450, y= 220) 
 
-    lblMusicas = Label(window_adicionar_album, text = "Músicas")
+    lblMusicas = Label(window_adicionar_album, text = "Músicas", bg="#121212", fg="white")
     lblMusicas.place(x=370, y=270)
     musicas=StringVar()
     entryMusicas = Entry(window_adicionar_album, width=25, textvariable=musicas)
@@ -652,6 +674,11 @@ def panel_adicionar_albuns():
 
     btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)
     btn_voltar.place(x=800, y=140)
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_adicionar_album, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
 
     window_adicionar_album.place(x=0, y=0)
 
@@ -727,6 +754,7 @@ def panel_filtrar_albuns():
 
     window_consultar_album = PanedWindow(window, width=1080, height=720)
     currentpanel = window_consultar_album
+    window_consultar_album.configure(bg="#121212")
 
     choice1 = IntVar()
     choice1.set(1) 
@@ -774,7 +802,7 @@ def panel_filtrar_albuns():
     tree.heading("Ano", text = "Ano")
     tree.place(x=20, y=90)
       
-    lbl_num_albuns = Label(window_consultar_album, text = "Nº de álbuns", font = ("Helvetica", "10"))
+    lbl_num_albuns = Label(window_consultar_album, text = "Nº de álbuns", font = ("Helvetica", "10"), bg="#121212", fg="white")
     lbl_num_albuns.place(x=18, y=360)
 
     num_albuns = StringVar()
@@ -783,6 +811,11 @@ def panel_filtrar_albuns():
 
     btn_voltar = Button(window_consultar_album, text="Voltar", width=20, command=panel_admin)
     btn_voltar.place(x=800, y=140)
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_consultar_album, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
 
     window_consultar_album.place(x=0,y=0)
 
@@ -849,6 +882,12 @@ def panel_admin():
 
     admTxt = Label(painel_adm, text="Função: administrador", width=24, bd=0, bg="#121212", fg="white")
     admTxt.place(x=440, y=400)
+
+    global imgBolinhas2
+    imgBolinhas2 = PhotoImage(file= "./imgs/painel_login/notas_musicais_bolinhas.png")
+    labelImg2 = Label(painel_adm, image=imgBolinhas2, width=300, height=600, bg="#121212")
+    labelImg2.place(x=800, y=50)
+    
 
     painel_adm.mainloop()
 
@@ -937,7 +976,7 @@ def panel_homepage():
 
 
     #define Álbuns mais ouvidos cada botao levando a pagina do album
-    maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais ouvidos do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+    maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais visitados do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
     maisOuvidosTxt.place (x=70, y=177)
 
     imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
@@ -1020,6 +1059,9 @@ home_page = PanedWindow(window, width=1080, height=720)
 home_page.place(x=0,y=0)
 home_page.configure(bg = "#121212")
 
+
+
+
 #coloca título da app
 lblTitulo = Label(home_page, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
 lblTitulo.place (x=500, y=5)
@@ -1070,7 +1112,7 @@ btnOutros.place(x=850, y=90)
 
 
 #define Álbuns mais ouvidos cada botao levando a pagina do album
-maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais ouvidos do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais visitados do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
 maisOuvidosTxt.place (x=70, y=177)
 
 imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
@@ -1129,6 +1171,7 @@ btnGuardarF4.place (x = 610 , y = 498)
 imgFav5 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
 btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white")   #174px album +nome
 btnGuardarF5.place (x = 790 , y = 498)   
+
 
 currentpanel = home_page
 

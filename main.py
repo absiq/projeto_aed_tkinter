@@ -520,6 +520,8 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     user_id = retrieve_current_user_id()
 
+    user_id = retrieve_current_user_id()
+
     global like_btn
     like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)

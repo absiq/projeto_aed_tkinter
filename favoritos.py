@@ -10,10 +10,12 @@ def likeList(user_id, album_id):
         data = line.split(';')
         if data[0] == user_id:
             list_favs = data[1].split(',')
+            last_pos = len(list_favs)
+            list_favs = list_favs[last_pos-1].replace('\n', '')
+            list_favs = list_favs.split(',')
             list_favs.append(album_id)
             if '0\n' in list_favs:
                 list_favs.remove('0\n')
-            print(list_favs)
             list_to_string = ','.join(map(str, list_favs))
             line = user_id + ';' + list_to_string + '\n'
             campos[i] = line

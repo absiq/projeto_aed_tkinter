@@ -5,6 +5,7 @@ from users import *
 from pop import *
 from notifications import *
 from favoritos import *
+from categorias import *
 
 ## GUI implementation
 
@@ -622,6 +623,66 @@ def panel_adicionar_albuns():
 
     window_adicionar_album.place(x=0, y=0)
 
+## - - - - - - - - - - CONTAINER GERENCIAR CATEGORIAS - - - - - - - - - ##
+
+def preencheCombobox():
+    """
+    função que irá preencher a combobox com as categorias
+    """
+    ficheiroCategorias = 'databases/categorias.txt'
+    f = open(ficheiroCategorias, "r", encoding="utf-8")
+    categorias = f.readlines()
+    f.close()
+    return categorias
+
+def panel_categorias():
+    """
+    Painel de gerenciamento de categorias
+    """
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_consultar_categorias = PanedWindow(window, width=1080, height=720)
+    currentpanel = window_consultar_categorias
+
+    btn_voltar = Button(window_consultar_categorias, text="Voltar", command=panel_admin)
+    btn_voltar.place(x=100, y=30)
+
+    label_remover = Label(window_consultar_categorias, text="Remover uma categoria:")
+    label_remover.place(x=100, y=90)
+
+    current_var = StringVar()
+    combobox = ttk.Combobox(window_consultar_categorias, textvariable=current_var)
+    categorias = preencheCombobox()
+    combobox['values'] = categorias
+    combobox['state'] = 'readonly'
+    combobox.place(x=100, y=150)
+
+    btn_remover = Button(window_consultar_categorias, text="Remover", command=lambda:remover_categoria(current_var.get()))
+    btn_remover.place(x=100, y=210)
+
+    label_adicionar = Label(window_consultar_categorias, text="Adicionar uma categoria:")
+    label_adicionar.place(x=500, y=90)
+
+    current_input = StringVar()
+    entry_categoria = Entry(window_consultar_categorias, textvariable=current_input)
+    entry_categoria.place(x=500, y=150)
+
+    btn_add = Button(window_consultar_categorias, text="Adicionar", command=lambda:inserir_categoria(current_input.get()))
+    btn_add.place(x=500, y=210)
+
+    columns = ('categorias')
+    treeview = ttk.Treeview(window_consultar_categorias, selectmode="browse", columns=columns, show='headings')
+    treeview.heading('categorias', text='Categorias')
+    for categoria in categorias:
+        treeview.insert('', END, values=categoria)
+    treeview.place(x=400, y=400)
+    window_consultar_categorias.place(x=0, y=0)
+    btn_refresh = Button(window_consultar_categorias, text="Refresh", command=panel_categorias)
+    btn_refresh.place(x=600, y=410)
+
+
+
 ## - - - - - - - - - - CONTAINER FILTER ALBUMS - - - - - - - - - ##
 
 def panel_filtrar_albuns():
@@ -735,7 +796,7 @@ def panel_admin():
     btnFiltrar.place(x=300, y=565)
 
     # botão gerenciar categorias
-    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25)
+    btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25, command=panel_categorias)
     btnGerenciarCategorias.place(x=520, y=565)
 
     # botão gerenciar notificações
@@ -854,7 +915,7 @@ def panel_homepage():
     tituloA1.place(x=62, y=377)
 
     imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
     btnGuardarA2.place (x = 250 , y = 212)
     tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=242, y=377)
@@ -987,7 +1048,7 @@ tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, h
 tituloA1.place(x=62, y=377)
 
 imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white")   
+btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
 btnGuardarA2.place (x = 250 , y = 212)
 tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA2.place(x=242, y=377)

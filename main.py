@@ -448,50 +448,76 @@ def panel_delete_album():
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
+
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
 
     window_album = PanedWindow(window, width=1080, height=720)
+    window_album.configure(bg = "#121212")
     currentpanel = window_album
     
-    # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
+    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
 
     name = album_name
-    Label_name = Label(window_album, text=name, fg="black", font=('Arial', 80))
+    Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 70))
     Label_name.place(x=242,y=60)
 
     artist = album_artist
-    Label_artist = Label(window_album, text=artist, fg="black")
+    Label_artist = Label(window_album, text=artist, fg="white", bg="#121212")
     Label_artist.place(x=250,y=170)
     
     info = album_info
-    Label_info = Label(window_album, text=info, fg="black")
+    Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
     score = album_score
-    Label_score = Label(window_album, text=score, fg="black", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="white", bg="#121212", font=('Arial', 20))
     Label_score.place(x=170, y=220)
 
     description = album_description
-    Label_description = Label(window_album, text=description, fg="black", wraplength=450, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=750, justify="left")
     Label_description.place(x = 20, y = 270)
 
-    # songs = album_songs
-    # Label_songs = Label(window_album, text=songs, fg="black")
-    # Label_songs.place(x=20,y=350)
+    global lboxMusicas
+    lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
+    lboxMusicas.place(x=20, y= 320)
+    lboxMusicas.configure(foreground="white")
+    musicas = "databases\musicas.txt"
+
+    file = open(musicas, "r", encoding="utf-8")
+    music = file.readlines()
+    file.close()
+
+    for musica in music:
+        campos = musica.split(";")
+        if campos[0] == "2":
+            for songs in campos[1:]:
+                lboxMusicas.insert("end", songs)
+
+    global playBtn
+    playBtn = PhotoImage(file="imgs\icons\play_icon.png")
+    play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas)))
+    play_button.place(x=80, y= 590)
+
+    global pauseBtn
+    pauseBtn = PhotoImage(file="imgs\icons\pause_icon.png")
+    play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
+    play_button.place(x=120, y= 590)
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
+    button_share.configure(bg="#121212", fg="#121212")
+
 
     user_id = retrieve_current_user_id()
 
@@ -500,41 +526,49 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     like_label= Label(image=like_btn)
     button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
     button_like.place(x = 80, y = 220)
+    button_like.configure(bg="#121212")
+
 
     global stars_btn
     stars_btn= PhotoImage(file="imgs\star-icon.png")
     stars_label= Label(image=stars_btn)
     button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = one_star)
     button_stars.place(x = 250, y = 220)
+    button_stars.configure(bg="#121212")
 
     global stars_btn2
     stars_btn2= PhotoImage(file="imgs\star-icon.png")
     stars_label2= Label(image=stars_btn2)
     button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = two_stars)
     button_stars2.place(x = 285, y = 220)
+    button_stars2.configure(bg="#121212")
 
     global stars_btn3
     stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
     button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = three_stars)
     button_stars3.place(x = 320, y = 220)
+    button_stars3.configure(bg="#121212")
 
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\star-icon.png")
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
+    button_stars4.configure(bg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
+    button_stars5.configure(bg="#121212")
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)
 
     window_album.place(x=0, y=0)
+
 
 ## - - - - - - - - - - CONTAINER ADD ALBUMS - - - - - - - - - - ##
 

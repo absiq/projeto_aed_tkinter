@@ -448,6 +448,7 @@ def panel_delete_album():
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
+
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
@@ -456,10 +457,10 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     window_album.configure(bg = "#121212")
     currentpanel = window_album
     
-    # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
+    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
@@ -520,8 +521,6 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     user_id = retrieve_current_user_id()
 
-    user_id = retrieve_current_user_id()
-
     global like_btn
     like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)
@@ -556,17 +555,20 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
+    button_stars4.configure(bg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
+    button_stars5.configure(bg="#121212")
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)
 
     window_album.place(x=0, y=0)
+
 
 ## - - - - - - - - - - CONTAINER ADD ALBUMS - - - - - - - - - - ##
 

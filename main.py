@@ -4,6 +4,7 @@ import os
 from users import *
 from pop import *
 from notifications import *
+from favoritos import *
 
 ## GUI implementation
 
@@ -18,8 +19,9 @@ def login_and_change_page(username, password, page):
         page()
 
 def generate_page_album(album_id):
-    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
-    panel_album(img, album_name, album_artist, album_info, album_score, album_description)
+    print('entered function')
+    img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
+    panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id)
 
 def login_or_account():
     pasta = '.\\databases'
@@ -253,6 +255,7 @@ def create_register(nome, email, username, password):
     submit_register(nome, email, username, password)
     user_id = get_user_id(username)
     insert_new_user_into_notification_database(int(user_id))
+    insert_new_user_into_favs_database(int(user_id))
 
 def panel_register():
     global currentpanel
@@ -445,7 +448,7 @@ def panel_delete_album():
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
-def panel_album(img, album_name, album_artist, album_info, album_score, album_description):
+def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
 
@@ -490,10 +493,12 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
 
+    user_id = retrieve_current_user_id()
+
     global like_btn
     like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)
-    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command=like)
+    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
     button_like.place(x = 80, y = 220)
 
     global stars_btn
@@ -843,7 +848,7 @@ def panel_homepage():
     maisOuvidosTxt.place (x=70, y=177)
 
     imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white")
+    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
     btnGuardarA1.place (x = 70 , y = 212)
     tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=62, y=377)
@@ -976,7 +981,7 @@ maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais ouvidos do momento",
 maisOuvidosTxt.place (x=70, y=177)
 
 imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white")
+btnGuardarA1 = Button(home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
 btnGuardarA1.place (x = 70 , y = 212)
 tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#121212", fg="white")
 tituloA1.place(x=62, y=377)

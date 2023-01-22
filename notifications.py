@@ -54,7 +54,7 @@ def insert_new_user_into_notification_database(new_user_id):
         user_id = int(new_user_id)
         user_id -= 1
         if position == str(user_id):
-            campos[i] = new_line
+            campos.append(new_line)
             j = open(ficheiro, 'w')
             j.writelines(campos)
         else:

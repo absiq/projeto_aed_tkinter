@@ -38,6 +38,7 @@ def album_contents(album_id):
         # print(songs)
         if campos[0] == str(album_id):
             print(album_id)
+            alb_id = campos[0]
             img = campos[1]
             album_name = campos[2]
             album_artist = campos[3]
@@ -46,7 +47,7 @@ def album_contents(album_id):
             album_description = campos[9]
             # for songs in linha:
               #  album_songs = songs[0:]
-            return img, album_name, album_artist, album_info, album_score, album_description
+            return img, album_name, album_artist, album_info, album_score, album_description, alb_id
             
 def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))

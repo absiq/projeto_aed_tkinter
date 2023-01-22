@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import os
 from users import *
-from pop import *
+from infoalbum import *
 from notifications import *
 from favoritos import *
 
@@ -457,7 +457,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     window_album.configure(bg = "#121212")
     currentpanel = window_album
     
-    img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
+    # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
 
     global cover
     ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken",  bg="#121212", highlightbackground = "#121212")

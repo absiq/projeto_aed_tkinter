@@ -782,7 +782,7 @@ def panel_categorias():
     btn_add.place(x=500, y=210)
 
     columns = ('categorias')
-    treeview = ttk.Treeview(window_consultar_categorias, selectmode="single", columns=columns, show='headings')
+    treeview = ttk.Treeview(window_consultar_categorias, selectmode="browse", columns=columns, show='headings')
     treeview.heading('categorias', text='Categorias')
     for categoria in categorias:
         treeview.insert('', END, values=categoria)

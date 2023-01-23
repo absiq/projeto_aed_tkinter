@@ -16,6 +16,8 @@ def likeList(user_id, album_id):
             list_favs.append(album_id)
             if '0\n' in list_favs:
                 list_favs.remove('0\n')
+            if '0' in list_favs:
+                list_favs.remove('0')
             list_to_string = ','.join(map(str, list_favs))
             line = user_id + ';' + list_to_string + '\n'
             campos[i] = line

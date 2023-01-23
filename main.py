@@ -427,8 +427,20 @@ def panel_account():
 
     label_favoritos = Label(window_account, text='Teus favoritos', justify='center', wraplength=240, bg="#121212", fg="white")
     label_favoritos.place(x=500, y=140)
-    lboxFavoritos=Listbox(window_account, width = 35, height=16, bd="0", selectmode = "single", relief="flat")
-    lboxFavoritos.place(x=500,y=200)
+    lboxFavoritos=Listbox(window_account, width = 35, height=16, selectmode = "single", relief="flat")
+    lboxFavoritos.place(x=480,y=200)
+
+    user_id = retrieve_current_user_id()
+    ficheiro = '.\\databases\\favoritos.csv'
+    f = open(ficheiro, 'r')
+    dados = f.readlines()
+    for line in dados:
+        user = line.split(';')
+        if user[0] == user_id:
+            songs = user[1].split(',')
+            for song in songs:
+                lboxFavoritos.insert('end', song)
+
 
     window_account.place(x=0, y=0)
 
@@ -472,8 +484,6 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     window_album.configure(bg = "#121212")
     currentpanel = window_album
     
-    # img, album_name, album_artist, album_info, album_score, album_description = album_contents(album_id)
-
     global cover
     ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
     ctn_cover.place(x=20, y=20)
@@ -531,9 +541,6 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
-
-    user_id = retrieve_current_user_id()
-
 
     user_id = retrieve_current_user_id()
 

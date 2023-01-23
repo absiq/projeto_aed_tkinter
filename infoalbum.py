@@ -55,12 +55,6 @@ def album_contents(album_id):
 
 ficheiroFav= "databases/favoritos.txt"
 
-def likeList():
-    favoritos = open(ficheiroFav, "a", encoding="utf-8")
-    infoAlb = campos[0] + ";" + campos[1] + ";" + campos[2] + ";" + campos[3] + ";" + campos[4] + ";" + campos[5] + ";" + campos[6] + ";" + campos[7] + ";" + campos[8] + ";" + campos[9] 
-    favoritos.write(infoAlb)
-    favoritos.close()
-
 ficheiroReviews = "databases/reviews.txt"
 
 def reviewsList(numberStars):

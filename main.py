@@ -25,16 +25,18 @@ def generate_page_album(album_id):
     img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id)
     
-    ficheiro = open("pop.txt", "r", encoding="utf'8")
-    lista = ficheiro.readlines()
-    for linha in lista:
-        split = lista.split(";")
+    with open("albums.txt", "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    for i, line in enumerate(lines):
+        split = line.split(";")
         id = split[0]
         views = int(split[10])
         if id == album_id:
             views += 1
-        else:
-            views = views
+            split[10] = str(views)
+            lines[i] = ";".join(split)
+    with open("albums.txt", "w", encoding="utf-8") as f:
+        f.writelines(lines)
 
 
 def login_or_account():
@@ -1080,6 +1082,601 @@ def panel_search():
     panel_search.mainloop()
 
 
+## - - - - - - - - - - CONTAINER CATEGORIAS - - - - - - - - - - ##
+
+def panel_categoriaPop():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaPop = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaPop
+    panel_categoriaPop.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaPop, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaPop, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaPop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaPop, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaPop, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaPop, text ="Destaques da categoria POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/Hold_the_Girl.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaPop, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(1))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaPop, text="Hold the Girl", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Harry's_House.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaPop, text="Harry´s House", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Midnights.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(3))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaPop, text="Midnights", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/Happier_Than_Ever.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(4))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaPop, text="Happier Than Ever", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/SOUR.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(5))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaPop, text="SOUR", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/Future_Nostalgia.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(6))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaPop, text="Future Nostalgia", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaPop.place(x=0,y=0)
+
+
+# ------------------------------------------------------
+def panel_categoriaHiphop():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaHiphop = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaHiphop
+    panel_categoriaHiphop.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaHiphop, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaHiphop, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaHiphop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaHiphop, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaHiphop, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaHiphop, text ="Destaques da categoria HIP-POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/This_Is_What_I_Mean.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(7))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaHiphop, text="This Is What I Mean", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/23.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(8))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaHiphop, text="23", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Honestly_Nevermind.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(9))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaHiphop, text="Honestly, Nevermind", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/Come_Home_the_Kids_Miss_You.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(10))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaHiphop, text="Come Home the Kids Miss You", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/The_Divine_Feminine.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaHiphop, text="The Divine Feminine", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/777.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaHiphop, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(12))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaHiphop, text="777", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaHiphop.place(x=0,y=0)
+
+# ------------------------------------------------------
+def panel_categoriaKpop():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaKpop = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaKpop
+    panel_categoriaKpop.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaKpop, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaKpop, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaKpop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaKpop, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaKpop, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaKpop, text ="Destaques da categoria K-POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/I_Never_Die.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaKpop, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(13))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaKpop, text="I Never Die", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Between_1&2.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaKpop, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(14))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaKpop, text="Between 1&2", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Checkmate.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaKpop, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(15))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaKpop, text="Checkmate", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/Girls.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaKpop, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(16))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaKpop, text="Girls", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/Born_Pink.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaKpop, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(17))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaKpop, text="Born Pink", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/IM_NAYEON.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaKpop, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(18))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaKpop, text="I'M NAYEON", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaKpop.place(x=0,y=0)
+
+
+    # ------------------------------------------------------
+def panel_categoriaRock():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaRock = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaRock
+    panel_categoriaRock.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaRock, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaRock, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaRock, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaRock, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaRock, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaRock, text ="Destaques da categoria ROCK", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/The_Car.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaRock, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(19))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaRock, text="The car", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Rumours.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaRock, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(20))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaRock, text="Rumours", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Nevermind.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaRock, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(21))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaRock, text="Nevermind", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/The_Dark_Side_of_the_Moon.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaRock, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(22))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaRock, text="The dark side of the moon", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/Ok_Computer.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaRock, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(23))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaRock, text="OK Computer", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/A_Night_at_the_Opera_Queen.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaRock, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(24))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaRock, text="A night at the opera", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaRock.place(x=0,y=0)
+
+
+    # ------------------------------------------------------
+def panel_categoriaReB():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaReB = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaReB
+    panel_categoriaReB.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaReB, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaReB, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaReB, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaReB, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaReB, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaReB, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/An_Evening_with_Silk_Sonic.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaReB, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(25))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaReB, text="An evening with Silk Sonic", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Thriller.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaReB, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(26))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaReB, text="Thriller", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Gemini_Rights.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaReB, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(27))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaReB, text="Gemini Rights", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/Whats_Going_On.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaReB, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(28))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaReB, text="What's Going On", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/innervisions.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaReB, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(29))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaReB, text="Innervisions", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/No_Thank_You.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaReB, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(30))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaReB, text="No Thank You", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaReB.place(x=0,y=0)
+
+
+    # ------------------------------------------------------
+def panel_categoriaCountry():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaCountry = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaCountry
+    panel_categoriaCountry.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaCountry, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaCountry, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaCountry, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaCountry, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaCountry, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaCountry, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+    global imgAlbum4
+    global imgAlbum5
+    global imgAlbum6
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/I_Know_Im_Funny_Haha.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaCountry, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(31))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaCountry, text="I Know I'm Funny Haha", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Show_Pony.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaCountry, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(32))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaCountry, text="Show Pony", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Laura_Stevenson.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaCountry, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(33))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaCountry, text="Laura Stevenson", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+    imgAlbum4 = PhotoImage(file="imgs/covers/The_Hardest_Part.png", height= 150, width= 150)
+    btnGuardarA4 = Button (panel_categoriaCountry, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(34))   #174px album +nome
+    btnGuardarA4.place (x = 100 , y = 460)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaCountry, text="The Hardest Part", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=92, y=625)
+
+    imgAlbum5 = PhotoImage(file="imgs/covers/Saint_Cloud.png", height= 150, width= 150)
+    btnGuardarA5 = Button (panel_categoriaCountry, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(35))   #174px album +nome
+    btnGuardarA5.place (x = 350 , y = 460)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaCountry, text="Saint Cloud", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=342, y=625)
+
+    imgAlbum6 = PhotoImage(file="imgs/covers/Why_Not_Me.png", height= 150, width= 150)
+    btnGuardarA6 = Button (panel_categoriaCountry, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(36))   #174px album +nome
+    btnGuardarA6.place (x = 600 , y = 460)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaCountry, text="Why Not Me", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=592, y=625)
+
+    panel_categoriaCountry.place(x=0,y=0)
+
+
+        # ------------------------------------------------------
+def panel_categoriaOutros():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    panel_categoriaOutros = PanedWindow(window, width=1080, height=720)
+    currentpanel = panel_categoriaOutros
+    panel_categoriaOutros.configure(bg="#121212")
+
+    #coloca título da app
+    lblTitulo = Label(panel_categoriaOutros, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo.place (x=500, y=5)
+
+    #define icone da lupa no botao de busca
+    global imgSearch
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
+    btnGuardarS = Button (panel_categoriaOutros, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS.place (x = 1020 , y = 7)
+
+    #define icone de user no botao para ir p/ página do usuário
+    global imgUser
+    imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
+    btnGuardarU = Button (panel_categoriaOutros, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU.place (x = 975 , y = 9)
+
+    #define icone de sino para ir pra página de notificações
+    global imgNotific
+    imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
+
+    btnGuardarN = Button (panel_categoriaOutros, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+    btnGuardarN.place (x = 930 , y = 9)
+    btnGuardarN.bind('<Enter>', panel_notifications)
+
+    # botao voltar
+    btn_voltar = Button(panel_categoriaOutros, text="Voltar", width=20, command=panel_homepage)
+    btn_voltar.place(x=850, y=580)
+
+    #coloca título da categoria
+    lblTitulo = Label(panel_categoriaOutros, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo.place (x=100, y=150)
+
+    #imagens
+    global imgAlbum1
+    global imgAlbum2
+    global imgAlbum3
+
+
+    imgAlbum1 = PhotoImage(file="imgs/covers/I_Know_Im_Funny_Haha.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaOutros, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(31))
+    btnGuardarA1.place (x = 100 , y = 212)
+    tituloA1 = Label(panel_categoriaOutros, text="I Know I'm Funny Haha", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1.place(x=92, y=377)
+
+    imgAlbum2 = PhotoImage(file="imgs/covers/Show_Pony.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(32))   
+    btnGuardarA2.place (x = 350 , y = 212)
+    tituloA2 = Label(panel_categoriaOutros, text="Show Pony", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2.place(x=342, y=377)
+
+    imgAlbum3 = PhotoImage(file="imgs/covers/Laura_Stevenson.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(33))   #174px album +nome
+    btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
+    tituloA3 = Label(panel_categoriaOutros, text="Laura Stevenson", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3.place(x=592, y=377)
+
+
+    panel_categoriaOutros.place(x=0,y=0)
 
 ## - - - - - - - - - - CONTAINER HOMEPAGE - - - - - - - - - - ##
 
@@ -1087,131 +1684,141 @@ def panel_homepage():
     global currentpanel
     currentpanel.pack_forget()
 
-    home_page = PanedWindow(window, width=1080, height=720)
-    home_page.place(x=0,y=0)
-    currentpanel = home_page
-    home_page.configure(bg="#121212")
+    home_pageP = PanedWindow(window, width=1080, height=720)
+    home_pageP.place(x=0,y=0)
+    currentpanel = home_pageP
+    home_pageP.configure(bg="#121212")
 
     window.title('   Songsy')
     window.resizable(0,0)
     window.iconbitmap("./imgs/home/music.ico")
 
-
-    home_page = PanedWindow(window, width=1080, height=720)
-    home_page.place(x=0,y=0)
-    home_page.configure(bg = "#121212")
-
     #coloca título da app
-    lblTitulo = Label(home_page, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo = Label(home_pageP, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
     lblTitulo.place (x=500, y=5)
 
     #define icone da lupa no botao de busca
+    global imgSearch
     imgSearch = PhotoImage(file = "./imgs/home/search.png", height=20, width=20)
-    btnGuardarS = Button (home_page, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
+    btnGuardarS = Button (home_pageP, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
     btnGuardarS.place (x = 1020 , y = 7)
 
     #define icone de user no botao para ir p/ página do usuário
+    global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", command=login_or_account)
+    btnGuardarU = Button (home_pageP, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
+    global imgNotific
     imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
-    btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
+
+    btnGuardarN = Button (home_pageP, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
     btnGuardarN.place (x = 930 , y = 9)
     btnGuardarN.bind('<Enter>', panel_notifications)
 
     # mostra os generos musicias suportados pela app
-    """
-    frameGeneros = LabelFrame (home_page, text = "   Géneros musicais:   ", width= 250, height=110, bg="#d3d3d3", font="Arial, 10", fg= "black")
-    frameGeneros.place (x=110, y=80)
-    """
-
-    btnPop = Button(home_page, text="POP", width=15, height=2, bg="white", fg="#121212")
+    btnPop = Button(home_pageP, text="POP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaPop)
     btnPop.place(x=70, y=90)
 
-    btnHiphop = Button(home_page, text="HIP-HOP", width=15, height=2, bg="white", fg="#121212")
+    btnHiphop = Button(home_pageP, text="HIP-HOP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaHiphop)
     btnHiphop.place(x=200, y=90)
 
-    btnKpop = Button(home_page, text="K-POP", width=15, height=2, bg="white", fg="#121212")
+    btnKpop = Button(home_pageP, text="K-POP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaKpop)
     btnKpop.place(x=330, y=90)
 
-    btnRock = Button(home_page, text="ROCK", width=15, height=2, bg="white", fg="#121212")
+    btnRock = Button(home_pageP, text="ROCK", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaRock)
     btnRock.place(x=460, y=90)
 
-    btnReb = Button(home_page, text="R&B", width=15, height=2, bg="white", fg="#121212")
+    btnReb = Button(home_pageP, text="R&B", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaReB)
     btnReb.place(x=590, y=90)
 
-    btnCountry = Button(home_page, text="COUNTRY", width=15, height=2, bg="white", fg="#121212")
+    btnCountry = Button(home_pageP, text="COUNTRY", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaCountry)
     btnCountry.place(x=720, y=90)
 
-    btnOutros = Button(home_page, text="OUTROS", width=15, height=2,bg="white", fg="#121212")
+    btnOutros = Button(home_pageP, text="OUTROS", width=15, height=2,bg="white", fg="#121212", command=panel_categoriaOutros)
     btnOutros.place(x=850, y=90)
 
 
-    #define Álbuns mais ouvidos cada botao levando a pagina do album
-    maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais visitados do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+    #define Álbuns mais vistos cada botao levando a pagina do album
+    maisOuvidosTxt = LabelFrame(home_pageP, text = "Álbuns mais visitados do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
     maisOuvidosTxt.place (x=70, y=177)
 
-    imgAlbum1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-    btnGuardarA1 = Button (home_page, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
+    listaMaisVistos = idsMaisVistos()
+    imagemMaisVisto1, nomeAlbMaisVisto1, artistaAlb1, infoAlb1, scoreAlb1, descpAlb1, idAlb1 = album_contents(listaMaisVistos[0])
+    imagemMaisVisto2, nomeAlbMaisVisto2, artistaAlb2, infoAlb2, scoreAlb2, descpAlb2, idAlb2 = album_contents(listaMaisVistos[1])
+    imagemMaisVisto3, nomeAlbMaisVisto3, artistaAlb3, infoAlb3, scoreAlb3, descpAlb3, idAlb3 = album_contents(listaMaisVistos[2])
+    imagemMaisVisto4, nomeAlbMaisVisto4, artistaAlb4, infoAlb4, scoreAlb4, descpAlb4, idAlb4 = album_contents(listaMaisVistos[3])
+    imagemMaisVisto5, nomeAlbMaisVisto5, artistaAlb5, infoAlb5, scoreAlb5, descpAlb5, idAlb5 = album_contents(listaMaisVistos[4])
+
+    global imgAlbum1
+    imgAlbum1 = PhotoImage(file = imagemMaisVisto1, height= 150, width= 150)
+    btnGuardarA1 = Button(home_pageP, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(listaMaisVistos[0]))
     btnGuardarA1.place (x = 70 , y = 212)
-    tituloA1 = Label(home_page, text="Harry's House \n by Harry Styles", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1 = Label(home_pageP, text=nomeAlbMaisVisto1, width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=62, y=377)
 
-    imgAlbum2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-    btnGuardarA2 = Button (home_page, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
+    global imgAlbum2
+    imgAlbum2 = PhotoImage(file = imagemMaisVisto2, height= 150, width= 150)
+    btnGuardarA2 = Button (home_pageP, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(listaMaisVistos[1]))   
     btnGuardarA2.place (x = 250 , y = 212)
-    tituloA2 = Label(home_page, text="The divine feminine \n by Mac Miller", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2 = Label(home_pageP, text=nomeAlbMaisVisto2, width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=242, y=377)
 
-    imgAlbum3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-    btnGuardarA3 = Button (home_page, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white")   #174px album +nome
+    global imgAlbum3
+    imgAlbum3 = PhotoImage(file = imagemMaisVisto3, height= 150, width= 150)
+    btnGuardarA3 = Button (home_pageP, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(listaMaisVistos[2]))   #174px album +nome
     btnGuardarA3.place (x = 430 , y = 212)   #180px distancia de um album pra outro
-    tituloA3 = Label(home_page, text="Born Pink \n by BLACKPINK", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3 = Label(home_pageP, text= nomeAlbMaisVisto3, width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA3.place(x=422, y=377)
 
-    imgAlbum4 = PhotoImage(file = "./imgs/home/nevermind.png", height= 150, width= 150)
-    btnGuardarA4 = Button (home_page, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white")   #174px album +nome
+    global imgAlbum4
+    imgAlbum4 = PhotoImage(file = imagemMaisVisto4, height= 150, width= 150)
+    btnGuardarA4 = Button (home_pageP, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(listaMaisVistos[3]))   #174px album +nome
     btnGuardarA4.place (x = 610 , y = 212)   #180px distancia de um album pra outro
-    tituloA4 = Label(home_page, text="Nevermind\nby Nirvana", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4 = Label(home_pageP, text= nomeAlbMaisVisto4, width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA4.place(x=602, y=377)
 
-    imgAlbum5 = PhotoImage(file = "./imgs/home/A_Night_At_The_Opera.png", height= 150, width= 150)
-    btnGuardarA5 = Button (home_page, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white")   #174px album +nome
+    global imgAlbum5
+    imgAlbum5 = PhotoImage(file = imagemMaisVisto5, height= 150, width= 150)
+    btnGuardarA5 = Button (home_pageP, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(listaMaisVistos[4]))   #174px album +nome
     btnGuardarA5.place (x = 790 , y = 212)   #180px distancia de um album pra outro
-    tituloA5 = Label(home_page, text="A night at the opera\nby Queen", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5 = Label(home_pageP, text= nomeAlbMaisVisto5, width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA5.place(x=784, y=377)
 
 
     #define Álbuns mais favoritados da app
-    favoritosTxt = LabelFrame(home_page, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+    favoritosTxt = LabelFrame(home_pageP, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
     favoritosTxt.place (x=70, y=463)
 
+    global imgFav1
     imgFav1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-    btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white")
+    btnGuardarF1 = Button (home_pageP, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
     btnGuardarF1.place (x = 70 , y = 498)
 
-    imgFav2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-    btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white")   
+    global imgFav2
+    imgFav2 = PhotoImage(file = "./imgs/covers/The_Divine_Feminine.png", height= 150, width= 150)
+    btnGuardarF2 = Button (home_pageP, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
     btnGuardarF2.place (x = 250 , y = 498)
 
-
-    imgFav3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-    btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white")   #174px album +nome
+    global imgFav3
+    imgFav3 = PhotoImage(file = "./imgs/covers/Born_Pink.png", height= 150, width= 150)
+    btnGuardarF3 = Button (home_pageP, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(17))   #174px album +nome
     btnGuardarF3.place (x = 430 , y = 498)   
 
-    imgFav4 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-    btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white")   #174px album +nome
+    global imgFav4
+    imgFav4 = PhotoImage(file = "./imgs/covers/Rumours.png", height= 150, width= 150)
+    btnGuardarF4 = Button (home_pageP, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(20))   #174px album +nome
     btnGuardarF4.place (x = 610 , y = 498)  
 
+    global imgFav5
+    imgFav5 = PhotoImage(file = ".\imgs\covers\The_Hardest_Part.png", height= 150, width= 150)
+    btnGuardarF5 = Button (home_pageP, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(34))   #174px album +nome
+    btnGuardarF5.place (x = 790 , y = 498)  
 
-    imgFav5 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-    btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white")   #174px album +nome
-    btnGuardarF5.place (x = 790 , y = 498)   
+    currentpanel = home_pageP
 
-
-    home_page.mainloop()
+    home_page.place(x=0,y=0)
 
 
 
@@ -1241,16 +1848,19 @@ lblTitulo = Label(home_page, text = "Songsy", bg="#121212", fg="white", font = "
 lblTitulo.place (x=500, y=5)
 
 #define icone da lupa no botao de busca
+global imgSearch
 imgSearch = PhotoImage(file = "./imgs/home/search.png", height=20, width=20)
 btnGuardarS = Button (home_page, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
 btnGuardarS.place (x = 1020 , y = 7)
 
 #define icone de user no botao para ir p/ página do usuário
+global imgUser
 imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
 btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
 btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações
+global imgNotific
 imgNotific = PhotoImage(file = "./imgs/home/sino.png", height=20, width=20)
 
 btnGuardarN = Button (home_page, width = 40, height = 40, image = imgNotific, border=0, bg="#121212", fg="white", command=panel_notifications)
@@ -1258,34 +1868,29 @@ btnGuardarN.place (x = 930 , y = 9)
 btnGuardarN.bind('<Enter>', panel_notifications)
 
 # mostra os generos musicias suportados pela app
-"""
-frameGeneros = LabelFrame (home_page, text = "   Géneros musicais:   ", width= 250, height=110, bg="#d3d3d3", font="Arial, 10", fg= "black")
-frameGeneros.place (x=110, y=80)
-"""
-
-btnPop = Button(home_page, text="POP", width=15, height=2, bg="white", fg="#121212")
+btnPop = Button(home_page, text="POP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaPop)
 btnPop.place(x=70, y=90)
 
-btnHiphop = Button(home_page, text="HIP-HOP", width=15, height=2, bg="white", fg="#121212")
+btnHiphop = Button(home_page, text="HIP-HOP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaHiphop)
 btnHiphop.place(x=200, y=90)
 
-btnKpop = Button(home_page, text="K-POP", width=15, height=2, bg="white", fg="#121212")
+btnKpop = Button(home_page, text="K-POP", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaKpop)
 btnKpop.place(x=330, y=90)
 
-btnRock = Button(home_page, text="ROCK", width=15, height=2, bg="white", fg="#121212")
+btnRock = Button(home_page, text="ROCK", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaRock)
 btnRock.place(x=460, y=90)
 
-btnReb = Button(home_page, text="R&B", width=15, height=2, bg="white", fg="#121212")
+btnReb = Button(home_page, text="R&B", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaReB)
 btnReb.place(x=590, y=90)
 
-btnCountry = Button(home_page, text="COUNTRY", width=15, height=2, bg="white", fg="#121212")
+btnCountry = Button(home_page, text="COUNTRY", width=15, height=2, bg="white", fg="#121212", command=panel_categoriaCountry)
 btnCountry.place(x=720, y=90)
 
-btnOutros = Button(home_page, text="OUTROS", width=15, height=2,bg="white", fg="#121212")
+btnOutros = Button(home_page, text="OUTROS", width=15, height=2,bg="white", fg="#121212", command=panel_categoriaOutros)
 btnOutros.place(x=850, y=90)
 
 
-#define Álbuns mais ouvidos cada botao levando a pagina do album
+#define Álbuns mais vistos cada botao levando a pagina do album
 maisOuvidosTxt = LabelFrame(home_page, text = "Álbuns mais visitados do momento", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
 maisOuvidosTxt.place (x=70, y=177)
 
@@ -1331,27 +1936,29 @@ tituloA5.place(x=784, y=377)
 favoritosTxt = LabelFrame(home_page, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
 favoritosTxt.place (x=70, y=463)
 
+
 imgFav1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white")
+btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
 btnGuardarF1.place (x = 70 , y = 498)
 
+
 imgFav2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white")   
+btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
 btnGuardarF2.place (x = 250 , y = 498)
 
-
 imgFav3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white")   #174px album +nome
+btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(17))   #174px album +nome
 btnGuardarF3.place (x = 430 , y = 498)   
 
-imgFav4 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white")   #174px album +nome
+
+imgFav4 = PhotoImage(file = "./imgs/covers/rumours.png", height= 150, width= 150)
+btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(20))   #174px album +nome
 btnGuardarF4.place (x = 610 , y = 498)  
 
 
-imgFav5 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white")   #174px album +nome
-btnGuardarF5.place (x = 790 , y = 498)   
+imgFav5 = PhotoImage(file = ".\imgs\covers\The_Hardest_Part.png", height= 150, width= 150)
+btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(34))   #174px album +nome
+btnGuardarF5.place (x = 790 , y = 498)  
 
 currentpanel = home_page
 

@@ -127,6 +127,7 @@ def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))
 
 
+def maisVistos():
     """
     seleciona os 5 albuns mais vistos da aplicacao
     """

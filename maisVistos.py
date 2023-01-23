@@ -20,7 +20,8 @@ def maisVistos():
         img_album = split[1]
         nome_album = split[2]
         nome_artista = split[3]
-        print(id_album + ";" + img_album  + ";" + nome_album +";" + nome_artista)
+        visualizacoes = split[10]
+        print(id_album + ";" + img_album  + ";" + nome_album +";" + nome_artista+ ";" + visualizacoes)
 
     with open("top_5_views.txt", "w", encoding="utf-8") as file:
         for view in top_5_views:
@@ -29,7 +30,8 @@ def maisVistos():
             img_album = split[1]
             nome_album = split[2]
             nome_artista = split[3]
-            file.write(id_album + ";" + img_album  + ";" + nome_album +";" + nome_artista + '\n')
+            visualizacoes = split[10]
+            file.write(id_album + ";" + img_album  + ";" + nome_album + ";" + nome_artista + ";" + visualizacoes + '\n')
 
 
 maisVistos()

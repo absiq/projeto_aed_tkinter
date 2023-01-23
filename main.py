@@ -506,6 +506,16 @@ def panel_delete_album():
     labelImg.place(x=0, y=550)
 
 
+## - - - - - - - - - - CONTAINER COMENTARIOS - - - - - - - - - - ##
+
+def panel_comentarios(album_id):
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_comentarios = PanedWindow(window, width=1080, height=720)
+
+    
+
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
@@ -616,6 +626,9 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
+
+    btn_comentar = Button(window_album, text="Comentar", command=panel_comentarios)
+    btn_comentar.place(x=600, y=600)
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)

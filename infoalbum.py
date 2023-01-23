@@ -26,6 +26,7 @@ def inserir_album(Nome, Artista, filename, current_var, Ano, Qt, Duracao, Metacr
     linha = str(album_id) + ";" + str(filename) + ";" + str(Nome) + ";" + str(Artista) + ";" + str(current_var) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0;" + "\n" 
     filePop.write(linha)
     filePop.close()
+    messagebox.showeinfo("Álbum", "Álbum inserido com sucesso!")
 
 def album_contents(album_id):
 

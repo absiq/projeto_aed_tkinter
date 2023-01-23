@@ -36,9 +36,6 @@ def album_contents(album_id):
     for linha in linhas:
         global campos
         campos = linha.split(";")
-        # campo = str(campos)
-        # songs = campo.split(",")
-        # print(songs)
         if campos[0] == str(album_id):
             print(album_id)
             alb_id = campos[0]
@@ -48,8 +45,6 @@ def album_contents(album_id):
             album_info = campos[4] + ", " + campos[5] + ", " + campos[6] + ", " + campos[7]
             album_score = campos[8]
             album_description = campos[9]
-            # for songs in linha:
-              #  album_songs = songs[0:]
             return img, album_name, album_artist, album_info, album_score, album_description, alb_id
 
 ficheiroFav= "databases/favoritos.txt"
@@ -219,7 +214,7 @@ def refreshTreeViews(listaViews, treeVisualicacao):
         item = item.split(";")
         treeVisualicacao.insert("", "end", values = (item[0],item[2], item[3], item[4]))
 
-fScore = ""
+fScore = "databases\\top_5_ratings.txt"
 
 def lerScore():
     fileScore=open(fScore, "r", encoding="utf-8")

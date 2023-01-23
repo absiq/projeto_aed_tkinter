@@ -206,7 +206,9 @@ def lerViews():
     fileViews=open(fmaisVistos, "r", encoding="utf-8")
     lista = fileViews.readlines()
     fileViews.close()
+    print(lista)
     return lista
+
 
 def refreshTreeViews(listaViews, treeVisualicacao):
     treeVisualicacao.delete(*treeVisualicacao.get_children())
@@ -217,10 +219,19 @@ def refreshTreeViews(listaViews, treeVisualicacao):
 fScore = "databases\\top_5_ratings.txt"
 
 def lerScore():
+    fScore = 'databases/top_5_ratings.txt'
     fileScore=open(fScore, "r", encoding="utf-8")
-    lista = fileScore.readlines()
+    listaScore = fileScore.readlines()
     fileScore.close()
+    lista = []
+    for line in listaScore:
+        campos = line.split(';')
+        img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(campos[0])
+        new_line = campos[0] + ';' + img + ';' + album_name + ';' + album_artist + ';' + campos[1]
+        lista.append(new_line)
     return lista
+
+lerScore()
 
 def refreshTreeViews(listaAvaliacao, treeAvaliacao):
     treeAvaliacao.delete(*treeAvaliacao.get_children())

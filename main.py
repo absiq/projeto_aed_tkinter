@@ -927,12 +927,78 @@ def panel_search():
     currentpanel.pack_forget()
 
     panel_search = PanedWindow(window, width=1080, height=720)
+    panel_search.place(x=0,y=0)
     currentpanel = panel_search
     panel_search.configure(bg="#121212")
 
+    global lbCategorias
+    lblCategorias = Label(panel_search, text = "Filtro por Categorias", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 10)
+    lbCategorias = Listbox(panel_search, width=20, height=8)
+    ListBoxCategorias(lbCategorias)
+    lbCategorias.place(x = 20, y = 40)
 
-    txt = Label(panel_search, text="Pesquise aqui", width=24, height=3, bd=0, bg="#121212", fg="white")
-    txt.place(x=420, y=345)
+    BtnNext = Button(panel_search, text = ">", command= lambda: [selecaoItem(lbCategorias), filtrarAlbums(treeCategorias, numAlbumCat)])
+    BtnNext.place(x = 160, y = 100)
+
+    def on_select(event):
+        selected_item = treeCategorias.selection()[0]
+        global select
+        select = treeCategorias.item(selected_item)["values"][0]
+        print(select)
+        return select
+
+    treeCategorias = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Ano"), show = "headings")
+
+    treeCategorias.column("ID", width=14, anchor="w")
+    treeCategorias.column("Álbum", width=200, anchor="w")
+    treeCategorias.column("Artista", width=150, anchor="w")
+    treeCategorias.column("Ano", width=100, anchor="c")
+    treeCategorias.heading("ID", text = "ID")
+    treeCategorias.heading("Álbum", text = "Álbum")
+    treeCategorias.heading("Artista", text = "Artista")
+    treeCategorias.heading("Ano", text = "Ano")
+    treeCategorias.place(x = 200, y = 40)
+    treeCategorias.bind("<<TreeviewSelect>>", on_select)
+
+    lbNumAlbumCat = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbumCat.place(x=220, y=180)
+    global numAlbumCat
+    numAlbumCat = StringVar()
+    txtNumAlbumCat = Entry(panel_search, width=10, textvariable = numAlbumCat, state="disable")
+    txtNumAlbumCat.place(x=320, y=180)
+
+    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeCategorias.yview)
+    verscrlbar.place(x = 670+2, y=40+2, height=112+10)
+    treeCategorias.configure(yscrollcommand=verscrlbar.set)
+
+    btnPag = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select))
+    btnPag.place(x = 450, y = 180)
+
+    lblCategorias = Label(panel_search, text = "Filtro por Visualizações", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 220)
+
+    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("Álbum", "Artista", "Visualizações"), show = "headings")
+
+    treeVisualicacao.column("Álbum", width=200, anchor="w")
+    treeVisualicacao.column("Artista", width=150, anchor="w")
+    treeVisualicacao.column("Visualizações", width=100, anchor="c")
+    treeVisualicacao.heading("Álbum", text = "Álbum")
+    treeVisualicacao.heading("Artista", text = "Artista")
+    treeVisualicacao.heading("Visualizações", text = "Visualizações")
+    treeVisualicacao.place(x = 20, y = 260)
+
+    lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbum.place(x=20, y=400)
+    numAlbumVisu = StringVar()
+    txtNumAlbumVisu = Entry(panel_search, width=10, textvariable = numAlbumVisu, state="disable")
+    txtNumAlbumVisu.place(x = 120, y=400)
+
+    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeVisualicacao.yview)
+    verscrlbar.place(x = 470+2, y=260+2, height=112+10)
+    treeVisualicacao.configure(yscrollcommand=verscrlbar.set)
+
+    panel_search.mainloop()
 
 
 

@@ -231,17 +231,13 @@ def panel_edit_profile():
 
     icon_text = "O teu icon atual é: "
     label_icon_text = Label(window_edit_profile, text=icon_text, bg="#121212", fg="white")
-    label_icon_text.place(x=400, y=220)
+    label_icon_text.place(x=740, y=220)
     ficheiro_img = os.path.join('imgs\\profile_pics', icon)
     user_img = Canvas(window_edit_profile, width=100, height=100, bd=0)
-    user_img.place(x=400, y=240)
-    user_img.itemconfig(image_id, image= image1)
+    user_img.place(x=740, y=240)
     global img
     img = PhotoImage(file = ficheiro_img)
-    image_id = user_img.create_image(50,50, anchor=CENTER, image = img)
-    btnAltIcon = Button(window, width=15, text="Altere o teu icon", relief="flat", command=selecionaFile)
-    
-    btnAltIcon.place(x=400, y=370)
+    user_img.create_image(50,50, anchor=CENTER, image = img)
    
 
     label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")
@@ -273,6 +269,9 @@ def panel_edit_profile():
 
     btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get()))
     btn_editar.place(x=540, y=430)
+
+    btn_voltar = Button(window_edit_profile, text="Voltar", command=panel_account)
+    btn_voltar.place(x=700, y=600)
 
     window_edit_profile.place(x=0, y=0)
 

@@ -892,6 +892,46 @@ def panel_categorias():
     labelImg = Label(window_consultar_categorias, image=imgMusicas, width=1080, height=300, bg="#121212")
     labelImg.place(x=0, y=550)
 
+## - - - - - - - - - - CONTAINER VER USERS - - - - - - - - - - ##
+
+def panel_ver_users():
+    global currentpanel
+    currentpanel.pack_forget()
+
+    window_ver_users = PanedWindow(window, width=1080, height=720)
+    window_ver_users.place(x=0, y =0)
+    window_ver_users.configure(bg = "#121212")
+    currentpanel = window_ver_users
+
+    btn_voltar = Button(window_ver_users, text="Voltar", width = 20, command=panel_admin)
+    btn_voltar.place(x=20, y=20)
+
+    tree_users = ttk.Treeview(window_ver_users, columns = ("ID", "Nome", "Email", "Username"), show = "headings", height = 12, selectmode = "browse")
+    tree_users.column("ID", width = 20, anchor = "w")
+    tree_users.column("Nome", width = 120, anchor = "c")
+    tree_users.column("Email", width = 120, anchor = "c")
+    tree_users.column("Username", width = 120, anchor = "c")
+
+    tree_users.heading("ID", text = "ID")
+    tree_users.heading("Nome", text = "Nome")
+    tree_users.heading("Email", text = "Email")
+    tree_users.heading("Username", text = "Username")
+    tree_users.place(x=350, y=110)
+
+    lbl_num_users = Label(window_ver_users, text = "Nº de users", font = ("Helvetica", "10"), bg="#121212", fg="white")
+    lbl_num_users.place(x=350, y=390)
+    global num_users
+    num_users = StringVar()
+    txt_num_users = Entry(window_ver_users, width=10, textvariable = num_users)
+    txt_num_users.place(x=440, y=390)
+
+    ver_users(tree_users, num_users)
+
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_ver_users, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
+
 
 ## - - - - - - - - - - CONTAINER FILTER ALBUMS - - - - - - - - - ##
 
@@ -1005,7 +1045,7 @@ def panel_admin():
     btnRemovAlbum.place(x=520, y=480)
 
     # botão usuarios
-    btnUsers = Button(painel_adm, text="Veja usuários", width=25)
+    btnUsers = Button(painel_adm, text="Veja usuários", width=25, command = panel_ver_users)
     btnUsers.place(x=300, y=525)
 
     # botão filtrar álbuns

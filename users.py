@@ -156,6 +156,14 @@ def logout_user():
     f.close()
     messagebox.showinfo("Logout", "Logout efetuado com sucesso!")
 
+def start_fresh_user():
+    pasta = '.\\ databases'
+    ficheiro = '.\\databases\\currentsession.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'w')
+    f.write('')
+    f.close()
+
 def retrieve_current_user_data():
     '''
     busca os dados do usuário logado
@@ -302,5 +310,4 @@ def get_users_by_gender(gender):
         if data[7] == gender:
             user_id = data[0]
             users.append(user_id)
-
     return users

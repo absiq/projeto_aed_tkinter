@@ -1945,7 +1945,7 @@ home_page = PanedWindow(window, width=1080, height=720)
 home_page.place(x=0,y=0)
 home_page.configure(bg = "#121212")
 
-logout_user()
+start_fresh_user()
 
 #coloca título da app
 lblTitulo = Label(home_page, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")

@@ -1794,34 +1794,50 @@ def panel_homepage():
     tituloA5.place(x=784, y=377)
 
 
-    #define Álbuns mais favoritados da app
-    favoritosTxt = LabelFrame(home_pageP, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+    listaMaisBemAvaliados = idsMaisAvaliados()
+    imgavaliado1, album_nameavaliado1, album_artistavaliado1, album_infoavaliado1, album_scoreavaliado1, album_descriptionavaliado1, alb_idavaliado1 = album_contents(listaMaisBemAvaliados[0])
+    imgavaliado2, album_nameavaliado2, album_artistavaliado2, album_infoavaliado2, album_scoreavaliado2, album_descriptionavaliado2, alb_idavaliado2 = album_contents(listaMaisBemAvaliados[1])
+    imgavaliado3, album_nameavaliado3, album_artistavaliado3, album_infoavaliado3, album_scoreavaliado3, album_descriptionavaliado3, alb_idavaliado3 = album_contents(listaMaisBemAvaliados[2])
+    imgavaliado4, album_nameavaliado4, album_artistavaliado4, album_infoavaliado4, album_scoreavaliado4, album_descriptionavaliado4, alb_idavaliado4 = album_contents(listaMaisBemAvaliados[3])
+    imgavaliado5, album_nameavaliado5, album_artistavaliado5, album_infoavaliado5, album_scoreavaliado5, album_descriptionavaliado5, alb_idavaliado5 = album_contents(listaMaisBemAvaliados[4])
+
+    favoritosTxt = LabelFrame(home_page, text = "TOP 5 mais bem avaliados", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
     favoritosTxt.place (x=70, y=463)
 
     global imgFav1
-    imgFav1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-    btnGuardarF1 = Button (home_pageP, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
+    imgFav1 = PhotoImage(file = imgavaliado1, height= 150, width= 150)
+    btnGuardarF1 = Button (home_pageP, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado1))
     btnGuardarF1.place (x = 70 , y = 498)
+    tituloF1 = Label(home_pageP, text= album_nameavaliado1, width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloF1.place(x=64, y=663)
 
     global imgFav2
-    imgFav2 = PhotoImage(file = "./imgs/covers/The_Divine_Feminine.png", height= 150, width= 150)
-    btnGuardarF2 = Button (home_pageP, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
+    imgFav2 = PhotoImage(file = imgavaliado2, height= 150, width= 150)
+    btnGuardarF2 = Button (home_pageP, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado2))   
     btnGuardarF2.place (x = 250 , y = 498)
+    tituloF2 = Label(home_pageP, text= album_nameavaliado2, width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloF2.place(x=244, y=663)
 
     global imgFav3
-    imgFav3 = PhotoImage(file = "./imgs/covers/Born_Pink.png", height= 150, width= 150)
-    btnGuardarF3 = Button (home_pageP, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(17))   #174px album +nome
+    imgFav3 = PhotoImage(file = imgavaliado3, height= 150, width= 150)
+    btnGuardarF3 = Button (home_pageP, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado3))   #174px album +nome
     btnGuardarF3.place (x = 430 , y = 498)   
+    tituloF3 = Label(home_pageP, text= album_nameavaliado3, width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloF3.place(x=424, y=663)
 
     global imgFav4
-    imgFav4 = PhotoImage(file = "./imgs/covers/Rumours.png", height= 150, width= 150)
-    btnGuardarF4 = Button (home_pageP, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(20))   #174px album +nome
+    imgFav4 = PhotoImage(file = imgavaliado4, height= 150, width= 150)
+    btnGuardarF4 = Button (home_pageP, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado4))   #174px album +nome
     btnGuardarF4.place (x = 610 , y = 498)  
+    tituloF4 = Label(home_pageP, text= album_nameavaliado4, width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloF4.place(x=606, y=663)
 
     global imgFav5
-    imgFav5 = PhotoImage(file = ".\imgs\covers\The_Hardest_Part.png", height= 150, width= 150)
-    btnGuardarF5 = Button (home_pageP, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(34))   #174px album +nome
+    imgFav5 = PhotoImage(file = imgavaliado5, height= 150, width= 150)
+    btnGuardarF5 = Button (home_pageP, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado5))   #174px album +nome
     btnGuardarF5.place (x = 790 , y = 498)  
+    tituloF5 = Label(home_pageP, text= album_nameavaliado5, width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloF5.place(x=784, y=663)
 
     currentpanel = home_pageP
 
@@ -1847,8 +1863,7 @@ home_page = PanedWindow(window, width=1080, height=720)
 home_page.place(x=0,y=0)
 home_page.configure(bg = "#121212")
 
-
-
+logout_user()
 
 #coloca título da app
 lblTitulo = Label(home_page, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
@@ -1940,32 +1955,48 @@ tituloA5.place(x=784, y=377)
 
 
 #define Álbuns mais favoritados da app
-favoritosTxt = LabelFrame(home_page, text = "TOP 5 favoritos do Songsy", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
+
+listaMaisBemAvaliados = idsMaisAvaliados()
+imgavaliado1, album_nameavaliado1, album_artistavaliado1, album_infoavaliado1, album_scoreavaliado1, album_descriptionavaliado1, alb_idavaliado1 = album_contents(listaMaisBemAvaliados[0])
+imgavaliado2, album_nameavaliado2, album_artistavaliado2, album_infoavaliado2, album_scoreavaliado2, album_descriptionavaliado2, alb_idavaliado2 = album_contents(listaMaisBemAvaliados[1])
+imgavaliado3, album_nameavaliado3, album_artistavaliado3, album_infoavaliado3, album_scoreavaliado3, album_descriptionavaliado3, alb_idavaliado3 = album_contents(listaMaisBemAvaliados[2])
+imgavaliado4, album_nameavaliado4, album_artistavaliado4, album_infoavaliado4, album_scoreavaliado4, album_descriptionavaliado4, alb_idavaliado4 = album_contents(listaMaisBemAvaliados[3])
+imgavaliado5, album_nameavaliado5, album_artistavaliado5, album_infoavaliado5, album_scoreavaliado5, album_descriptionavaliado5, alb_idavaliado5 = album_contents(listaMaisBemAvaliados[4])
+
+favoritosTxt = LabelFrame(home_page, text = "TOP 5 mais bem avaliados", borderwidth=0, width= 1000, height=250, bg="#121212", fg="white", font="Arial, 10", relief="flat")
 favoritosTxt.place (x=70, y=463)
 
 
-imgFav1 = PhotoImage(file = "./imgs/home/harrys-house.png", height= 150, width= 150)
-btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))
+imgFav1 = PhotoImage(file = imgavaliado1, height= 150, width= 150)
+btnGuardarF1 = Button (home_page, width = 150, height = 150, image = imgFav1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado1))
 btnGuardarF1.place (x = 70 , y = 498)
+tituloF1 = Label(home_page, text= album_nameavaliado1, width=24, height=3, bd=0, bg="#121212", fg="white")
+tituloF1.place(x=64, y=663)
 
-
-imgFav2 = PhotoImage(file = "./imgs/home/divine-feminine.png", height= 150, width= 150)
-btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(11))   
+imgFav2 = PhotoImage(file = imgavaliado2, height= 150, width= 150)
+btnGuardarF2 = Button (home_page, width = 150, height = 150, image = imgFav2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado2))   
 btnGuardarF2.place (x = 250 , y = 498)
+tituloF2 = Label(home_page, text= album_nameavaliado2, width=24, height=3, bd=0, bg="#121212", fg="white")
+tituloF2.place(x=244, y=663)
 
-imgFav3 = PhotoImage(file = "./imgs/home/born-pink.png", height= 150, width= 150)
-btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(17))   #174px album +nome
+imgFav3 = PhotoImage(file = imgavaliado3, height= 150, width= 150)
+btnGuardarF3 = Button (home_page, width = 150, height = 150, image = imgFav3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado3))   #174px album +nome
 btnGuardarF3.place (x = 430 , y = 498)   
+tituloF3 = Label(home_page, text= album_nameavaliado3, width=24, height=3, bd=0, bg="#121212", fg="white")
+tituloF3.place(x=424, y=663)
 
-
-imgFav4 = PhotoImage(file = "./imgs/covers/rumours.png", height= 150, width= 150)
-btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(20))   #174px album +nome
+imgFav4 = PhotoImage(file = imgavaliado4, height= 150, width= 150)
+btnGuardarF4 = Button (home_page, width = 150, height = 150, image = imgFav4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado4))   #174px album +nome
 btnGuardarF4.place (x = 610 , y = 498)  
+tituloF4 = Label(home_page, text= album_nameavaliado4, width=24, height=3, bd=0, bg="#121212", fg="white")
+tituloF4.place(x=606, y=663)
 
-
-imgFav5 = PhotoImage(file = ".\imgs\covers\The_Hardest_Part.png", height= 150, width= 150)
-btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(34))   #174px album +nome
+imgFav5 = PhotoImage(file = imgavaliado5, height= 150, width= 150)
+btnGuardarF5 = Button (home_page, width = 150, height = 150, image = imgFav5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(alb_idavaliado5))   #174px album +nome
 btnGuardarF5.place (x = 790 , y = 498)  
+
+tituloF5 = Label(home_page, text= album_nameavaliado5, width=24, height=3, bd=0, bg="#121212", fg="white")
+tituloF5.place(x=784, y=663)
 
 currentpanel = home_page
 

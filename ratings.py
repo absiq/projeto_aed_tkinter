@@ -92,4 +92,17 @@ def top_5_avaliados():
             rating = split[1]
             f.write(id_album + ";" + rating)
 
+def idsMaisAvaliados():
+    '''
+    retorna a lista de IDs dos álbuns mais bem avaliados
+    '''
+    f = open("databases/top_5_ratings.txt")
+    lista = f.readlines()
+    ids = []
+    for linha in lista:
+        split = linha.split(";")
+        id_album = split[0]
+        ids.append(id_album)
+    return ids
+
 top_5_avaliados()

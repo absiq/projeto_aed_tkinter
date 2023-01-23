@@ -159,8 +159,9 @@ def retrieve_current_user_data():
     name = campos_split[1]
     username = campos_split[3]
     icon = campos_split[5]
-    bio = campos_split[6].replace('\n', '')
-    return name, username, icon, bio, user_id
+    bio = campos_split[6]
+    categoria = campos_split[7].replace('\n', '')
+    return name, username, icon, bio, user_id, categoria
 
 def retrieve_current_user_id():
     '''

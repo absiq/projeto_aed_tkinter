@@ -6,6 +6,7 @@ from notifications import *
 from favoritos import *
 from categorias import *
 from infoalbum import *
+from comentarios import *
 from tkinter import filedialog 
 
 ## GUI implementation
@@ -21,7 +22,6 @@ def login_and_change_page(username, password, page):
         page()
 
 def generate_page_album(album_id):
-    print('entered function')
     img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id)
     
@@ -283,7 +283,7 @@ def panel_edit_profile():
     btn_editar.place(x=540, y=430)
 
     btn_voltar = Button(window_edit_profile, text="Voltar", command=panel_account)
-    btn_voltar.place(x=700, y=600)
+    btn_voltar.place(x=700, y=700)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -526,6 +526,25 @@ def panel_comentarios(album_id):
 
     window_comentarios = PanedWindow(window, width=1080, height=720)
 
+    img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
+    lista_comentarios = leitura_comentarios(alb_id)
+
+    page_text = 'Comentários em ' + album_name
+    label_page = Label(text=page_text, font=('Arial', 14))
+    label_page.place(x=10, y=10)
+
+    comments_textarea = Text(window, width=80, height=30)
+
+    for comment in lista_comentarios:
+        comments_textarea.insert(INSERT, comment)
+
+    comments_textarea.place(x=10, y=60)
+
+    btn_voltar = Button(text='Voltar', command=lambda:generate_page_album(album_id))
+    btn_voltar.place(x=980, y=10)
+
+    window_comentarios.place(x=0, y=0)
+
     
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
@@ -639,11 +658,19 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
 
-    btn_comentar = Button(window_album, text="Comentar", command=panel_comentarios)
-    btn_comentar.place(x=600, y=600)
-
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)
+
+    comment_frame = Frame(window_album, width=400, height=200)
+    comment_frame.place(x=600, y=300)
+    comment_label = Label(comment_frame, text="Comentário:")
+    comment_label.place(x = 10, y = 10)
+    comment_entry = Text(comment_frame, width=30, height=6)
+    comment_entry.place(x = 90, y = 10)
+    btn_comentar = Button(comment_frame, text="Comentar")
+    btn_comentar.place(x=10, y=150)
+    btn_comentarios = Button(comment_frame, text="Ver comentários", command=lambda:panel_comentarios(alb_id))
+    btn_comentarios.place(x=90, y=150)
 
     window_album.place(x=0, y=0)
 

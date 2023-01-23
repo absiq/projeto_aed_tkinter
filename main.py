@@ -7,6 +7,7 @@ from favoritos import *
 from categorias import *
 from infoalbum import *
 from tkinter import filedialog 
+from maisVistos import *
 
 ## GUI implementation
 
@@ -567,7 +568,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     global lboxMusicas
     lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
-    lboxMusicas.place(x=20, y= 320)
+    lboxMusicas.place(x=20, y= 330)
     lboxMusicas.configure(foreground="white")
     musicas = "databases\musicas.txt"
 
@@ -585,11 +586,13 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     playBtn = PhotoImage(file="imgs\play_icon.png")
     play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
     play_button.place(x=80, y= 590)
+    play_button.configure(bg="#121212", fg="#121212")
 
     global pauseBtn
     pauseBtn = PhotoImage(file="imgs\pause_icon.png")
-    play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
-    play_button.place(x=120, y= 590)
+    pause_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
+    pause_button.place(x=120, y= 590)
+    pause_button.configure(bg="#121212", fg="#121212")
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
@@ -1855,8 +1858,6 @@ window.iconbitmap("./imgs/home/music.ico")
 home_page = PanedWindow(window, width=1080, height=720)
 home_page.place(x=0,y=0)
 home_page.configure(bg = "#121212")
-
-
 
 
 #coloca título da app

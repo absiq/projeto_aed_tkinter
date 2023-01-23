@@ -946,12 +946,12 @@ def panel_categoriaPop():
     panel_categoriaPop.configure(bg="#121212")
 
     #coloca título da app
-    lblTitulo = Label(panel_categoriaPop, text = "Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
+    lblTitulo = Label(panel_categoriaPop, text ="Songsy", bg="#121212", fg="white", font = "Arial, 25",relief = "flat")
     lblTitulo.place (x=500, y=5)
 
     #define icone da lupa no botao de busca
     global imgSearch
-    imgSearch = PhotoImage(file = "./imgs/home/search.png", height=20, width=20)
+    imgSearch = PhotoImage(file ="./imgs/home/search.png", height=20, width=20)
     btnGuardarS = Button (panel_categoriaPop, width = 40, height = 40, image = imgSearch, border=0, bg="#121212", fg="white", command=panel_search)
     btnGuardarS.place (x = 1020 , y = 7)
 
@@ -974,47 +974,45 @@ def panel_categoriaPop():
     btn_voltar.place(x=800, y=600)
 
     #coloca título da categoria
-    lblTitulo = Label(panel_categoriaPop, text = "Destaques da categoria POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo = Label(panel_categoriaPop, text ="Destaques da categoria POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
     lblTitulo.place (x=100, y=100)
 
     #imagens
-    imgAlbum1 = PhotoImage(file = "imgs/covers/Hold_the_Girl.png", height= 150, width= 150)
+    imgAlbum1 = PhotoImage(file="imgs/covers/Hold_the_Girl.png", height= 150, width= 150)
     btnGuardarA1 = Button(panel_categoriaPop, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(1))
     btnGuardarA1.place (x = 70 , y = 212)
     tituloA1 = Label(panel_categoriaPop, text="Hold the Girl", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=62, y=377)
 
-    imgAlbum2 = PhotoImage(file = "imgs/covers/Harry's_House.png", height= 150, width= 150)
+    imgAlbum2 = PhotoImage(file="imgs/covers/Harry's_House.png", height= 150, width= 150)
     btnGuardarA2 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(2))   
     btnGuardarA2.place (x = 250 , y = 212)
     tituloA2 = Label(panel_categoriaPop, text="Harry´s House", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=242, y=377)
 
-    imgAlbum3 = PhotoImage(file = "imgs/covers/Midnights.png", height= 150, width= 150)
+    imgAlbum3 = PhotoImage(file="imgs/covers/Midnights.png", height= 150, width= 150)
     btnGuardarA3 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(3))   #174px album +nome
     btnGuardarA3.place (x = 430 , y = 212)   #180px distancia de um album pra outro
-    tituloA3 = Label(panel_categoriaPop, text= "Midnights", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3 = Label(panel_categoriaPop, text="Midnights", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA3.place(x=422, y=377)
 
-    imgAlbum4 = PhotoImage(file = "imgs/covers/Happier_Than_Ever.png", height= 150, width= 150)
+    imgAlbum4 = PhotoImage(file="imgs/covers/Happier_Than_Ever.png", height= 150, width= 150)
     btnGuardarA4 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum4, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(4))   #174px album +nome
-    btnGuardarA4.place (x = 430 , y = 212)   #180px distancia de um album pra outro
-    tituloA4 = Label(panel_categoriaPop, text= "Midnights", width=24, height=3, bd=0, bg="#121212", fg="white")
-    tituloA4.place(x=422, y=377)
+    btnGuardarA4.place (x = 70 , y = 512)   #180px distancia de um album pra outro
+    tituloA4 = Label(panel_categoriaPop, text="Happier Than Ever", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA4.place(x=62, y=700)
 
-    imgAlbum5 = PhotoImage(file = "imgs/covers/SOUR.png", height= 150, width= 150)
+    imgAlbum5 = PhotoImage(file="imgs/covers/SOUR.png", height= 150, width= 150)
     btnGuardarA5 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum5, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(5))   #174px album +nome
-    btnGuardarA5.place (x = 430 , y = 212)   #180px distancia de um album pra outro
-    tituloA5 = Label(panel_categoriaPop, text= "Midnights", width=24, height=3, bd=0, bg="#121212", fg="white")
-    tituloA5.place(x=422, y=377)
+    btnGuardarA5.place (x = 250 , y = 512)   #180px distancia de um album pra outro
+    tituloA5 = Label(panel_categoriaPop, text="SOUR", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA5.place(x=242, y=700)
 
-    imgAlbum6 = PhotoImage(file = "imgs/covers/Future_Nostalgia.png", height= 150, width= 150)
+    imgAlbum6 = PhotoImage(file="imgs/covers/Future_Nostalgia.png", height= 150, width= 150)
     btnGuardarA6 = Button (panel_categoriaPop, width = 150, height = 150, image = imgAlbum6, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(6))   #174px album +nome
-    btnGuardarA6.place (x = 430 , y = 212)   #180px distancia de um album pra outro
-    tituloA6 = Label(panel_categoriaPop, text= "Future Nostalgia", width=24, height=3, bd=0, bg="#121212", fg="white")
-    tituloA6.place(x=422, y=377)
-
-
+    btnGuardarA6.place (x = 430 , y = 512)   #180px distancia de um album pra outro
+    tituloA6 = Label(panel_categoriaPop, text="Future Nostalgia", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA6.place(x=422, y=700)
 
     panel_categoriaPop.place(x=0,y=0)
 

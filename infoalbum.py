@@ -155,6 +155,7 @@ def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, n
             tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
     contar_albuns(tree, num_albuns)
 
+def maisVistos():
     """
     seleciona os 5 albuns mais vistos da aplicacao
     """

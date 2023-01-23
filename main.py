@@ -1234,7 +1234,7 @@ def panel_categoriaPop():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaPop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaPop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1322,7 +1322,7 @@ def panel_categoriaHiphop():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaHiphop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaHiphop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1409,7 +1409,7 @@ def panel_categoriaKpop():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaKpop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaKpop, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1497,7 +1497,7 @@ def panel_categoriaRock():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaRock, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaRock, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1585,7 +1585,7 @@ def panel_categoriaReB():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaReB, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaReB, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1673,7 +1673,7 @@ def panel_categoriaCountry():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaCountry, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaCountry, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1761,7 +1761,7 @@ def panel_categoriaOutros():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (panel_categoriaOutros, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (panel_categoriaOutros, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -1835,7 +1835,7 @@ def panel_homepage():
     #define icone de user no botao para ir p/ página do usuário
     global imgUser
     imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-    btnGuardarU = Button (home_pageP, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+    btnGuardarU = Button (home_pageP, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
     btnGuardarU.place (x = 975 , y = 9)
 
     #define icone de sino para ir pra página de notificações
@@ -2000,7 +2000,7 @@ btnGuardarS.place (x = 1020 , y = 7)
 #define icone de user no botao para ir p/ página do usuário
 global imgUser
 imgUser = PhotoImage(file = "./imgs/home/user.png", height=20, width=20)
-btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=panel_login)
+btnGuardarU = Button (home_page, width = 40, height = 40, image = imgUser, border=0, bg="#121212", fg="white", command=login_or_account)
 btnGuardarU.place (x = 975 , y = 9)
 
 #define icone de sino para ir pra página de notificações

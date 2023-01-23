@@ -225,7 +225,7 @@ def edit_user_data(new_name, new_username, new_bio, new_gender, new_icon):
     '''
     edita os dados do usuário logado
     '''
-    name, username, icon, bio, user_id = retrieve_current_user_data()
+    name, username, icon, bio, user_id, categoria = retrieve_current_user_data()
     print(user_id)
     ficheiro = '.\\databases\\users.csv'
     f = open(ficheiro, 'r', encoding='utf-8')
@@ -261,7 +261,6 @@ def edit_user_data(new_name, new_username, new_bio, new_gender, new_icon):
             # atualizando o arquivo com os novos dados      
             arquivo = open(ficheiro, 'w', encoding='utf-8')
             arquivo.writelines(dados)
-            messagebox.showinfo("Alterações", "Dados alterados com sucesso")
         else:
             i += 1
             messagebox.showerror("Alterações", "Dados não foram alterados.")

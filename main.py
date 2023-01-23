@@ -6,6 +6,7 @@ from notifications import *
 from favoritos import *
 from categorias import *
 from infoalbum import *
+from tkinter import filedialog 
 
 ## GUI implementation
 
@@ -234,12 +235,23 @@ def panel_edit_profile():
     icon_text = "O teu icon atual é: "
     label_icon_text = Label(window_edit_profile, text=icon_text, bg="#121212", fg="white")
     label_icon_text.place(x=740, y=220)
-    ficheiro_img = os.path.join('imgs\\profile_pics', icon)
-    user_img = Canvas(window_edit_profile, width=100, height=100, bd=0)
-    user_img.place(x=740, y=240)
-    global img
-    img = PhotoImage(file = ficheiro_img)
-    user_img.create_image(50,50, anchor=CENTER, image = img)
+
+    def seleciona_foto_perfil():
+        global cover
+        global filename
+        filename = filedialog.askopenfilename(title = "Select Image", initialdir="./imgs/profile_pics", filetypes=(("png files", "*.png"), ("all files", "*.*"))) 
+        cover = PhotoImage(file = filename)
+        canvasImage.itemconfig(image_id, image = cover)
+        return filename
+
+    canvasImage = Canvas(window_edit_profile, width = 100, height = 100, bd = 2, relief = "sunken")
+    canvasImage.place(x=650, y=70)
+    global imagem
+    imagem = PhotoImage(file = "imgs\\profile_pics\\avatarnone.png")
+    image_id = canvasImage.create_image(50, 50, image=imagem)
+    
+    btnSelect = Button(window_edit_profile, text= "Selecionar Imagem", width=25, height=2, command=seleciona_foto_perfil)
+    btnSelect.place(x=660, y=280)
    
 
     label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")
@@ -269,7 +281,7 @@ def panel_edit_profile():
     combobox['state'] = 'readonly'
     combobox.place(x=400, y=340)
 
-    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get()))
+    btn_editar = Button(window_edit_profile, text='Guardar', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get(), filename))
     btn_editar.place(x=540, y=430)
 
     btn_voltar = Button(window_edit_profile, text="Voltar", command=panel_account)
@@ -632,7 +644,7 @@ def add_album(nome, artista, genero, ano, qt, duracao, metacritic, descricao, mu
     users = get_users_by_gender(genero)
     print(users)
     send_notification(users, nome, artista)
-    inserir_album(nome, artista, genero, ano, qt, duracao, metacritic, descricao, musicas)
+    inserir_album(nome, artista, filename, genero, ano, qt, duracao, metacritic, descricao, musicas)
 
 def panel_adicionar_albuns():
     global currentpanel
@@ -663,20 +675,13 @@ def panel_adicionar_albuns():
 
     lblGenero = Label(window_adicionar_album, text = "Género",bg="#121212", fg="white")
     lblGenero.place(x=70, y=220)
-    generoalbum = StringVar()
-    generoalbum.set(0)
-    rd1 = Radiobutton(window_adicionar_album, text = "POP", value = "POP", variable= generoalbum)
-    rd2 = Radiobutton(window_adicionar_album, text = "HIP-HOP", value = "HIP-HOP", variable= generoalbum)
-    rd3 = Radiobutton(window_adicionar_album, text = "K-POP", value = "K-POP", variable= generoalbum)
-    rd4 = Radiobutton(window_adicionar_album, text = "ROCK", value = "ROCK", variable= generoalbum)
-    rd5 = Radiobutton(window_adicionar_album, text = "R&B", value = "R&B", variable= generoalbum)
-    rd6 = Radiobutton(window_adicionar_album, text = "COUNTRY", value = "COUNTRY", variable= generoalbum)
-    rd1.place(x= 120, y= 220)
-    rd2.place(x= 120, y= 250)
-    rd3.place(x= 120, y= 280)
-    rd4.place(x= 120, y= 310)
-    rd5.place(x=120, y=340)
-    rd6.place(x=120, y=370)
+    current_var = StringVar()
+    combobox = ttk.Combobox(window_adicionar_album, textvariable=current_var)
+    categorias = preencheCombobox()
+    combobox['values'] = categorias
+    combobox['state'] = 'readonly'
+    combobox.place(x=120, y=220)
+
 
     lblQt = Label(window_adicionar_album, text = "Qt músicas",bg="#121212", fg="white")
     lblQt.place(x=370, y=70)
@@ -708,10 +713,27 @@ def panel_adicionar_albuns():
     entryMusicas = Entry(window_adicionar_album, width=25, textvariable=musicas)
     entryMusicas.place(x=450, y= 270) 
 
+    def selecionaFicheiro():
+        global cover
+        global filename
+        filename = filedialog.askopenfilename(title = "Select Image", initialdir="./imgs/covers", filetypes=(("png files", "*.png"), ("all files", "*.*"))) 
+        cover = PhotoImage(file = filename)
+        canvasImage.itemconfig(image_id, image = cover)
+        return filename
+
+    canvasImage = Canvas(window_adicionar_album, width = 200, height = 200, bd = 2, relief = "sunken")
+    canvasImage.place(x=650, y=70)
+    global imagem
+    imagem = PhotoImage(file = "imgs\covers\\No_Image.png")
+    image_id = canvasImage.create_image(100, 100, image=imagem)
+    
+    btnSelect = Button(window_adicionar_album, text= "Selecionar Imagem", width=25, height=2, command=selecionaFicheiro)
+    btnSelect.place(x=660, y=280)
+
     global image1
     image1 = PhotoImage(file = "imgs\\add.png" )
     btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
-                command= lambda: add_album(nome.get(), artista.get(), generoalbum.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
+                command= lambda: add_album(nome.get(), artista.get(), current_var.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
     btnInserir.place(x=400, y= 350)
 
     btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)
@@ -810,6 +832,8 @@ def panel_filtrar_albuns():
     choice5.set(0) 
     choice6 = IntVar()
     choice6.set(0) 
+    choice7 = IntVar()
+    choice7.set(0) 
 
     ck1 = Checkbutton(window_consultar_album, text = "POP", variable = choice1)
     ck2 = Checkbutton(window_consultar_album, text = "K-POP", variable = choice2)
@@ -817,19 +841,21 @@ def panel_filtrar_albuns():
     ck4 = Checkbutton(window_consultar_album, text = "ROCK", variable = choice4)
     ck5 = Checkbutton(window_consultar_album, text = "R&B", variable = choice5)
     ck6 = Checkbutton(window_consultar_album, text = "COUNTRY", variable = choice6)
+    ck7 = Checkbutton(window_consultar_album, text = "OUTROS", variable = choice7)
     ck1.place(x=50, y=30)
     ck2.place(x=150, y=30)
     ck3.place(x=250, y=30)
     ck4.place(x=350, y=30)
     ck5.place(x=450, y=30)
     ck6.place(x=550, y=30)
+    ck7.place(x=650, y=30)
 
 
     global imagePesq
     imagePesq = PhotoImage(file = "imgs\\pesquisar.png")
 
     btnPesquisar = Button(window_consultar_album, width=48, height=48, image = imagePesq, 
-            command = lambda: filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, num_albuns))
+            command = lambda: filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, choice7, num_albuns))
     btnPesquisar.place(x=650, y= 20)
 
     tree = ttk.Treeview(window_consultar_album, columns = ("Nome", "Artista", "Género", "Ano"), show = "headings", height = 12, selectmode = "browse")

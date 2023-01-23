@@ -401,8 +401,8 @@ def panel_account():
     label_username = Label(window_account, text=text_label_username, font=("Helvetica", 12), bg="#121212", fg="white")
     label_username.place(x=220, y=90)
 
-    label_username = Label(window_account, text=bio, justify='center', wraplength=240, bg="#121212", fg="white")
-    label_username.place(x=100, y=160)
+    label_bio = Label(window_account, text=bio, justify='center', wraplength=240, bg="#121212", fg="white")
+    label_bio.place(x=100, y=160)
 
     btn_edit_profile = Button(window_account, text="Editar perfil", width=20, command=panel_edit_profile)
     btn_edit_profile.place(x=800, y=40)
@@ -424,6 +424,11 @@ def panel_account():
         btn_logout.place(x=800, y=90)
         btn_voltar = Button(window_account, text="Voltar", width=20, command=panel_homepage)
         btn_voltar.place(x=800, y=140)
+
+    label_favoritos = Label(window_account, text='Teus favoritos', justify='center', wraplength=240, bg="#121212", fg="white")
+    label_favoritos.place(x=500, y=140)
+    lboxFavoritos=Listbox(window_account, width = 35, height=16, bd="0", selectmode = "single", relief="flat")
+    lboxFavoritos.place(x=500,y=200)
 
     window_account.place(x=0, y=0)
 
@@ -721,7 +726,7 @@ def panel_categorias():
     btn_add.place(x=500, y=210)
 
     columns = ('categorias')
-    treeview = ttk.Treeview(window_consultar_categorias, selectmode="browse", columns=columns, show='headings')
+    treeview = ttk.Treeview(window_consultar_categorias, selectmode="single", columns=columns, show='headings')
     treeview.heading('categorias', text='Categorias')
     for categoria in categorias:
         treeview.insert('', END, values=categoria)

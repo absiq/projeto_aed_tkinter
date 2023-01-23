@@ -15,7 +15,7 @@ def data_exists_in_utilizadores(ficheiro, linha):
     '''
     verifica se a linha de dados já se encontra no banco de dados e retorna um valor booleano
     '''
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     dados = f.readlines()
     f.close()
     linha_split = linha.split(';')
@@ -61,7 +61,7 @@ def cria_id_user():
     last_id = 0
     count_id = 0
     ficheiro = '.\\databases\\users.csv'
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     dados = f.readlines()
     for i in dados:
         line_split = i.split(';')
@@ -89,7 +89,7 @@ def submit_register(nome, email, username, password):
     elif valida_email(email) == False:
         print('O e-mail inserido é inválido')
     else:
-        f = open(ficheiro, 'a')
+        f = open(ficheiro, 'a', encoding='utf-8')
         count_id = cria_id_user()
         default_bio = 'Adicione um texto na tua bio ao editar o perfil'
         default_profile_pic = 'avatarnone.png'
@@ -105,7 +105,7 @@ def atualiza_sessao(dado):
     pasta = '.\\ databases'
     ficheiro = '.\\databases\\currentsession.csv'
     verify_files(pasta, ficheiro)
-    f = open(ficheiro, 'w')
+    f = open(ficheiro, 'w', encoding='utf-8')
     f.write(dado)
     f.close()
 
@@ -113,7 +113,7 @@ def verify_login(ficheiro, username, password):
     '''
     verifica se o username e a password se encontra, no banco de dados e retorna um valor booleano
     '''
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     dados = f.readlines()
     for i in dados:
         line_split = i.split(';')
@@ -152,7 +152,7 @@ def retrieve_current_user_data():
     pasta = '.\\databases'
     ficheiro = '.\\databases\\currentsession.csv'
     verify_files(pasta, ficheiro)
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     campos = f.readline()
     campos_split = campos.split(';')
     user_id = campos_split[0]
@@ -169,7 +169,7 @@ def retrieve_current_user_id():
     pasta = '.\\databases'
     ficheiro = '.\\databases\\currentsession.csv'
     verify_files(pasta, ficheiro)
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     campos = f.readline()
     campos_split = campos.split(';')
     user_id = campos_split[0]
@@ -199,14 +199,14 @@ def deletar_album(del_album, del_artista):
         else: 
             i += 1
 
-def edit_user_data(new_name, filename, new_username, new_bio, new_gender):
+def edit_user_data(new_name, new_username, new_bio, new_gender, new_icon):
     '''
     edita os dados do usuário logado
     '''
     name, username, icon, bio, user_id = retrieve_current_user_data()
     print(user_id)
     ficheiro = '.\\databases\\users.csv'
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     dados = f.readlines()
     i = 0
     for line in dados:
@@ -229,12 +229,15 @@ def edit_user_data(new_name, filename, new_username, new_bio, new_gender):
                 new_data[6] = new_bio
             if new_gender != '':
                 new_data[7] = new_gender
+            if new_icon != '':
+                new_data[5] = new_icon
             list_to_string = ','.join(map(str, new_data))
             list_to_string = list_to_string.replace(',', ';')
             line = list_to_string
             dados[i] = line
+            atualiza_sessao(line)
             # atualizando o arquivo com os novos dados      
-            arquivo = open(ficheiro, 'w')
+            arquivo = open(ficheiro, 'w', encoding='utf-8')
             arquivo.writelines(dados)
         else:
             i += 1
@@ -249,8 +252,6 @@ def selecionaFile():
     image1 = PhotoImage(file=filename)
     
 
-
-
 def get_user_id(username):
     '''
     retorna o id do usuário baseado no username
@@ -258,7 +259,7 @@ def get_user_id(username):
     pasta = '.\\databases'
     ficheiro = '.\\databases\\users.csv'
     verify_files(pasta, ficheiro)
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     campos = f.readlines()
     for line in campos:
         data = line.split(';')
@@ -273,7 +274,7 @@ def get_users_by_gender(gender):
     pasta = '.\\databases'
     ficheiro = '.\\databases\\users.csv'
     verify_files(pasta, ficheiro)
-    f = open(ficheiro, 'r')
+    f = open(ficheiro, 'r', encoding='utf-8')
     campos = f.readlines()
     users = []
     for line in campos:

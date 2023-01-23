@@ -1,58 +1,41 @@
-from tkinter import *
-import os
+def leitura_comentarios(album_id):
+    '''
+    retorna a lista de comentários do ID do álbum
+    '''
+    ficheiro = '.\\databases\\comentarios.csv'
+    f = open(ficheiro, 'r', encoding='utf-8')
+    campos = f.readlines()
+    comments = []
+    for line in campos:
+        data = line.split(';')
+        if data[0] == album_id:
+            list_comments = data[1].split(',')
+            for comment in list_comments:
+                comment_field = comment.split('-')
+                new_line = comment_field[0] + ':' + ' ' + comment_field[1] + '\n'
+                comments.append(new_line)
+    return comments
 
-
-window = Tk()
-window.geometry('1080x720')
-window.title('Comentários')
-
-userFile  = "databases\currentsession.csv"
-commentsFile = "comentarios.txt"
-
-f = open(userFile, "r", encoding="utf-8")
-users = f.readlines()
-f.close()
-for user in users:
-    user = user.split(",")
-    userName = user[3]
-
-
-comments = Text(window, width=40, height=10)
-comments.place(x = 10, y = 50)
-
-def read_comments():
-    if os.path.exists(commentsFile):
-        f = open(commentsFile, "r", encoding="utf-8")
-        comments_data = f.readlines()
-        for comment in comments_data:
-            comm = comment.split(";")
-            for com in comm:
-                print(com)
-                comments.insert(INSERT, com[1] + ": " + com[2] + "\n")
-    else:
-        comments.insert(INSERT, "No comments yet")
-
-
-def add_comment(userName):
-    comment = comment_entry.get()
-    comments.insert(INSERT, userName + ": " + comment + "\n")
-    writeComment(comment)
-
-def writeComment(comment):
-    fComent = open(commentsFile, "a")
-    
-    fComent.write(comment)
-    fComent.close()
-
-
-comment_label = Label(window, text="Comentário:")
-comment_label.place(x = 10, y = 10)
-comment_entry = Entry(window)
-comment_entry.place(x = 80, y = 10)
-
-add_comment_button = Button(window, text="Comentar", command= lambda: (add_comment(userName)))
-add_comment_button.place(x = 250, y = 10)
-
-read_comments()
-
-window.mainloop()
+def inserir_comentario(username, comment, album_id):
+    '''
+    insere um comentário do usuário no respectivo álbum do id dado
+    '''
+    ficheiro = '.\\databases\\comentarios.csv'
+    f = open(ficheiro, 'r', encoding='utf-8')
+    campos = f.readlines()
+    i = 0
+    for line in campos:
+        data = line.split(';')
+        if data[0] == album_id:
+            previous_comments = []
+            without_n = data[1].replace('\n', '')
+            previous_comments.append(without_n)
+            new_comment = '{0}-{1}\n' .format(username, comment)
+            previous_comments.append(new_comment)
+            new_comments = ','.join(map(str, previous_comments))
+            campos[i] = album_id + ';' + new_comments
+            print(campos[i])
+            arquivo = open(ficheiro, 'w', encoding='utf-8')
+            arquivo.writelines(campos)
+        else:
+            i += 1

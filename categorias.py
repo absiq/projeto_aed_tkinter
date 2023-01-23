@@ -4,11 +4,7 @@ def inserir_categoria(nova_categoria):
     '''
     ficheiro = '.\\databases\\categorias.txt'
     f = open(ficheiro, 'a+')
-    f.seek(0)
-    data = f.read(100)
-    if len(data) > 0:
-        f.write("\n")
-    f.write(nova_categoria)
+    f.write(nova_categoria + '\n')
 
 def remover_categoria(categoria_selecionada):
     '''
@@ -19,5 +15,5 @@ def remover_categoria(categoria_selecionada):
     lines = f.readlines()
     j = open(ficheiro, 'w')
     for line in lines:
-        if line.strip('\n') != categoria_selecionada:
+        if line != categoria_selecionada:
             j.write(line)

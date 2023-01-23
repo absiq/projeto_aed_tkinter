@@ -233,12 +233,23 @@ def panel_edit_profile():
     icon_text = "O teu icon atual é: "
     label_icon_text = Label(window_edit_profile, text=icon_text, bg="#121212", fg="white")
     label_icon_text.place(x=740, y=220)
-    ficheiro_img = os.path.join('imgs\\profile_pics', icon)
-    user_img = Canvas(window_edit_profile, width=100, height=100, bd=0)
-    user_img.place(x=740, y=240)
-    global img
-    img = PhotoImage(file = ficheiro_img)
-    user_img.create_image(50,50, anchor=CENTER, image = img)
+
+    def seleciona_foto_perfil():
+        global cover
+        global filename
+        filename = filedialog.askopenfilename(title = "Select Image", initialdir="./imgs/profile_pics", filetypes=(("png files", "*.png"), ("all files", "*.*"))) 
+        cover = PhotoImage(file = filename)
+        canvasImage.itemconfig(image_id, image = cover)
+        return filename
+
+    canvasImage = Canvas(window_edit_profile, width = 100, height = 100, bd = 2, relief = "sunken")
+    canvasImage.place(x=650, y=70)
+    global imagem
+    imagem = PhotoImage(file = "imgs\\profile_pics\\avatarnone.png")
+    image_id = canvasImage.create_image(50, 50, image=imagem)
+    
+    btnSelect = Button(window_edit_profile, text= "Selecionar Imagem", width=25, height=2, command=seleciona_foto_perfil)
+    btnSelect.place(x=660, y=280)
    
 
     label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")
@@ -268,7 +279,7 @@ def panel_edit_profile():
     combobox['state'] = 'readonly'
     combobox.place(x=400, y=340)
 
-    btn_editar = Button(window_edit_profile, text='Editar dados', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get()))
+    btn_editar = Button(window_edit_profile, text='Guardar', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get(), filename))
     btn_editar.place(x=540, y=430)
 
     btn_voltar = Button(window_edit_profile, text="Voltar", command=panel_account)
@@ -708,13 +719,13 @@ def panel_adicionar_albuns():
         canvasImage.itemconfig(image_id, image = cover)
         return filename
 
-    canvasImage = Canvas(window, width = 200, height = 200, bd = 2, relief = "sunken")
+    canvasImage = Canvas(window_adicionar_album, width = 200, height = 200, bd = 2, relief = "sunken")
     canvasImage.place(x=650, y=70)
     global imagem
     imagem = PhotoImage(file = "imgs\covers\\No_Image.png")
     image_id = canvasImage.create_image(100, 100, image=imagem)
     
-    btnSelect = Button(window, text= "Selecionar Imagem", width=25, height=2, command=selecionaFicheiro)
+    btnSelect = Button(window_adicionar_album, text= "Selecionar Imagem", width=25, height=2, command=selecionaFicheiro)
     btnSelect.place(x=660, y=280)
 
     global image1

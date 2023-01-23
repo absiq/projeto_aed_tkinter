@@ -1,4 +1,6 @@
 import os
+from tkinter import filedialog
+from tkinter import *
 
 def verify_files(pasta, ficheiro):
     '''
@@ -236,6 +238,18 @@ def edit_user_data(new_name, new_username, new_bio, new_gender):
             arquivo.writelines(dados)
         else:
             i += 1
+
+def selecionaFile():
+    """
+    permite o usuario selecionar a imagem de perfil
+    """
+    global image1
+
+    filename = filedialog.askopenfilename(title="Select Image", initialdir="./images", filetypes=(("png files", "*.png"), ("gif files", "*.gif"), ("all files", "*.*")))
+    image1 = PhotoImage(file=filename)
+    
+
+
 
 def get_user_id(username):
     '''

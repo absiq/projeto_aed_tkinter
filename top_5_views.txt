@@ -1,0 +1,5 @@
+5;imgs/covers/SOUR.png;SOUR;Olivia Rodrigo
+22;imgs/covers/the_Dark_Side_of_the_Moon.png;The dark side of the moon;Pink FLoyd
+7;imgs/covers/This_Is_What_I_Mean.png;This Is What I Mean;Stormzy
+28;imgs/covers/Whats_Going_On.jpg;What's Going On;Marvin Gaye
+8;imgs/covers/23.png;23;Central Cee

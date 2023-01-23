@@ -55,12 +55,6 @@ def album_contents(album_id):
 
 ficheiroFav= "databases/favoritos.txt"
 
-def likeList():
-    favoritos = open(ficheiroFav, "a", encoding="utf-8")
-    infoAlb = campos[0] + ";" + campos[1] + ";" + campos[2] + ";" + campos[3] + ";" + campos[4] + ";" + campos[5] + ";" + campos[6] + ";" + campos[7] + ";" + campos[8] + ";" + campos[9] 
-    favoritos.write(infoAlb)
-    favoritos.close()
-
 ficheiroReviews = "databases/reviews.txt"
 
 def reviewsList(numberStars):
@@ -224,3 +218,37 @@ def idsMaisVistos():
     quinto = ids[4]
     print(quinto)
     return ids
+
+ficheiroCategorias = "databases\categorias.txt"
+ficheiroMusicas = "databases\\albums.txt"
+
+def ListBoxCategorias(lbCategorias):
+    f = open(ficheiroCategorias, "r", encoding="utf-8")
+    categorias = f.readlines()
+    f.close()
+    for categoria in categorias:
+        lbCategorias.insert(END, categoria)
+
+def contarAlbum(treeCategorias, numAlbumCat):
+    numAlbumCat.set(len(treeCategorias.get_children()))
+
+
+def filtrarAlbums(treeCategorias, numAlbumCat):
+    treeCategorias.delete(*treeCategorias.get_children())
+
+    fileAlbum = open(ficheiroMusicas, "r", encoding="utf-8")
+    lista = fileAlbum.readlines()
+    fileAlbum.close()
+    for musica in lista:
+        musica = musica.split(";")
+        categoria = musica[4] + "\n"
+        if categoria == texto:
+            treeCategorias.insert("", "end", values = (musica[0], musica[2], musica[3], musica[5]))
+            
+    contarAlbum(treeCategorias, numAlbumCat)
+
+def selecaoItem(lbCategorias):
+    id = lbCategorias.curselection()
+    global texto
+    texto = lbCategorias.get(id)
+    return texto

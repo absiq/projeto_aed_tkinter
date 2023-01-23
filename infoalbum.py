@@ -231,3 +231,32 @@ def selecaoItem(lbCategorias):
     global texto
     texto = lbCategorias.get(id)
     return texto
+
+
+fmaisVistos = "top_5_views.txt"
+
+def lerViews():
+    fileViews=open(fmaisVistos, "r", encoding="utf-8")
+    lista = fileViews.readlines()
+    fileViews.close()
+    return lista
+
+def refreshTreeViews(listaViews, treeVisualicacao):
+    treeVisualicacao.delete(*treeVisualicacao.get_children())
+    for item in listaViews:
+        item = item.split(";")
+        treeVisualicacao.insert("", "end", values = (item[0],item[2], item[3], item[4]))
+
+fScore = ""
+
+def lerScore():
+    fileScore=open(fScore, "r", encoding="utf-8")
+    lista = fileScore.readlines()
+    fileScore.close()
+    return lista
+
+def refreshTreeViews(listaAvaliacao, treeAvaliacao):
+    treeAvaliacao.delete(*treeAvaliacao.get_children())
+    for item in listaAvaliacao:
+        item = item.split(";")
+        treeAvaliacao.insert("", "end", values = (item[0],item[2], item[3], item[4]))

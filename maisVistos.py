@@ -3,7 +3,9 @@ def maisVistos():
     """
     seleciona os 5 albuns mais vistos da aplicacao
     """
-    file = open("albums.txt", 'r', encoding="utf-8")
+    fileAlbuns = "databases\\albums.txt"
+
+    file = open(fileAlbuns, 'r', encoding="utf-8")
     lines = file.readlines()
     file.close()
     viewsList = []

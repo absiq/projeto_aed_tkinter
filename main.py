@@ -54,7 +54,9 @@ def login_or_account():
 
 #### MISC FUNCTIONS
 
-def like():
+def like(album_id):
+    user_id = retrieve_current_user_id
+    likeList(user_id, album_id)
     like_btn['file'] = "imgs\heart-icon-full.png"
 
 def one_star(album_id):
@@ -571,6 +573,10 @@ def panel_comentarios(album_id):
 
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
+def comment(comment, album_id):
+    user_id = retrieve_current_user_id
+    inserir_comentario(user_id, comment, album_id)
+
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):
     global currentpanel
     currentpanel.pack_forget()
@@ -651,12 +657,12 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     button_share.place(x = 20, y = 220)
     button_share.configure(bg="#121212", fg="#121212")
 
-    user_id = retrieve_current_user_id()
+    # user_id = retrieve_current_user_id()
 
     global like_btn
     like_btn= PhotoImage(file="imgs\heart-icon.png")
     like_label= Label(image=like_btn)
-    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: (like(), likeList(user_id, alb_id)))
+    button_like= Button(window_album, relief = "raised", image=like_btn, borderwidth=0, command= lambda: like(alb_id))
     button_like.place(x = 80, y = 220)
     button_like.configure(bg="#121212", fg="#121212")
 
@@ -699,15 +705,13 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     btnVoltar = Button(window_album, text="Voltar", width=20, command=panel_homepage)
     btnVoltar.place(x=900, y=10)
 
-    nameuser, username, icon, bio, user_id, categoria = retrieve_current_user_data()
-
     comment_frame = Frame(window_album, width=400, height=200, bg="#121212")
     comment_frame.place(x=600, y=360)
     comment_label = Label(comment_frame, text="Comentário:", bg="#121212", fg="white")
     comment_label.place(x = 10, y = 10)
     comment_entry = Text(comment_frame, width=30, height=6)
     comment_entry.place(x = 90, y = 10)
-    btn_comentar = Button(comment_frame, text="Comentar", command=lambda:inserir_comentario(username, comment_entry.get("1.0",'end-1c'), alb_id))
+    btn_comentar = Button(comment_frame, text="Comentar", command=lambda:comment(comment_entry.get("1.0",'end-1c'), alb_id))
     btn_comentar.place(x=90, y=150)
     btn_comentarios = Button(comment_frame, text="Ver comentários", command=lambda:panel_comentarios(alb_id))
     btn_comentarios.place(x=180, y=150)

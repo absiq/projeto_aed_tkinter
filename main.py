@@ -661,13 +661,15 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
     btnVoltar.place(x=30, y=500)
 
+    nameuser, username, icon, bio, user_id = retrieve_current_user_data()
+
     comment_frame = Frame(window_album, width=400, height=200)
     comment_frame.place(x=600, y=300)
     comment_label = Label(comment_frame, text="Comentário:")
     comment_label.place(x = 10, y = 10)
     comment_entry = Text(comment_frame, width=30, height=6)
     comment_entry.place(x = 90, y = 10)
-    btn_comentar = Button(comment_frame, text="Comentar")
+    btn_comentar = Button(comment_frame, text="Comentar", command=lambda:inserir_comentario(username, comment_entry.get("1.0",'end-1c'), alb_id))
     btn_comentar.place(x=10, y=150)
     btn_comentarios = Button(comment_frame, text="Ver comentários", command=lambda:panel_comentarios(alb_id))
     btn_comentarios.place(x=90, y=150)

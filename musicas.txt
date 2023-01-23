@@ -4,18 +4,18 @@
 4,Getting Older,I Didn't Change My Number,Billie Bossa Nova,My Future,Oxytocin,Goldwing,Lost Cause,Halley's Comet,Not My Responsibility,Overheated,Everybody Dies,Your Power,NDA,Therefore I Am,Happier Than Ever,Male Fantasy
 5,Brutal,Traitor,Drivers License,1 Step Forward 3 Steps Back,Deja Vu,Good 4 U,Enough for You,Happier,Jealousy Jealousy,Favorite Crime,Hope Ur OK
 6,Future Nostalgia,Don't Start Now,Cool,Physical,Levitating,Pretty Please,Hallucinate,Love Again,Break My Heart,Good in Bed,Boys Will Be Boys
-7,
-8,
-9,
-10,
-11,
-12,
-13,
-14,
-15,
-16,
-17,
-18,
+7;Fire + Water;This Is What I Mean;Firebabe;Please;Need You;Hide & Seek;My Presidents Are Black;Sampha's Plea;Holy Spirit;Bad Blood;I Got My Smile Back;Give It to the Water
+8;Khabib;Straight Back to It;Ungrateful;Bunda;Retail Therapy;Eurovision;Cold Shoulder;Mrs;Air Bnb;No Pain;Terminal 5;Obsessed with You;8 Ball;Lil Bro (ft. Lil Bro);End of the Beginning
+9;Intro;Falling Back;Texts Go Green;Currents;A Keeper;Calling My Name;Sticky;Massive;Flight's Booked;Overdrive;Down Hill;Tie That Binds;Liability;Jimmy Cooks (ft. 21 Savage)
+10;Talk of the Town;Young Harleezy;I'd Do Anything to Make You Smile;First Class;Dua Lipa;Side Piece;Movie Star (ft. Pharrel Williams);Lil Secret; I Got a Shot; Churchill Downs (ft. Drake);Like a Blade of Grass;Parent Trap (ft. Justin Timberlake);Poison (ft. Lil Wayne);Nail Tech;State Fair
+11;Congratulations (ft. Bial);Dang! (ft. Anderson .Paak);Stay;Skin;Cinderella (ft. Ty Dolla Sign);Planet God Damn (ft. Njomza);Soulmate;We (ft. CeeLo Green);My Favorite Part (ft. Ariana Grande);God is Fair Sexy Nasty (ft. Kendrick Lamar)
+12;777 Pt.1;777 Pt.2;Wheelie (ft. 21 Savage);Big Energy;Sunshine (ft. Lil Wayne and Childish Gambino);Like a Thug (ft. Lil Durk);It's Givin;Stepper (ft. Nardo Wick);Trust No Bitch;Bussdown (ft. Kodak Black);Soufside;Sleep Sleep;Real One
+13;Tomboy;Never Stop Me;Villain Dies;Already;Polaroid;Escape;Liar;My Bag
+14;Talk That Talk;Queen of Hearts;Basics;Trouble;Brave;Gone;When We Were Dahyun Kids
+15;Sneakers;Racer;What I Want;Free Fall;365;Domino;Sneakers (English Version)
+16;Girls;Illusion;Lingo;Life's Too Short;ICU;Life's Too Short (English Version)
+17;Pink Venom;Shut Down;Typa Girl;Yeah Yeah Yeah;Hard to Love;The Happiest Girl;Tally;Ready for Love
+18;Pop!;No Problem (ft. Felix);Love Countdown;Candyfloss;All or Nothing;Happy Birthday to You;Sunset
 19,There'd Better Be a Mirrorball,I Ain't Quite Where I Think I Am,Sculptures of Anything Goes,Jet Skis on the Moat,Body Paint,The Car,Big Ideas,Hello You,Mr Schwartz,Perfect Sense
 20,Second Hand News,Dreams,Never Going Back Agai,Don't Stop,Go Your Own Way,Songbird,The Chain,You Make Loving Fun,I Don't Want to Know,Oh Daddy,Gold Dust Woman
 21,Smells Like Teen Spirit,In Bloom,Come as You Are,Breed,Lithium,Polly,Territorial Pissings,Drain You,Lounge Act,Stay Away,On a Plain,Something in the Way,Endless, Nameless
@@ -34,3 +34,6 @@
 34,Noah (Stand Still),Ready to Go,Mr. Percocet,Every Beginning Ends,Hardest Part,I Just Want a Lover,Unfinished,My Side of the Bed,I Burned LA Down,Loretta’s Song
 35,Oxbow,Can't Do Much,Fire,Lilacs,The Eye,Hell,Witches,War,Arkadelphia,Ruby Falls,Saint Cloud
 36,Why Not Me,Mr. Pain,Drops of Water,Sleeping Heart,My Baby's Gone,Bye Bye Baby Blues,Girls Night Out,Love Is Alive,Endless Sleep,Mama He's Crazy
+37,Wardance,Wind Beneath My Wings,Alien Nation,Hell on Earth,Visions of Suicide
+38,Hear Me Now, All By Myself,Alive,Wherever You Go
+39,Não Desisto De Ti,Cantor De Sonhos,A Sonhar Contigo,Já Que Te Vais, Estrada E Eu

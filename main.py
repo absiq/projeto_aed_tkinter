@@ -1615,22 +1615,22 @@ def panel_categoriaOutros():
     global imgAlbum3
 
 
-    imgAlbum1 = PhotoImage(file="imgs/covers/I_Know_Im_Funny_Haha.png", height= 150, width= 150)
-    btnGuardarA1 = Button(panel_categoriaOutros, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(31))
+    imgAlbum1 = PhotoImage(file="imgs/covers/Raising_Cain.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaOutros, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(37))
     btnGuardarA1.place (x = 100 , y = 212)
-    tituloA1 = Label(panel_categoriaOutros, text="I Know I'm Funny Haha", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1 = Label(panel_categoriaOutros, text="Hell on Earth", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=92, y=377)
 
-    imgAlbum2 = PhotoImage(file="imgs/covers/Show_Pony.png", height= 150, width= 150)
-    btnGuardarA2 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(32))   
+    imgAlbum2 = PhotoImage(file="imgs/covers/Hear_Me_Now.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(38))   
     btnGuardarA2.place (x = 350 , y = 212)
-    tituloA2 = Label(panel_categoriaOutros, text="Show Pony", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2 = Label(panel_categoriaOutros, text="Hear me now", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=342, y=377)
 
-    imgAlbum3 = PhotoImage(file="imgs/covers/Laura_Stevenson.png", height= 150, width= 150)
-    btnGuardarA3 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(33))   #174px album +nome
+    imgAlbum3 = PhotoImage(file="imgs/covers/Cantor_De_Sonhos.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(39))   #174px album +nome
     btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
-    tituloA3 = Label(panel_categoriaOutros, text="Laura Stevenson", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3 = Label(panel_categoriaOutros, text="Cantor de Sonhos", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA3.place(x=592, y=377)
 
 

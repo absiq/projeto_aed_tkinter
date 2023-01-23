@@ -499,7 +499,8 @@ def panel_account():
         if user[0] == user_id:
             songs = user[1].split(',')
             for song in songs:
-                lboxFavoritos.insert('end', song)
+                img_album, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(int(song))
+                lboxFavoritos.insert('end', album_name)
 
 
     window_account.place(x=0, y=0)

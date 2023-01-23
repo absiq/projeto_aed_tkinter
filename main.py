@@ -531,7 +531,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     currentpanel = window_album
     
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, bg="#121212", highlightbackground="#121212", relief="sunken")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
@@ -541,19 +541,28 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_name.place(x=242,y=60)
 
     artist = album_artist
-    Label_artist = Label(window_album, text=artist, fg="black")
+    Label_artist = Label(window_album, text=artist, fg="white", bg="#121212")
     Label_artist.place(x=250,y=170)
     
     info = album_info
-    Label_info = Label(window_album, text=info, fg="black")
+    Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
     score = album_score
-    Label_score = Label(window_album, text=score, fg="black", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="white", font=('Arial', 20))
     Label_score.place(x=170, y=220)
+    
+    scoreMin = 40
+    scoreMax = 70
+    if int(score) <= scoreMin:
+        Label_score.configure(bg="red")
+    elif int(score) >= scoreMin and int(score) <= scoreMax:
+        Label_score.configure(bg="yellow")
+    else:
+        Label_score.configure(bg="green")
 
     description = album_description
-    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=450, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=660, justify="left")
     Label_description.place(x = 20, y = 270)
 
     global lboxMusicas
@@ -587,6 +596,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
+    button_share.configure(bg="#121212", fg="#121212")
 
     user_id = retrieve_current_user_id()
 
@@ -610,29 +620,31 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label2= Label(image=stars_btn2)
     button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = two_stars)
     button_stars2.place(x = 285, y = 220)
-    button_stars2.configure(bg="#121212")
+    button_stars2.configure(bg="#121212", fg="#121212")
 
     global stars_btn3
     stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
     button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = three_stars)
     button_stars3.place(x = 320, y = 220)
-    button_stars3.configure(bg="#121212")
+    button_stars3.configure(bg="#121212", fg="#121212")
 
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\star-icon.png")
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
     button_stars4.place(x = 355, y = 220)
+    button_stars4.configure(bg="#121212", fg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
     button_stars5.place(x = 390, y = 220)
+    button_stars5.configure(bg="#121212", fg="#121212")
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
-    btnVoltar.place(x=30, y=500)
+    btnVoltar.place(x=990, y=10)
 
     window_album.place(x=0, y=0)
 
@@ -1047,6 +1059,41 @@ def panel_search():
     txtNumAlbumVisu.place(x = 120, y=400)
     btnPagVis = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select1))
     btnPagVis.place(x = 250, y = 400)
+
+
+    lblCategorias = Label(panel_search, text = "Filtro por Avaliações", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 450)
+
+    def on_select2(event):
+        selected_item3 = treeAvaliacao.selection()[0]
+        global select2
+        select2 = treeAvaliacao.item(selected_item3)["values"][0]
+        print(select2)
+        return select2
+
+    treeAvaliacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Avaliações"), show = "headings")
+
+    treeAvaliacao.column("ID", width=14, anchor="w")
+    treeAvaliacao.column("Álbum", width=200, anchor="c")
+    treeAvaliacao.column("Artista", width=150, anchor="c")
+    treeAvaliacao.column("Avaliações", width=100, anchor="c")
+    treeAvaliacao.heading("ID", text = "ID")
+    treeAvaliacao.heading("Álbum", text = "Álbum")
+    treeAvaliacao.heading("Artista", text = "Artista")
+    treeAvaliacao.heading("Avaliações", text = "Avaliações")
+    treeAvaliacao.place(x = 20, y = 480)
+    treeAvaliacao.bind("<<TreeviewSelect>>", on_select2)
+
+    listaAvaliacao = lerScore()
+    
+    refreshTreeViews(listaAvaliacao, treeAvaliacao)
+
+    lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbum.place(x=20, y=400)
+    txtNumAlbumScore = Label(panel_search, width=10, text = "5", state="disable", anchor="w")
+    txtNumAlbumScore.place(x = 120, y=400)
+    btnPagScore = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select2))
+    btnPagScore.place(x = 250, y = 500)
 
     panel_search.mainloop()
 

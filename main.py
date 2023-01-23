@@ -7,6 +7,7 @@ from favoritos import *
 from categorias import *
 from infoalbum import *
 from comentarios import *
+from ratings import *
 from tkinter import filedialog 
 
 ## GUI implementation
@@ -25,17 +26,17 @@ def generate_page_album(album_id):
     img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
     panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id)
     
-    with open("albums.txt", "r", encoding="utf-8") as f:
+    with open("databases/albums.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
     for i, line in enumerate(lines):
         split = line.split(";")
         id = split[0]
-        views = int(split[10])
+        views = int(split[-2])
         if id == album_id:
             views += 1
             split[10] = str(views)
             lines[i] = ";".join(split)
-    with open("albums.txt", "w", encoding="utf-8") as f:
+    with open("databases/albums.txt", "w", encoding="utf-8") as f:
         f.writelines(lines)
 
 
@@ -45,7 +46,6 @@ def login_or_account():
     verify_files(pasta, ficheiro)
     f = open(ficheiro, 'r')
     campos = f.readlines()
-    print(campos)
     if campos != []:
         panel_account()
     else:
@@ -56,25 +56,35 @@ def login_or_account():
 def like():
     like_btn['file'] = "imgs\heart-icon-full.png"
 
-def one_star():
-   stars_btn['file'] = "imgs\star-icon-full.png"
+def one_star(album_id):
+    user_id = retrieve_current_user_id()
+    insert_rating(user_id, album_id, '1')
+    stars_btn['file'] = "imgs\star-icon-full.png"
 
-def two_stars():
+def two_stars(album_id):
+    user_id = retrieve_current_user_id()
+    insert_rating(user_id, album_id, '2')
     stars_btn['file'] = "imgs\star-icon-full.png"
     stars_btn2['file'] = "imgs\star-icon-full.png"
 
-def three_stars():
+def three_stars(album_id):
+    user_id = retrieve_current_user_id()
+    insert_rating(user_id, album_id, '3')
     stars_btn['file'] = "imgs\star-icon-full.png"
     stars_btn2['file'] = "imgs\star-icon-full.png"
     stars_btn3['file'] = "imgs\star-icon-full.png"
 
-def four_stars():
+def four_stars(album_id):
+    user_id = retrieve_current_user_id()
+    insert_rating(user_id, album_id, '4')
     stars_btn['file'] = "imgs\star-icon-full.png"
     stars_btn2['file'] = "imgs\star-icon-full.png"
     stars_btn3['file'] = "imgs\star-icon-full.png"
     stars_btn4['file'] = "imgs\star-icon-full.png"
 
-def five_stars():
+def five_stars(album_id):
+    user_id = retrieve_current_user_id()
+    insert_rating(user_id, album_id, '5')
     stars_btn['file'] = "imgs\star-icon-full.png"
     stars_btn2['file'] = "imgs\star-icon-full.png"
     stars_btn3['file'] = "imgs\star-icon-full.png"
@@ -94,7 +104,6 @@ def close_notifications(panel):
 def panel_notifications(event):
     global panelNot
     global currentpanel
-    print(panelNot)
     if not panelNot:
         notifications = PanedWindow(window, width=300, height=500)
         notifications.place(x=730, y=60)
@@ -118,8 +127,6 @@ def panel_notifications(event):
                 campos = i.split(';')
                 title = ' ' + campos[0].replace("'", '') + ' '
                 description = campos[1].replace("'", '')
-                print(title)
-                print(description)
                 if title == " 0 ":
                     notification_counter = notification_counter
                 else:
@@ -555,6 +562,8 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global currentpanel
     currentpanel.pack_forget()
 
+    update_media(alb_id)
+
     window_album = PanedWindow(window, width=1080, height=720)
     window_album.configure(bg = "#121212")
     currentpanel = window_album
@@ -630,34 +639,34 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global stars_btn
     stars_btn= PhotoImage(file="imgs\star-icon.png")
     stars_label= Label(image=stars_btn)
-    button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = one_star)
+    button_stars= Button(window_album, image=stars_btn, borderwidth=0, command = lambda: one_star(alb_id))
     button_stars.place(x = 250, y = 220)
     button_stars.configure(bg="#121212", fg="#121212")
 
     global stars_btn2
     stars_btn2= PhotoImage(file="imgs\star-icon.png")
     stars_label2= Label(image=stars_btn2)
-    button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = two_stars)
+    button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = lambda: two_stars(alb_id))
     button_stars2.place(x = 285, y = 220)
     button_stars2.configure(bg="#121212")
 
     global stars_btn3
     stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
-    button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = three_stars)
+    button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = lambda: three_stars(alb_id))
     button_stars3.place(x = 320, y = 220)
     button_stars3.configure(bg="#121212")
 
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\star-icon.png")
     stars_label4= Label(image=stars_btn4)
-    button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = four_stars)
+    button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = lambda: four_stars(alb_id))
     button_stars4.place(x = 355, y = 220)
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
-    button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = five_stars)
+    button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = lambda: five_stars(alb_id))
     button_stars5.place(x = 390, y = 220)
 
     btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
@@ -684,7 +693,6 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 def add_album(nome, artista, genero, ano, qt, duracao, metacritic, descricao, musicas):
     # função que envia notificação
     users = get_users_by_gender(genero)
-    print(users)
     send_notification(users, nome, artista)
     inserir_album(nome, artista, filename, genero, ano, qt, duracao, metacritic, descricao, musicas)
 
@@ -1026,7 +1034,6 @@ def panel_search():
         selected_item = treeCategorias.selection()[0]
         global select
         select = treeCategorias.item(selected_item)["values"][0]
-        print(select)
         return select
 
     treeCategorias = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Ano"), show = "headings")

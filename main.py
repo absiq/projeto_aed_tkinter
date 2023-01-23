@@ -1199,14 +1199,14 @@ def panel_search():
 
     listaAvaliacao = lerScore()
     
-    refreshTreeViews(listaAvaliacao, treeAvaliacao)
+    refreshTreeAval(listaAvaliacao, treeAvaliacao)
 
-    lbNumAlbum = Label(panel_search, text = "Nº de álbums", bg="#121212", fg = "white", font = ("Helvetica", "10"))
-    lbNumAlbum.place(x=20, y=400)
+    lbNumAlbumScore = Label(panel_search, text = "Nº de álbums", bg="#121212", fg = "white", font = ("Helvetica", "10"))
+    lbNumAlbumScore.place(x=20, y=620)
     txtNumAlbumScore = Label(panel_search, width=10, text = "5", state="disable", anchor="w")
-    txtNumAlbumScore.place(x = 120, y=400)
+    txtNumAlbumScore.place(x = 120, y=620)
     btnPagScore = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select2))
-    btnPagScore.place(x = 250, y = 500)
+    btnPagScore.place(x = 250, y = 620)
 
     panel_search.mainloop()
 

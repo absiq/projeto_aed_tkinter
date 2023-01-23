@@ -199,7 +199,6 @@ def selecaoItem(lbCategorias):
     texto = lbCategorias.get(id)
     return texto
 
-
 fmaisVistos = "top_5_views.txt"
 
 def lerViews():
@@ -233,7 +232,7 @@ def lerScore():
 
 lerScore()
 
-def refreshTreeViews(listaAvaliacao, treeAvaliacao):
+def refreshTreeAval(listaAvaliacao, treeAvaliacao):
     treeAvaliacao.delete(*treeAvaliacao.get_children())
     for item in listaAvaliacao:
         item = item.split(";")

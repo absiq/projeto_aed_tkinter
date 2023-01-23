@@ -229,3 +229,18 @@ def selecaoItem(lbCategorias):
     global texto
     texto = lbCategorias.get(id)
     return texto
+
+
+fmaisVistos = "top_5_views.txt"
+
+def lerViews():
+    fileViews=open(fmaisVistos, "r", encoding="utf-8")
+    lista = fileViews.readlines()
+    fileViews.close()
+    return lista
+
+def refreshTreeViews(listaViews, treeVisualicacao):
+    treeVisualicacao.delete(*treeVisualicacao.get_children())
+    for item in listaViews:
+        item = item.split(";")
+        treeVisualicacao.insert("", "end", values = (item[0],item[2], item[3]))

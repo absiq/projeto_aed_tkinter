@@ -1015,21 +1015,37 @@ def panel_search():
     lblCategorias = Label(panel_search, text = "Filtro por Visualizações", font=("Helvetica", 11))
     lblCategorias.place(x = 20, y = 220)
 
-    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("Álbum", "Artista", "Visualizações"), show = "headings")
+    def on_select1(event):
+        selected_item2 = treeVisualicacao.selection()[0]
+        global select1
+        select1 = treeVisualicacao.item(selected_item2)["values"][0]
+        print(select1)
+        return select1
 
-    treeVisualicacao.column("Álbum", width=200, anchor="w")
-    treeVisualicacao.column("Artista", width=150, anchor="w")
+    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Visualizações"), show = "headings")
+
+    treeVisualicacao.column("ID", width=14, anchor="w")
+    treeVisualicacao.column("Álbum", width=200, anchor="c")
+    treeVisualicacao.column("Artista", width=150, anchor="c")
     treeVisualicacao.column("Visualizações", width=100, anchor="c")
+    treeVisualicacao.heading("ID", text = "ID")
     treeVisualicacao.heading("Álbum", text = "Álbum")
     treeVisualicacao.heading("Artista", text = "Artista")
     treeVisualicacao.heading("Visualizações", text = "Visualizações")
     treeVisualicacao.place(x = 20, y = 260)
+    treeVisualicacao.bind("<<TreeviewSelect>>", on_select1)
+
+    listaViews= lerViews()
+    
+    refreshTreeViews(listaViews, treeVisualicacao)
 
     lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
     lbNumAlbum.place(x=20, y=400)
     numAlbumVisu = StringVar()
     txtNumAlbumVisu = Entry(panel_search, width=10, textvariable = numAlbumVisu, state="disable")
     txtNumAlbumVisu.place(x = 120, y=400)
+    btnPagVis = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select1))
+    btnPagVis.place(x = 250, y = 480)
 
     verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeVisualicacao.yview)
     verscrlbar.place(x = 470+2, y=260+2, height=112+10)

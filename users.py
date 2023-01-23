@@ -199,7 +199,7 @@ def deletar_album(del_album, del_artista):
         else: 
             i += 1
 
-def edit_user_data(new_name, new_username, new_bio, new_gender):
+def edit_user_data(new_name, filename, new_username, new_bio, new_gender):
     '''
     edita os dados do usuário logado
     '''

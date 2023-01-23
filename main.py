@@ -1041,15 +1041,10 @@ def panel_search():
 
     lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
     lbNumAlbum.place(x=20, y=400)
-    numAlbumVisu = StringVar()
-    txtNumAlbumVisu = Entry(panel_search, width=10, textvariable = numAlbumVisu, state="disable")
+    txtNumAlbumVisu = Label(panel_search, width=10, text = "5", state="disable", anchor="w")
     txtNumAlbumVisu.place(x = 120, y=400)
     btnPagVis = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select1))
-    btnPagVis.place(x = 250, y = 480)
-
-    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeVisualicacao.yview)
-    verscrlbar.place(x = 470+2, y=260+2, height=112+10)
-    treeVisualicacao.configure(yscrollcommand=verscrlbar.set)
+    btnPagVis.place(x = 250, y = 400)
 
     panel_search.mainloop()
 

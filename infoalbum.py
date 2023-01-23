@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from pygame import mixer
+from tkinter import filedialog 
 
 
 ficheiro= "databases/albums.txt"
@@ -19,15 +20,12 @@ def cria_id_album():
     count_id = last_id + 1
     return count_id
 
-def inserir_album(Nome, Artista, generoalbum, Ano, Qt, Duracao, Metacritic, Descricao, Musicas):
+def inserir_album(Nome, Artista, filename, current_var, Ano, Qt, Duracao, Metacritic, Descricao, Musicas):
     filePop=open(ficheiro, "a", encoding="utf-8")
     album_id = cria_id_album()
-    linha = str(album_id) + ";" + "imgs/No-Image.png" + ";" + str(Nome) + ";" + str(Artista) + ";" + str(generoalbum) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0;" + "\n" 
+    linha = str(album_id) + ";" + str(filename) + ";" + str(Nome) + ";" + str(Artista) + ";" + str(current_var) + ";" + str(Ano) + ";" + str(Qt) + " músicas" + ";" + str(Duracao) + ";" + str(Metacritic) + ";" + str(Descricao) + ";" + str(Musicas) + ";0;" + "\n" 
     filePop.write(linha)
     filePop.close()
-    
-# colocar ID do álbum
-# músicas
 
 def album_contents(album_id):
 
@@ -85,7 +83,7 @@ def reviewsList(numberStars):
 def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))
 
-def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, num_albuns):
+def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, choice7, num_albuns):
     tree.delete(*tree.get_children())
 
     file=open(ficheiro, "r", encoding="utf-8")
@@ -105,6 +103,8 @@ def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, n
         if album.split(";")[4] == "R&B" and choice5.get():
             tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
         if album.split(";")[4] == "COUNTRY" and choice6.get():
+            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
+        if album.split(";")[4] != "COUNTRY" and album.split(";")[4] != "R&B" and album.split(";")[4] != "ROCK" and album.split(";")[4] != "HIP-HOP" and album.split(";")[4] != "K-POP" and album.split(";")[4] != "POP" and choice7.get():
             tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
     contar_albuns(tree, num_albuns)
 
@@ -132,28 +132,6 @@ def pause_song():
 def contar_albuns(tree, num_albuns):
     num_albuns.set(len(tree.get_children()))
 
-def filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, num_albuns):
-    tree.delete(*tree.get_children())
-
-    file=open(ficheiro, "r", encoding="utf-8")
-    lista = file.readlines()
-    file.close()
-    cont=0
-    for album in lista:
-        if album == "": continue
-        if album.split(";")[4] == "POP" and choice1.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-        if album.split(";")[4] == "K-POP" and choice2.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-        if album.split(";")[4] == "HIP-HOP" and choice3.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-        if album.split(";")[4] == "ROCK" and choice4.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-        if album.split(";")[4] == "R&B" and choice5.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-        if album.split(";")[4] == "COUNTRY" and choice6.get():
-            tree.insert("", "end", values = (album.split(";")[2],album.split(";")[3], album.split(";")[4], album.split(";")[5] ))
-    contar_albuns(tree, num_albuns)
 
     """
     seleciona os 5 albuns mais vistos da aplicacao
@@ -246,7 +224,7 @@ def filtrarAlbums(treeCategorias, numAlbumCat):
     fileAlbum.close()
     for musica in lista:
         musica = musica.split(";")
-        categoria = musica[4] + "\n"
+        categoria = musica[4]+ "\n"
         if categoria == texto:
             treeCategorias.insert("", "end", values = (musica[0], musica[2], musica[3], musica[5]))
             

@@ -131,7 +131,7 @@ def maisVistos():
     """
     seleciona os 5 albuns mais vistos da aplicacao
     """
-    file = open("pop.txt", 'r', encoding="utf-8")
+    file = open("albums.txt", 'r', encoding="utf-8")
     lines = file.readlines()
     file.close()
     viewsList = []
@@ -163,7 +163,7 @@ def maioresScores():
     """
     seleciona os 5 albuns com o maior Score do metacritic
     """
-    file = open("pop.txt", 'r', encoding="utf-8")
+    file = open("albums.txt", 'r', encoding="utf-8")
     lines = file.readlines()
     file.close()
     scoresList = []

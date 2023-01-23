@@ -9,6 +9,7 @@ from infoalbum import *
 from comentarios import *
 from ratings import *
 from tkinter import filedialog 
+from maisVistos import *
 
 ## GUI implementation
 
@@ -184,7 +185,7 @@ def panel_gerir_notificacoes():
     window_manage_notifs.configure(bg="#121212")
 
     btn_voltar = Button(window_manage_notifs, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=30, y=40)
+    btn_voltar.place(x=20, y=20)
 
     label_username = Label(window_manage_notifs, text="Escreva o username do usuário que deseja enviar uma notificação:", bg="#121212", fg="white")
     label_username.place(x=400, y=40)
@@ -223,25 +224,26 @@ def panel_edit_profile():
 
     window_edit_profile.configure(bg="#121212")
 
-    name, username, icon, bio, user_id = retrieve_current_user_data()
+    name, username, icon, bio, user_id, categoria = retrieve_current_user_data()
 
-    name_text = "Teu nome atual é: " + name
+
+    name_text = "O seu nome atual é: " + name
     label_name = Label(window_edit_profile, text=name_text, bg="#121212", fg="white")
     label_name.place(x=20, y=50)
 
-    username_text = "Teu username atual é: " + username
+    username_text = "O seu username atual é: " + username
     label_username = Label(window_edit_profile, text=username_text, bg="#121212", fg="white")
     label_username.place(x=400, y=50)
 
-    bio_text = "Tua bio atual é: "
+    bio_text = "O sua bio atual é: "
     label_bio_text = Label(window_edit_profile, text=bio_text, bg="#121212", fg="white")
     label_bio = Label(window_edit_profile, justify='center', wraplength=240, text=bio, bg="#121212", fg="white")
     label_bio_text.place(x=20, y=220)
     label_bio.place(x=20, y=240)
 
-    icon_text = "O teu icon atual é: "
+    icon_text = "O seu icon atual é: "
     label_icon_text = Label(window_edit_profile, text=icon_text, bg="#121212", fg="white")
-    label_icon_text.place(x=740, y=220)
+    label_icon_text.place(x=740, y=50)
 
     def seleciona_foto_perfil():
         global cover
@@ -252,33 +254,36 @@ def panel_edit_profile():
         return filename
 
     canvasImage = Canvas(window_edit_profile, width = 100, height = 100, bd = 2, relief = "sunken")
-    canvasImage.place(x=650, y=70)
+    canvasImage.place(x=740, y=80)
     global imagem
     imagem = PhotoImage(file = "imgs\\profile_pics\\avatarnone.png")
     image_id = canvasImage.create_image(50, 50, image=imagem)
     
-    btnSelect = Button(window_edit_profile, text= "Selecionar Imagem", width=25, height=2, command=seleciona_foto_perfil)
-    btnSelect.place(x=660, y=280)
+    btnSelect = Button(window_edit_profile, text= "Selecionar imagem", width=14, height=1, command=seleciona_foto_perfil)
+    btnSelect.place(x=740, y=200)
    
 
-    label_new_name = Label(window_edit_profile, text="Insira o teu novo nome:", bg="#121212", fg="white")
+    label_new_name = Label(window_edit_profile, text="Insira o seu novo nome:", bg="#121212", fg="white")
     label_new_name.place(x=20, y=80)
     new_name = name
     entry_new_name = Entry(window_edit_profile, width=30, textvariable=new_name)
     entry_new_name.place(x=20, y=100)
 
-    label_new_username = Label(window_edit_profile, text="Insira o teu novo username:", bg="#121212", fg="white")
+    label_new_username = Label(window_edit_profile, text="Insira o seu novo username:", bg="#121212", fg="white")
     label_new_username.place(x=400, y=80)
     new_username = username
     entry_new_username = Entry(window_edit_profile, width=30, textvariable=new_username)
     entry_new_username.place(x=400, y=100)
 
-    label_new_bio = Label(window_edit_profile, text="Insira a tua nova bio:", bg="#121212", fg="white")
+    label_new_bio = Label(window_edit_profile, text="Insira a sua nova bio:", bg="#121212", fg="white")
     label_new_bio.place(x=20, y=290)
     entry_new_bio = Text(window_edit_profile) # usar GET para inserir conteúdo do Text em new_bio
     entry_new_bio.place(x=20, y=310, width=300, height=100)
 
-    label_new_fav = Label(window_edit_profile, text="Insira o teu novo gênero favorito:", bg="#121212", fg="white")
+    categoria_text = "O seu gênero favorito é: " + categoria
+    label_categoria = Label(window_edit_profile, text=categoria_text, bg="#121212", fg="white")
+    label_categoria.place(x=400, y=220)
+    label_new_fav = Label(window_edit_profile, text="Insira o seu novo gênero favorito:", bg="#121212", fg="white")
     label_new_fav.place(x=400, y=290)
 
     current_var = StringVar()
@@ -286,13 +291,18 @@ def panel_edit_profile():
     categorias = preencheCombobox()
     combobox['values'] = categorias
     combobox['state'] = 'readonly'
-    combobox.place(x=400, y=340)
+    combobox.place(x=400, y=320)
 
-    btn_editar = Button(window_edit_profile, text='Guardar', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get(), filename))
-    btn_editar.place(x=540, y=430)
+    btn_editar = Button(window_edit_profile, width = 14, height=1, text='Guardar', command=lambda: edit_user_data(entry_new_name.get(), entry_new_username.get(), entry_new_bio.get("1.0",'end-1c'), current_var.get(), filename))
+    btn_editar.place(x=740, y=320)
 
-    btn_voltar = Button(window_edit_profile, text="Voltar", command=panel_account)
-    btn_voltar.place(x=700, y=700)
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_edit_profile, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
+
+    btn_voltar = Button(window_edit_profile, width = 14, height=1, text="Voltar", command=panel_account)
+    btn_voltar.place(x=740, y=370)
 
     window_edit_profile.place(x=0, y=0)
 
@@ -431,7 +441,7 @@ def panel_account():
 
     window_account.configure(bg="#121212")
 
-    name, username, icon, bio, user_id = retrieve_current_user_data()
+    name, username, icon, bio, user_id, categoria = retrieve_current_user_data()
 
     ficheiro_img = os.path.join('imgs\\profile_pics', icon)
 
@@ -472,10 +482,11 @@ def panel_account():
         btn_voltar = Button(window_account, text="Voltar", width=20, command=panel_homepage)
         btn_voltar.place(x=800, y=140)
 
-    label_favoritos = Label(window_account, text='Teus favoritos', justify='center', wraplength=240, bg="#121212", fg="white")
-    label_favoritos.place(x=500, y=140)
+    label_favoritos = Label(window_account, text='Os seus favoritos', justify='center', wraplength=240, bg="#121212", fg="white")
+    label_favoritos.place(x=100, y=240)
     lboxFavoritos=Listbox(window_account, width = 35, height=16, selectmode = "single", relief="flat")
-    lboxFavoritos.place(x=480,y=200)
+    lboxFavoritos.place(x=100,y=260)
+    lboxFavoritos.configure(bg="#121212", fg="white", selectbackground="#1db954")
 
     user_id = retrieve_current_user_id()
     ficheiro = '.\\databases\\favoritos.csv'
@@ -504,22 +515,22 @@ def panel_delete_album():
     panel_delete_album.configure(bg="#121212")
 
     lblTitulo = Label(panel_delete_album, text = "Delete um álbum", bg="#121212", fg="white", font = "arial, 15", relief = "flat")
-    lblTitulo.place (x=60, y=25)
+    lblTitulo.place (x=450, y=45)
 
     label_album = Label(panel_delete_album, text="Álbum que deseja apagar: ", bg="#121212", fg="white")
-    label_album.place(x=60, y=100)
+    label_album.place(x=450, y=120)
     del_album = Entry(panel_delete_album, width=30)
-    del_album.place(x=60, y=130)
+    del_album.place(x=450, y=150)
 
     label_artista = Label(panel_delete_album, text="Artista do álbum que deseja apagar: ", bg="#121212", fg="white")
-    label_artista.place(x=60, y=170)
+    label_artista.place(x=450, y=190)
     del_artista = Entry(panel_delete_album, width=30)
-    del_artista.place(x=60, y=200)
+    del_artista.place(x=450, y=220)
 
     btn_delete = Button(panel_delete_album, text="Apagar álbum", width=20, command= lambda: deletar_album(del_album, del_artista))
     btn_voltar = Button(panel_delete_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=800, y=190)
-    btn_delete.place(x=800, y=140)
+    btn_voltar.place(x=20, y=20)
+    btn_delete.place(x=450, y=280)
 
     global imgMusicas
     imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
@@ -534,23 +545,25 @@ def panel_comentarios(album_id):
     currentpanel.pack_forget()
 
     window_comentarios = PanedWindow(window, width=1080, height=720)
+    window_comentarios.configure(bg = "#121212")
 
     img, album_name, album_artist, album_info, album_score, album_description, alb_id = album_contents(album_id)
     lista_comentarios = leitura_comentarios(alb_id)
 
     page_text = 'Comentários em ' + album_name
-    label_page = Label(text=page_text, font=('Arial', 14))
+    label_page = Label(text=page_text, bg = "#121212", fg = "white", font=('Arial', 14))
     label_page.place(x=10, y=10)
 
     comments_textarea = Text(window, width=80, height=30)
+    comments_textarea.configure(bg = "#121212", fg="white")
 
     for comment in lista_comentarios:
         comments_textarea.insert(INSERT, comment)
 
     comments_textarea.place(x=10, y=60)
 
-    btn_voltar = Button(text='Voltar', command=lambda:generate_page_album(album_id))
-    btn_voltar.place(x=980, y=10)
+    btn_voltar = Button(text='Voltar', width=20, command=lambda:generate_page_album(album_id))
+    btn_voltar.place(x=920, y=10)
 
     window_comentarios.place(x=0, y=0)
 
@@ -569,7 +582,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     currentpanel = window_album
     
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, relief="sunken")
+    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, bg="#121212", highlightbackground="#121212", relief="sunken")
     ctn_cover.place(x=20, y=20)
     cover = PhotoImage(file = img)
     ctn_cover.create_image(100, 100, image = cover) 
@@ -579,24 +592,33 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     Label_name.place(x=242,y=60)
 
     artist = album_artist
-    Label_artist = Label(window_album, text=artist, fg="black")
+    Label_artist = Label(window_album, text=artist, fg="white", bg="#121212")
     Label_artist.place(x=250,y=170)
     
     info = album_info
-    Label_info = Label(window_album, text=info, fg="black")
+    Label_info = Label(window_album, text=info, fg="white", bg="#121212")
     Label_info.place(x=250,y=199)
 
     score = album_score
-    Label_score = Label(window_album, text=score, fg="black", font=('Arial', 20))
+    Label_score = Label(window_album, text=score, fg="white", font=('Arial', 20))
     Label_score.place(x=170, y=220)
+    
+    scoreMin = 40
+    scoreMax = 60
+    if int(score) <= scoreMin:
+        Label_score.configure(bg="red")
+    elif int(score) >= scoreMin and int(score) <= scoreMax:
+        Label_score.configure(bg="#cccc00")
+    else:
+        Label_score.configure(bg="green")
 
     description = album_description
-    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=450, justify="left")
+    Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=660, justify="left")
     Label_description.place(x = 20, y = 270)
 
     global lboxMusicas
     lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
-    lboxMusicas.place(x=20, y= 320)
+    lboxMusicas.place(x=20, y= 360)
     lboxMusicas.configure(foreground="white")
     musicas = "databases\musicas.txt"
 
@@ -613,18 +635,21 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     global playBtn
     playBtn = PhotoImage(file="imgs\play_icon.png")
     play_button = Button(window_album, image=playBtn, relief="flat", bd="0", command= lambda: (play_song(lboxMusicas, alb_id)))
-    play_button.place(x=80, y= 590)
+    play_button.place(x=80, y= 620)
+    play_button.configure(bg="#121212", fg="#121212")
 
     global pauseBtn
     pauseBtn = PhotoImage(file="imgs\pause_icon.png")
-    play_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
-    play_button.place(x=120, y= 590)
+    pause_button = Button(window_album, image=pauseBtn, relief="flat", bd="0", command=pause_song)
+    pause_button.place(x=120, y= 620)
+    pause_button.configure(bg="#121212", fg="#121212")
 
     global share_btn
     share_btn= PhotoImage(file="imgs\share-icon.png")
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
     button_share.place(x = 20, y = 220)
+    button_share.configure(bg="#121212", fg="#121212")
 
     user_id = retrieve_current_user_id()
 
@@ -648,42 +673,44 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     stars_label2= Label(image=stars_btn2)
     button_stars2= Button(window_album, image=stars_btn2, borderwidth=0, command = lambda: two_stars(alb_id))
     button_stars2.place(x = 285, y = 220)
-    button_stars2.configure(bg="#121212")
+    button_stars2.configure(bg="#121212", fg="#121212")
 
     global stars_btn3
     stars_btn3= PhotoImage(file="imgs\star-icon.png")
     stars_label3= Label(image=stars_btn3)
     button_stars3= Button(window_album, image=stars_btn3, borderwidth=0, command = lambda: three_stars(alb_id))
     button_stars3.place(x = 320, y = 220)
-    button_stars3.configure(bg="#121212")
+    button_stars3.configure(bg="#121212", fg="#121212")
 
     global stars_btn4
     stars_btn4= PhotoImage(file="imgs\star-icon.png")
     stars_label4= Label(image=stars_btn4)
     button_stars4= Button(window_album, image=stars_btn4, borderwidth=0, command = lambda: four_stars(alb_id))
     button_stars4.place(x = 355, y = 220)
+    button_stars4.configure(bg="#121212", fg="#121212")
 
     global stars_btn5
     stars_btn5= PhotoImage(file="imgs\star-icon.png")
     stars_label5= Label(image=stars_btn5)
     button_stars5= Button(window_album, image=stars_btn5, borderwidth=0, command = lambda: five_stars(alb_id))
     button_stars5.place(x = 390, y = 220)
+    button_stars5.configure(bg="#121212", fg="#121212")
 
-    btnVoltar = Button(window_album, text="Voltar", width=10, command=panel_homepage)
-    btnVoltar.place(x=30, y=500)
+    btnVoltar = Button(window_album, text="Voltar", width=20, command=panel_homepage)
+    btnVoltar.place(x=900, y=10)
 
-    nameuser, username, icon, bio, user_id = retrieve_current_user_data()
+    nameuser, username, icon, bio, user_id, categoria = retrieve_current_user_data()
 
-    comment_frame = Frame(window_album, width=400, height=200)
-    comment_frame.place(x=600, y=300)
-    comment_label = Label(comment_frame, text="Comentário:")
+    comment_frame = Frame(window_album, width=400, height=200, bg="#121212")
+    comment_frame.place(x=600, y=360)
+    comment_label = Label(comment_frame, text="Comentário:", bg="#121212", fg="white")
     comment_label.place(x = 10, y = 10)
     comment_entry = Text(comment_frame, width=30, height=6)
     comment_entry.place(x = 90, y = 10)
     btn_comentar = Button(comment_frame, text="Comentar", command=lambda:inserir_comentario(username, comment_entry.get("1.0",'end-1c'), alb_id))
-    btn_comentar.place(x=10, y=150)
+    btn_comentar.place(x=90, y=150)
     btn_comentarios = Button(comment_frame, text="Ver comentários", command=lambda:panel_comentarios(alb_id))
-    btn_comentarios.place(x=90, y=150)
+    btn_comentarios.place(x=180, y=150)
 
     window_album.place(x=0, y=0)
 
@@ -708,60 +735,60 @@ def panel_adicionar_albuns():
     lblNome.place(x=70, y=70)
     nome = StringVar()
     entryNome = Entry(window_adicionar_album, width=25, textvariable=nome)
-    entryNome.place(x=120, y= 70) 
+    entryNome.place(x=150, y= 70) 
 
     lblArtista = Label(window_adicionar_album, text = "Artista",bg="#121212", fg="white")
     lblArtista.place(x=70, y=120)
     artista = StringVar()
     entryArtista = Entry(window_adicionar_album, width=25, textvariable=artista)
-    entryArtista.place(x=120, y= 120) 
+    entryArtista.place(x=150, y= 120) 
 
     lblAno = Label(window_adicionar_album, text = "Ano",bg="#121212", fg="white")
     lblAno.place(x=70, y=170)
     ano = IntVar()
     entryAno = Entry(window_adicionar_album, width=25, textvariable=ano)
-    entryAno.place(x=120, y= 170) 
+    entryAno.place(x=150, y= 170) 
 
 
     lblGenero = Label(window_adicionar_album, text = "Género",bg="#121212", fg="white")
     lblGenero.place(x=70, y=220)
     current_var = StringVar()
-    combobox = ttk.Combobox(window_adicionar_album, textvariable=current_var)
+    combobox = ttk.Combobox(window_adicionar_album, width = 22, textvariable=current_var)
     categorias = preencheCombobox()
     combobox['values'] = categorias
     combobox['state'] = 'readonly'
-    combobox.place(x=120, y=220)
+    combobox.place(x=150, y=220)
 
 
     lblQt = Label(window_adicionar_album, text = "Qt músicas",bg="#121212", fg="white")
-    lblQt.place(x=370, y=70)
+    lblQt.place(x=70, y=270)
     qt = IntVar()
     entryQt = Entry(window_adicionar_album, width=25, textvariable=qt)
-    entryQt.place(x=450, y= 70) 
+    entryQt.place(x=150, y= 270) 
 
     lblDuracao = Label(window_adicionar_album, text = "Duração",bg="#121212", fg="white")
-    lblDuracao.place(x=370, y=120)
+    lblDuracao.place(x=370, y=70)
     duracao = StringVar()
     entryDuracao = Entry(window_adicionar_album, width=25, textvariable=duracao)
-    entryDuracao.place(x=450, y= 120) 
+    entryDuracao.place(x=450, y= 70) 
 
     lblMetacritic = Label(window_adicionar_album, text = "Metacritic", bg="#121212", fg="white")
-    lblMetacritic.place(x=370, y=170)
+    lblMetacritic.place(x=370, y=120)
     metacritic = IntVar()
     entryMetacritic = Entry(window_adicionar_album, width=25, textvariable=metacritic)
-    entryMetacritic.place(x=450, y= 170) 
+    entryMetacritic.place(x=450, y= 120) 
 
     lblDescricao = Label(window_adicionar_album, text = "Descrição", bg="#121212", fg="white")
-    lblDescricao.place(x=370, y=220)
+    lblDescricao.place(x=370, y=170)
     descricao = StringVar()
     entryDescricao = Entry(window_adicionar_album, width=25, textvariable=descricao)
-    entryDescricao.place(x=450, y= 220) 
+    entryDescricao.place(x=450, y= 170) 
 
     lblMusicas = Label(window_adicionar_album, text = "Músicas", bg="#121212", fg="white")
-    lblMusicas.place(x=370, y=270)
+    lblMusicas.place(x=370, y=220)
     musicas=StringVar()
     entryMusicas = Entry(window_adicionar_album, width=25, textvariable=musicas)
-    entryMusicas.place(x=450, y= 270) 
+    entryMusicas.place(x=450, y= 220) 
 
     def selecionaFicheiro():
         global cover
@@ -777,17 +804,17 @@ def panel_adicionar_albuns():
     imagem = PhotoImage(file = "imgs\covers\\No_Image.png")
     image_id = canvasImage.create_image(100, 100, image=imagem)
     
-    btnSelect = Button(window_adicionar_album, text= "Selecionar Imagem", width=25, height=2, command=selecionaFicheiro)
-    btnSelect.place(x=660, y=280)
+    btnSelect = Button(window_adicionar_album, text= "Selecionar Imagem", width=28, height=1, command=selecionaFicheiro)
+    btnSelect.place(x=650, y=280)
 
     global image1
     image1 = PhotoImage(file = "imgs\\add.png" )
     btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
                 command= lambda: add_album(nome.get(), artista.get(), current_var.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
-    btnInserir.place(x=400, y= 350)
+    btnInserir.place(x=650, y= 350)
 
     btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=800, y=140)
+    btn_voltar.place(x=20, y=20)
 
     global imgMusicas
     imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
@@ -816,12 +843,13 @@ def panel_categorias():
     currentpanel.pack_forget()
 
     window_consultar_categorias = PanedWindow(window, width=1080, height=720)
+    window_consultar_categorias.configure(bg = "#121212")
     currentpanel = window_consultar_categorias
 
-    btn_voltar = Button(window_consultar_categorias, text="Voltar", command=panel_admin)
-    btn_voltar.place(x=100, y=30)
+    btn_voltar = Button(window_consultar_categorias, text="Voltar", width = 20, command=panel_admin)
+    btn_voltar.place(x=20, y=20)
 
-    label_remover = Label(window_consultar_categorias, text="Remover uma categoria:")
+    label_remover = Label(window_consultar_categorias, fg = "white", bg = "#121212", text="Remover uma categoria:")
     label_remover.place(x=100, y=90)
 
     current_var = StringVar()
@@ -832,28 +860,32 @@ def panel_categorias():
     combobox.place(x=100, y=150)
 
     btn_remover = Button(window_consultar_categorias, text="Remover", command=lambda:remover_categoria(current_var.get()))
-    btn_remover.place(x=100, y=210)
+    btn_remover.place(x=260, y=150)
 
-    label_adicionar = Label(window_consultar_categorias, text="Adicionar uma categoria:")
-    label_adicionar.place(x=500, y=90)
+    label_adicionar = Label(window_consultar_categorias, fg = "white", bg = "#121212", text="Adicionar uma categoria:")
+    label_adicionar.place(x=100, y=260)
 
     current_input = StringVar()
     entry_categoria = Entry(window_consultar_categorias, textvariable=current_input)
-    entry_categoria.place(x=500, y=150)
+    entry_categoria.place(x=100, y=320)
 
     btn_add = Button(window_consultar_categorias, text="Adicionar", command=lambda:inserir_categoria(current_input.get()))
-    btn_add.place(x=500, y=210)
+    btn_add.place(x=260, y=320)
 
     columns = ('categorias')
     treeview = ttk.Treeview(window_consultar_categorias, selectmode="browse", columns=columns, show='headings')
     treeview.heading('categorias', text='Categorias')
     for categoria in categorias:
         treeview.insert('', END, values=categoria)
-    treeview.place(x=400, y=400)
+    treeview.place(x=500, y=90)
     window_consultar_categorias.place(x=0, y=0)
     btn_refresh = Button(window_consultar_categorias, text="Refresh", command=panel_categorias)
-    btn_refresh.place(x=600, y=410)
+    btn_refresh.place(x=580, y=320)
 
+    global imgMusicas
+    imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
+    labelImg = Label(window_consultar_categorias, image=imgMusicas, width=1080, height=300, bg="#121212")
+    labelImg.place(x=0, y=550)
 
 
 ## - - - - - - - - - - CONTAINER FILTER ALBUMS - - - - - - - - - ##
@@ -892,13 +924,13 @@ def panel_filtrar_albuns():
     ck5 = Checkbutton(window_consultar_album, text = "R&B", variable = choice5)
     ck6 = Checkbutton(window_consultar_album, text = "COUNTRY", variable = choice6)
     ck7 = Checkbutton(window_consultar_album, text = "OUTROS", variable = choice7)
-    ck1.place(x=50, y=30)
-    ck2.place(x=150, y=30)
-    ck3.place(x=250, y=30)
-    ck4.place(x=350, y=30)
-    ck5.place(x=450, y=30)
-    ck6.place(x=550, y=30)
-    ck7.place(x=650, y=30)
+    ck1.place(x=150, y=70)
+    ck2.place(x=250, y=70)
+    ck3.place(x=350, y=70)
+    ck4.place(x=450, y=70)
+    ck5.place(x=550, y=70)
+    ck6.place(x=650, y=70)
+    ck7.place(x=750, y=70)
 
 
     global imagePesq
@@ -906,7 +938,7 @@ def panel_filtrar_albuns():
 
     btnPesquisar = Button(window_consultar_album, width=48, height=48, image = imagePesq, 
             command = lambda: filtrar_albuns(tree, choice1, choice2, choice3, choice4, choice5, choice6, choice7, num_albuns))
-    btnPesquisar.place(x=650, y= 20)
+    btnPesquisar.place(x=850, y= 50)
 
     tree = ttk.Treeview(window_consultar_album, columns = ("Nome", "Artista", "Género", "Ano"), show = "headings", height = 12, selectmode = "browse")
     tree.column("Nome", width = 220, anchor = "w")
@@ -918,17 +950,18 @@ def panel_filtrar_albuns():
     tree.heading("Artista", text = "Artista")
     tree.heading("Género", text = "Género")
     tree.heading("Ano", text = "Ano")
-    tree.place(x=20, y=90)
+    tree.place(x=150, y=110)
+
       
     lbl_num_albuns = Label(window_consultar_album, text = "Nº de álbuns", font = ("Helvetica", "10"), bg="#121212", fg="white")
-    lbl_num_albuns.place(x=18, y=360)
+    lbl_num_albuns.place(x=150, y=390)
 
     num_albuns = StringVar()
     txt_num_albuns = Entry(window_consultar_album, width=10, textvariable = num_albuns)
-    txt_num_albuns.place(x=100, y=360)
+    txt_num_albuns.place(x=240, y=390)
 
     btn_voltar = Button(window_consultar_album, text="Voltar", width=20, command=panel_admin)
-    btn_voltar.place(x=800, y=140)
+    btn_voltar.place(x=20, y=20)
 
     global imgMusicas
     imgMusicas = PhotoImage(file= "./imgs/painel_account/notas_musicais.png")
@@ -955,8 +988,8 @@ def panel_admin():
 
 
     # botão voltar
-    btnVoltar = Button(painel_adm, text="Voltar", width=10, command=panel_account)
-    btnVoltar.place(x=30, y=30)
+    btnVoltar = Button(painel_adm, text="Voltar", width=20, command=panel_account)
+    btnVoltar.place(x=20, y=20)
 
     # botão add album
     btnAddAlbum = Button(painel_adm, text="Adicione um álbum", width=25, command=panel_adicionar_albuns)
@@ -970,21 +1003,17 @@ def panel_admin():
     btnUsers = Button(painel_adm, text="Veja usuários", width=25)
     btnUsers.place(x=300, y=525)
 
-    # botão apagar reviews
-    btnApagarReviews = Button(painel_adm, text="Apague um review", width=25)
-    btnApagarReviews.place(x=520, y=525)
-
     # botão filtrar álbuns
     btnFiltrar = Button(painel_adm, text="Filtrar álbuns", width=25, command=panel_filtrar_albuns)
-    btnFiltrar.place(x=300, y=565)
+    btnFiltrar.place(x=300, y=570)
 
     # botão gerenciar categorias
     btnGerenciarCategorias = Button(painel_adm, text="Gerenciar categorias", width=25, command=panel_categorias)
-    btnGerenciarCategorias.place(x=520, y=565)
+    btnGerenciarCategorias.place(x=520, y=570)
 
     # botão gerenciar notificações
     btnNotificações = Button(painel_adm, text="Gerir notificações", width=25, command=panel_gerir_notificacoes)
-    btnNotificações.place(x=300, y=605)
+    btnNotificações.place(x=520, y=525)
     # info user
     name= retrieve_current_user_data()
     username= retrieve_current_user_data()
@@ -1020,10 +1049,13 @@ def panel_search():
     currentpanel = panel_search
     panel_search.configure(bg="#121212")
 
+    btnVoltar = Button(panel_search, text="Voltar", width=20, command=panel_account)
+    btnVoltar.place(x=920, y=20)
+
     global lbCategorias
-    lblCategorias = Label(panel_search, text = "Filtro por Categorias", font=("Helvetica", 11))
+    lblCategorias = Label(panel_search, text = "Filtro por Categorias", bg="#121212", fg = "white", font=("Helvetica", 11))
     lblCategorias.place(x = 20, y = 10)
-    lbCategorias = Listbox(panel_search, width=20, height=8)
+    lbCategorias = Listbox(panel_search, width=20, height=8, bg="#121212", fg = "white", selectbackground="#1db954")
     ListBoxCategorias(lbCategorias)
     lbCategorias.place(x = 20, y = 40)
 
@@ -1049,7 +1081,7 @@ def panel_search():
     treeCategorias.place(x = 200, y = 40)
     treeCategorias.bind("<<TreeviewSelect>>", on_select)
 
-    lbNumAlbumCat = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    lbNumAlbumCat = Label(panel_search, text = "Nº de álbums", bg="#121212", fg = "white", font = ("Helvetica", "10"))
     lbNumAlbumCat.place(x=220, y=180)
     global numAlbumCat
     numAlbumCat = StringVar()
@@ -1063,28 +1095,74 @@ def panel_search():
     btnPag = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select))
     btnPag.place(x = 450, y = 180)
 
-    lblCategorias = Label(panel_search, text = "Filtro por Visualizações", font=("Helvetica", 11))
+    lblCategorias = Label(panel_search, text = "Filtro por Visualizações", bg="#121212", fg = "white", font=("Helvetica", 11))
     lblCategorias.place(x = 20, y = 220)
 
-    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("Álbum", "Artista", "Visualizações"), show = "headings")
+    def on_select1(event):
+        selected_item2 = treeVisualicacao.selection()[0]
+        global select1
+        select1 = treeVisualicacao.item(selected_item2)["values"][0]
+        print(select1)
+        return select1
 
-    treeVisualicacao.column("Álbum", width=200, anchor="w")
-    treeVisualicacao.column("Artista", width=150, anchor="w")
+    treeVisualicacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Visualizações"), show = "headings")
+
+    treeVisualicacao.column("ID", width=14, anchor="w")
+    treeVisualicacao.column("Álbum", width=200, anchor="c")
+    treeVisualicacao.column("Artista", width=150, anchor="c")
     treeVisualicacao.column("Visualizações", width=100, anchor="c")
+    treeVisualicacao.heading("ID", text = "ID")
     treeVisualicacao.heading("Álbum", text = "Álbum")
     treeVisualicacao.heading("Artista", text = "Artista")
     treeVisualicacao.heading("Visualizações", text = "Visualizações")
     treeVisualicacao.place(x = 20, y = 260)
+    treeVisualicacao.bind("<<TreeviewSelect>>", on_select1)
 
-    lbNumAlbum = Label(panel_search, text = "Nº de álbums", font = ("Helvetica", "10"))
+    listaViews= lerViews()
+    
+    refreshTreeViews(listaViews, treeVisualicacao)
+
+    lbNumAlbum = Label(panel_search, text = "Nº de álbums", bg="#121212", fg = "white", font = ("Helvetica", "10"))
     lbNumAlbum.place(x=20, y=400)
-    numAlbumVisu = StringVar()
-    txtNumAlbumVisu = Entry(panel_search, width=10, textvariable = numAlbumVisu, state="disable")
+    txtNumAlbumVisu = Label(panel_search, width=10, text = "5", state="disable", anchor="w")
     txtNumAlbumVisu.place(x = 120, y=400)
+    btnPagVis = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select1))
+    btnPagVis.place(x = 250, y = 400)
 
-    verscrlbar = ttk.Scrollbar(panel_search, orient="vertical", command= treeVisualicacao.yview)
-    verscrlbar.place(x = 470+2, y=260+2, height=112+10)
-    treeVisualicacao.configure(yscrollcommand=verscrlbar.set)
+
+    lblCategorias = Label(panel_search, text = "Filtro por Avaliações", bg="#121212", fg = "white", font=("Helvetica", 11))
+    lblCategorias.place(x = 20, y = 450)
+
+    def on_select2(event):
+        selected_item3 = treeAvaliacao.selection()[0]
+        global select2
+        select2 = treeAvaliacao.item(selected_item3)["values"][0]
+        print(select2)
+        return select2
+
+    treeAvaliacao = ttk.Treeview(panel_search, height = 5, selectmode="browse", columns=("ID", "Álbum", "Artista", "Avaliações"), show = "headings")
+
+    treeAvaliacao.column("ID", width=14, anchor="w")
+    treeAvaliacao.column("Álbum", width=200, anchor="c")
+    treeAvaliacao.column("Artista", width=150, anchor="c")
+    treeAvaliacao.column("Avaliações", width=100, anchor="c")
+    treeAvaliacao.heading("ID", text = "ID")
+    treeAvaliacao.heading("Álbum", text = "Álbum")
+    treeAvaliacao.heading("Artista", text = "Artista")
+    treeAvaliacao.heading("Avaliações", text = "Avaliações")
+    treeAvaliacao.place(x = 20, y = 480)
+    treeAvaliacao.bind("<<TreeviewSelect>>", on_select2)
+
+    listaAvaliacao = lerScore()
+    
+    refreshTreeViews(listaAvaliacao, treeAvaliacao)
+
+    lbNumAlbum = Label(panel_search, text = "Nº de álbums", bg="#121212", fg = "white", font = ("Helvetica", "10"))
+    lbNumAlbum.place(x=20, y=400)
+    txtNumAlbumScore = Label(panel_search, width=10, text = "5", state="disable", anchor="w")
+    txtNumAlbumScore.place(x = 120, y=400)
+    btnPagScore = Button(panel_search, text = "Página do álbum", command = lambda: generate_page_album(select2))
+    btnPagScore.place(x = 250, y = 500)
 
     panel_search.mainloop()
 
@@ -1125,7 +1203,7 @@ def panel_categoriaPop():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaPop, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaPop, text ="Destaques da categoria POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1213,7 +1291,7 @@ def panel_categoriaHiphop():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaHiphop, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaHiphop, text ="Destaques da categoria HIP-POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1300,7 +1378,7 @@ def panel_categoriaKpop():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaKpop, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaKpop, text ="Destaques da categoria K-POP", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1388,7 +1466,7 @@ def panel_categoriaRock():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaRock, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaRock, text ="Destaques da categoria ROCK", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1476,7 +1554,7 @@ def panel_categoriaReB():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaReB, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaReB, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1564,10 +1642,10 @@ def panel_categoriaCountry():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaCountry, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
-    lblTitulo = Label(panel_categoriaCountry, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
+    lblTitulo = Label(panel_categoriaCountry, text ="Destaques da categoria Country", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
     lblTitulo.place (x=100, y=150)
 
     #imagens
@@ -1652,7 +1730,7 @@ def panel_categoriaOutros():
 
     # botao voltar
     btn_voltar = Button(panel_categoriaOutros, text="Voltar", width=20, command=panel_homepage)
-    btn_voltar.place(x=850, y=580)
+    btn_voltar.place(x=840, y=640)
 
     #coloca título da categoria
     lblTitulo = Label(panel_categoriaOutros, text ="Destaques da categoria R&B", bg="#121212", fg="white", font = "Arial, 15",relief = "flat")
@@ -1664,22 +1742,22 @@ def panel_categoriaOutros():
     global imgAlbum3
 
 
-    imgAlbum1 = PhotoImage(file="imgs/covers/I_Know_Im_Funny_Haha.png", height= 150, width= 150)
-    btnGuardarA1 = Button(panel_categoriaOutros, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(31))
+    imgAlbum1 = PhotoImage(file="imgs/covers/Raising_Cain.png", height= 150, width= 150)
+    btnGuardarA1 = Button(panel_categoriaOutros, width = 150, height = 150, image = imgAlbum1, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(37))
     btnGuardarA1.place (x = 100 , y = 212)
-    tituloA1 = Label(panel_categoriaOutros, text="I Know I'm Funny Haha", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA1 = Label(panel_categoriaOutros, text="Hell on Earth", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA1.place(x=92, y=377)
 
-    imgAlbum2 = PhotoImage(file="imgs/covers/Show_Pony.png", height= 150, width= 150)
-    btnGuardarA2 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(32))   
+    imgAlbum2 = PhotoImage(file="imgs/covers/Hear_Me_Now.png", height= 150, width= 150)
+    btnGuardarA2 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum2, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(38))   
     btnGuardarA2.place (x = 350 , y = 212)
-    tituloA2 = Label(panel_categoriaOutros, text="Show Pony", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA2 = Label(panel_categoriaOutros, text="Hear me now", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA2.place(x=342, y=377)
 
-    imgAlbum3 = PhotoImage(file="imgs/covers/Laura_Stevenson.png", height= 150, width= 150)
-    btnGuardarA3 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(33))   #174px album +nome
+    imgAlbum3 = PhotoImage(file="imgs/covers/Cantor_De_Sonhos.png", height= 150, width= 150)
+    btnGuardarA3 = Button (panel_categoriaOutros, width = 150, height = 150, image = imgAlbum3, border=0, bg="#121212", fg="white", command=lambda:generate_page_album(39))   #174px album +nome
     btnGuardarA3.place (x = 600 , y = 212)   #180px distancia de um album pra outro
-    tituloA3 = Label(panel_categoriaOutros, text="Laura Stevenson", width=24, height=3, bd=0, bg="#121212", fg="white")
+    tituloA3 = Label(panel_categoriaOutros, text="Cantor de Sonhos", width=24, height=3, bd=0, bg="#121212", fg="white")
     tituloA3.place(x=592, y=377)
 
 

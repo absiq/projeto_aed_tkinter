@@ -1,5 +1,5 @@
-26;imgs/covers/Thriller.png;Thriller;Michael Jackson;201
+26;imgs/covers/Thriller.png;Thriller;Michael Jackson;202
 5;imgs/covers/SOUR.png;SOUR;Olivia Rodrigo;101
-22;imgs/covers/The_Dark_Side_of_the_Moon.png;The dark side of the moon;Pink FLoyd;41
+32;imgs/covers/Show_Pony.png;Show Pony;Orville Peck;40
 7;imgs/covers/This_Is_What_I_Mean.png;This Is What I Mean;Stormzy;31
 28;imgs/covers/Whats_Going_On.png;What's Going On;Marvin Gaye;23

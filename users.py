@@ -1,6 +1,7 @@
 import os
 from tkinter import filedialog
 from tkinter import *
+from tkinter import messagebox
 
 def verify_files(pasta, ficheiro):
     '''
@@ -34,7 +35,9 @@ def valida_tamanho_password(password):
     valida o tamanho da password e retorna falso se tiver menos que 8 caracteres
     '''
     if len(password) < 8:
+        messagebox.showwarning("Password inválida", "Escreva uma password com mais de 8 caracteres")
         return False
+        
     else:
         return True
 
@@ -45,7 +48,9 @@ def valida_email(email):
     if email.count('@') > 0:
         return True
     else:
+        messagebox.showwarning("Email Inválido", "Insira um email válido")
         return False
+        
 
 def valida_campo_sem_virgula(*args):
     '''
@@ -97,6 +102,7 @@ def submit_register(nome, email, username, password):
         register = str(count_id) + ';' + line + ';' + default_profile_pic + ';' + default_bio + ';' + default_fav_gender + '\n'
         f.write(register)
         print('Dado inserido com sucesso')
+        messagebox.showinfo("Sucesso!", "O seu registro foi um sucesso!")
 
 def atualiza_sessao(dado):
     '''
@@ -133,9 +139,13 @@ def submit_login(username, password):
     verify_files(pasta, ficheiro)
     password = password + '\n'
     if verify_login(ficheiro, username, password) == True:
-        return True ## O login foi realizado com sucesso
+        messagebox.showinfo("Login", "Login efetuado com sucesso. Bem vindo " + username + "!")
+        return True 
+        
     else:
+        messagebox.showerror("Login Error", "O login não foi realizado, houve um erro.")
         return False ## O login não foi realizado pois houve erro
+        
 
 def logout_user():
     pasta = '.\\ databases'
@@ -144,6 +154,7 @@ def logout_user():
     f = open(ficheiro, 'w')
     f.write('')
     f.close()
+    messagebox.showinfo("Logout", "Logout efetuado com sucesso!")
 
 def retrieve_current_user_data():
     '''
@@ -159,8 +170,9 @@ def retrieve_current_user_data():
     name = campos_split[1]
     username = campos_split[3]
     icon = campos_split[5]
-    bio = campos_split[6].replace('\n', '')
-    return name, username, icon, bio, user_id
+    bio = campos_split[6]
+    categoria = campos_split[7].replace('\n', '')
+    return name, username, icon, bio, user_id, categoria
 
 def retrieve_current_user_id():
     '''
@@ -196,8 +208,10 @@ def deletar_album(del_album, del_artista):
                 for line in lines:
                     if not line == lines[i]:
                         ficheiro.write(line)
+                        messagebox.showinfo("Álbum", "Álbum deletado com sucesso")
         else: 
             i += 1
+            messagebox.showerror("Alterações", "Álbum não foi deletado.")
 
 def edit_user_data(new_name, new_username, new_bio, new_gender, new_icon):
     '''
@@ -239,8 +253,10 @@ def edit_user_data(new_name, new_username, new_bio, new_gender, new_icon):
             # atualizando o arquivo com os novos dados      
             arquivo = open(ficheiro, 'w', encoding='utf-8')
             arquivo.writelines(dados)
+            messagebox.showinfo("Alterações", "Dados alterados com sucesso")
         else:
             i += 1
+            messagebox.showerror("Alterações", "Dados não foram alterados.")
 
 def selecionaFile():
     """

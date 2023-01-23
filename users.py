@@ -289,3 +289,19 @@ def get_users_by_gender(gender):
             users.append(user_id)
 
     return users
+
+def contar_users(tree_users, num_users):
+    num_users.set(len(tree_users.get_children()))
+
+def ver_users(tree_users, num_users):
+    tree_users.delete(*tree_users.get_children())
+
+    ficheiro = "databases\\users.csv"
+
+    file=open(ficheiro, "r", encoding="utf-8")
+    lista = file.readlines()
+    file.close()
+    for users in lista:
+        user = users.split(";")
+        tree_users.insert("", "end", values = (user[0], user[1], user[2], user[3]))
+    contar_users(tree_users, num_users)

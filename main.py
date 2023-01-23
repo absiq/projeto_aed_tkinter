@@ -588,10 +588,10 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     currentpanel = window_album
     
     global cover
-    ctn_cover = Canvas(window_album, width=190, height=190, bd=2, bg="#121212", highlightbackground="#121212", relief="sunken")
-    ctn_cover.place(x=20, y=20)
+    ctn_cover = Canvas(window_album, width=150, height=150, bd=2, bg="#121212", highlightbackground="#121212", relief="sunken")
+    ctn_cover.place(x=30, y=50)
     cover = PhotoImage(file = img)
-    ctn_cover.create_image(100, 100, image = cover) 
+    ctn_cover.create_image(75, 75, image = cover) 
 
     name = album_name
     Label_name = Label(window_album, text=name, fg="white", bg="#121212", font=('Arial', 80))
@@ -607,7 +607,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     score = album_score
     Label_score = Label(window_album, text=score, fg="white", font=('Arial', 20))
-    Label_score.place(x=170, y=220)
+    Label_score.place(x=150, y=220)
     
     scoreMin = 40
     scoreMax = 60
@@ -620,11 +620,11 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
 
     description = album_description
     Label_description = Label(window_album, text=description, fg="white", bg="#121212", wraplength=660, justify="left")
-    Label_description.place(x = 20, y = 270)
+    Label_description.place(x = 30, y = 270)
 
     global lboxMusicas
     lboxMusicas=Listbox(window_album, width = 35, height=16, bd="0", selectmode = "single", relief="flat", selectbackground="#1db954", bg="#121212", highlightbackground = "#121212")
-    lboxMusicas.place(x=20, y= 360)
+    lboxMusicas.place(x=30, y= 360)
     lboxMusicas.configure(foreground="white")
     musicas = "databases\musicas.txt"
 
@@ -654,7 +654,7 @@ def panel_album(img, album_name, album_artist, album_info, album_score, album_de
     share_btn= PhotoImage(file="imgs\share-icon.png")
     share_label= Label(image=share_btn)
     button_share= Button(window_album, relief = "raised", image=share_btn, borderwidth=0)
-    button_share.place(x = 20, y = 220)
+    button_share.place(x = 30, y = 220)
     button_share.configure(bg="#121212", fg="#121212")
 
     # user_id = retrieve_current_user_id()
@@ -813,9 +813,9 @@ def panel_adicionar_albuns():
 
     global image1
     image1 = PhotoImage(file = "imgs\\add.png" )
-    btnInserir = Button(window_adicionar_album, image = image1, width=48, height=48, 
+    btnInserir = Button(window_adicionar_album, image = image1, width=122, height=48, text = "Adicionar álbum", compound = LEFT,
                 command= lambda: add_album(nome.get(), artista.get(), current_var.get(), ano.get(), qt.get(), duracao.get(), metacritic.get(), descricao.get(), musicas.get()))
-    btnInserir.place(x=650, y= 350)
+    btnInserir.place(x=450, y= 350)
 
     btn_voltar = Button(window_adicionar_album, text="Voltar", width=20, command=panel_admin)
     btn_voltar.place(x=20, y=20)

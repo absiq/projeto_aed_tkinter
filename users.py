@@ -75,7 +75,18 @@ def cria_id_user():
     count_id = last_id + 1
     return count_id
 
-
+def retrieve_current_username():
+    '''
+    busca apenas o username do usuário logado
+    '''
+    pasta = '.\\databases'
+    ficheiro = '.\\databases\\currentsession.csv'
+    verify_files(pasta, ficheiro)
+    f = open(ficheiro, 'r', encoding='utf-8')
+    campos = f.readline()
+    campos_split = campos.split(';')
+    username = campos_split[3]
+    return username
 
 def submit_register(nome, email, username, password):
     '''

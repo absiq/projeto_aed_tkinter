@@ -5,6 +5,7 @@ def likeList(user_id, album_id):
     ficheiro = '.\\databases\\favoritos.csv'
     f = open(ficheiro, 'r')
     campos = f.readlines()
+    f.close()
     i = 0
     for line in campos:
         data = line.split(';')
@@ -23,6 +24,7 @@ def likeList(user_id, album_id):
             campos[i] = line
             j = open(ficheiro, 'w')
             j.writelines(campos)
+            j.close()
         else:
             i += 1
     

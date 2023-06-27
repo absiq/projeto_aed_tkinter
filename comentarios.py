@@ -1,3 +1,5 @@
+from users import *
+
 def leitura_comentarios(album_id):
     '''
     retorna a lista de comentários do ID do álbum

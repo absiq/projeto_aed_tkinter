@@ -55,7 +55,7 @@ def login_or_account():
 #### MISC FUNCTIONS
 
 def like(album_id):
-    user_id = retrieve_current_user_id
+    user_id = retrieve_current_user_id()
     likeList(user_id, album_id)
     like_btn['file'] = "imgs\heart-icon-full.png"
 
@@ -574,7 +574,7 @@ def panel_comentarios(album_id):
 ## - - - - - - - - - CONTAINER ALBUM INFO - - - - - - - - - ##
 
 def comment(comment, album_id):
-    user_id = retrieve_current_user_id
+    user_id = retrieve_current_username()
     inserir_comentario(user_id, comment, album_id)
 
 def panel_album(img, album_name, album_artist, album_info, album_score, album_description, alb_id):

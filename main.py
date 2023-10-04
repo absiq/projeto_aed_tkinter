@@ -1,15 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 import os
-from users import *
-from notifications import *
-from favoritos import *
-from categorias import *
-from infoalbum import *
-from comentarios import *
-from ratings import *
+from py.users import *
+from py.notifications import *
+from py.favoritos import *
+from py.categorias import *
+from py.infoalbum import *
+from py.comentarios import *
+from py.ratings import *
 from tkinter import filedialog 
-from maisVistos import *
+from py.maisVistos import *
 
 ## GUI implementation
 

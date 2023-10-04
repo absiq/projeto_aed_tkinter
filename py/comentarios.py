@@ -1,4 +1,4 @@
-from users import *
+from py.users import *
 
 def leitura_comentarios(album_id):
     '''

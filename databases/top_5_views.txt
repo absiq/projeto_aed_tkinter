@@ -1,0 +1,5 @@
+26;imgs/covers/Thriller.png;Thriller;Michael Jackson;207
+5;imgs/covers/SOUR.png;SOUR;Olivia Rodrigo;102
+32;imgs/covers/Show_Pony.png;Show Pony;Orville Peck;42
+7;imgs/covers/This_Is_What_I_Mean.png;This Is What I Mean;Stormzy;31
+28;imgs/covers/Whats_Going_On.png;What's Going On;Marvin Gaye;23
